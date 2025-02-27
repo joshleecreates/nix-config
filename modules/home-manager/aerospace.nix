@@ -39,19 +39,20 @@
     [mode.main.binding]
     # Launch applications
     alt-shift-enter = 'exec-and-forget open -na ghostty'
-    alt-shift-b = 'exec-and-forget open -a "Safari"'
 
     # Window management
     alt-q = "close"
     alt-slash = 'layout tiles horizontal vertical'
     alt-comma = 'layout accordion horizontal vertical'
-    alt-m = 'fullscreen'
+    alt-z = 'fullscreen'
 
     # Focus movement
     alt-h = 'focus left'
     alt-j = 'focus down'
     alt-k = 'focus up'
     alt-l = 'focus right'
+    alt-o = 'focus-monitor --wrap-around next'
+    alt-i = 'focus-monitor --wrap-around prev'
 
     # Window movement
     alt-shift-h = 'move left'
@@ -74,6 +75,12 @@
     alt-8 = 'workspace 8'
     alt-9 = 'workspace 9'
     alt-0 = 'workspace 0'
+    alt-m = 'workspace m'
+    alt-b = 'workspace b'
+    alt-s = 'workspace s'
+    alt-t = 'workspace t'
+    alt-r = 'workspace r'
+    alt-n = 'workspace n'
 
     # Move windows to workspaces
     alt-shift-1 = 'move-node-to-workspace 1'
@@ -86,6 +93,12 @@
     alt-shift-8 = 'move-node-to-workspace 8'
     alt-shift-9 = 'move-node-to-workspace 9'
     alt-shift-0 = 'move-node-to-workspace 0'
+    alt-shift-m = 'move-node-to-workspace m'
+    alt-shift-b = 'move-node-to-workspace b'
+    alt-shift-s = 'move-node-to-workspace s'
+    alt-shift-t = 'move-node-to-workspace t'
+    alt-shift-r = 'move-node-to-workspace r'
+    alt-shift-n = 'move-node-to-workspace n'
 
     # Workspace navigation
     alt-tab = 'workspace-back-and-forth'
