@@ -20,6 +20,8 @@
       "zoom"
       "slack"
       "discord"
+
+      "aerospace"
       
       "arc"
       "1password" # password manager

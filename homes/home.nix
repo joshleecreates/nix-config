@@ -2,11 +2,12 @@
 
 {
   imports = [
+    ../modules/home-manager/aerospace.nix
+    ../modules/home-manager/git.nix
+    ../modules/home-manager/k9s.nix
     ../modules/home-manager/neovim.nix
     ../modules/home-manager/tmux.nix
     ../modules/home-manager/zsh.nix
-    ../modules/home-manager/git.nix
-    ../modules/home-manager/k9s.nix
   ];
 
   # The home.packages option allows you to install Nix packages into your

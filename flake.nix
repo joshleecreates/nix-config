@@ -37,9 +37,13 @@
       url = "github:norwoodj/homebrew-tap";
       flake = false;
     };
+    homebrew-nikitabobko = {
+      url = "github:nikitabobko/homebrew-tap";
+      flake = false;
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, darwin, homebrew-services, homebrew-felixkratz, homebrew-norwoodj, homebrew-core, homebrew-cask, homebrew-bundle, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, darwin, homebrew-services, homebrew-nikitabobko, homebrew-felixkratz, homebrew-norwoodj, homebrew-core, homebrew-cask, homebrew-bundle, ... }@inputs:
     let 
       homebrew-services-patched = nixpkgs.legacyPackages.aarch64-darwin.applyPatches {
         name = "homebrew-services-patched";
@@ -53,6 +57,7 @@
         "homebrew/homebrew-bundle" = homebrew-bundle;
         "felixkratz/homebrew-formulae" = homebrew-felixkratz;
         "norwoodj/tap" = homebrew-norwoodj;
+        "nikitabobko/tap" = homebrew-nikitabobko;
       };
     in
     {
