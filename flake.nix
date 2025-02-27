@@ -2,13 +2,13 @@
   description = "Nixos config flake";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
     home-manager = {
-      url = "github:nix-community/home-manager/release-24.05";
+      url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     darwin = {
-      url = "github:LnL7/nix-darwin/master";
+      url = "github:LnL7/nix-darwin/nix-darwin-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
@@ -46,6 +46,14 @@
         src = homebrew-services;
         patches = [./modules/darwin/homebrew-services.patch];
       };
+      homebrewTaps = {
+        "homebrew/homebrew-core" = homebrew-core;
+        "homebrew/homebrew-cask" = homebrew-cask;
+        "homebrew/homebrew-services" = homebrew-services-patched;
+        "homebrew/homebrew-bundle" = homebrew-bundle;
+        "felixkratz/homebrew-formulae" = homebrew-felixkratz;
+        "norwoodj/tap" = homebrew-norwoodj;
+      };
     in
     {
       nixosConfigurations.kasti = nixpkgs.lib.nixosSystem {
@@ -56,40 +64,50 @@
           inputs.home-manager.nixosModules.default
         ];
       };
-      homeConfigurations."josh@silver" = home-manager.lib.homeManagerConfiguration {
+      homeConfigurations."joshlee" = home-manager.lib.homeManagerConfiguration {
         modules = [
           ./homes/joshlee.nix
         ];
         pkgs = nixpkgs.legacyPackages."aarch64-darwin";
       };
-      homeConfigurations."josh@pop-os" = home-manager.lib.homeManagerConfiguration {
+      homeConfigurations."josh" = home-manager.lib.homeManagerConfiguration {
         modules = [
           ./homes/josh.nix
         ];
         pkgs = nixpkgs.legacyPackages."x86_64-linux";
       };
-      darwinConfigurations."sting" = darwin.lib.darwinSystem {
+      darwinConfigurations."silver" = darwin.lib.darwinSystem {
         system = "aarch64-darwin";
         modules = [
           home-manager.darwinModules.home-manager
           inputs.nix-homebrew.darwinModules.nix-homebrew
             {
               nix-homebrew = {
-                user = "josh";
+                user = "joshlee";
                 enable = true;
-                taps = {
-                  "homebrew/homebrew-core" = homebrew-core;
-                  "homebrew/homebrew-cask" = homebrew-cask;
-                  "homebrew/homebrew-services" = homebrew-services-patched;
-                  "homebrew/homebrew-bundle" = homebrew-bundle;
-                  "felixkratz/homebrew-formulae" = homebrew-felixkratz;
-                  "norwoodj/tap" = homebrew-norwoodj;
-                };
+                taps = homebrewTaps;
                 mutableTaps = true;
                 autoMigrate = false;
               };
             }
-          ./hosts/macbook/configuration.nix
+          ./hosts/silver.nix
+        ];
+      };
+      darwinConfigurations."mini" = darwin.lib.darwinSystem {
+        system = "aarch64-darwin";
+        modules = [
+          home-manager.darwinModules.home-manager
+          inputs.nix-homebrew.darwinModules.nix-homebrew
+            {
+              nix-homebrew = {
+                user = "joshlee";
+                enable = true;
+                taps = homebrewTaps;
+                mutableTaps = true;
+                autoMigrate = false;
+              };
+            }
+          ./hosts/mini.nix
         ];
       };
     };

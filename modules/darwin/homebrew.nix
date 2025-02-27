@@ -2,20 +2,19 @@
   homebrew = {
     enable = true;
     brews = [
-      "sniffnet" # monitor network traffic
+      # "sniffnet" # monitor network traffic
       "sketchybar"
       "helm"
       "terraform"
-      "doctl"
       "helm-docs"
     ];
     casks = [
       # utilities
-      "meetingbar" # shows upcoming meetings
-      "font-hack-nerd-font" #fors sketchy bar
+      # "meetingbar" # shows upcoming meetings
+      # "font-hack-nerd-font" #fors sketchy bar
 
       # virtualization
-      "utm" # virtual machines
+      # "utm" # virtual machines
 
       # communication
       "zoom"
@@ -25,26 +24,26 @@
       "arc"
       "1password" # password manager
       "spotify" # music
-      "obs" # stream / recoding software
       "eul" # mac monitoring
-      "wireshark" # network sniffer
+      # "wireshark" # network sniffer
       "obsidian" # zettelkasten
       "firefox"
       "iterm2"
-      "amethyst"
+      "ghostty"
+      # "amethyst"
       "visual-studio-code"
-      "docker"
-      "spacelauncher"
-      "ubersicht"
-      "syncthing"
+      # "docker"
+      # "spacelauncher"
+      # "ubersicht"
+      # "syncthing"
 
       # from recomendations
       # https://x.com/steventey/status/1800203408215027757
       "raycast"
-      "cleanshot"
-      "mimestream"
-      "screenflow"
-      "tableplus"
+      # "cleanshot"
+      # "mimestream"
+      # "screenflow"
+      # "tableplus"
     ];
     
     taps = map (key: builtins.replaceStrings ["homebrew-"] [""] key) (builtins.attrNames config.nix-homebrew.taps);
