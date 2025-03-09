@@ -22,6 +22,8 @@
       "discord"
 
       "aerospace"
+
+      "notunes" # stop apple music from launching
       
       "arc"
       "1password" # password manager

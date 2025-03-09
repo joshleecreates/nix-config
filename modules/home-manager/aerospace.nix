@@ -28,12 +28,12 @@
 
     # Gaps settings
     [gaps]
-    inner.horizontal = 6
-    inner.vertical =   6
-    outer.left =       6
-    outer.bottom =     6
-    outer.top =        6
-    outer.right =      6
+    inner.horizontal = 8
+    inner.vertical =   8
+    outer.left =       8
+    outer.bottom =     8
+    outer.top =        8
+    outer.right =      8
 
     # Main mode bindings
     [mode.main.binding]
