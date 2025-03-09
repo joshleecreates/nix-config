@@ -1,6 +1,11 @@
 {
   description = "Nixos config flake";
 
+  nixConfig = {
+    extra-trusted-substituters = ["https://cache.flox.dev"];
+    extra-trusted-public-keys = ["flox-cache-public-1:7F4OyH7ZCnFhcze3fJdfyXYLQw/aV7GEed86nQ7IsOs="];
+  };
+
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
     home-manager = {
@@ -41,9 +46,12 @@
       url = "github:nikitabobko/homebrew-tap";
       flake = false;
     };
+    flox = {
+      url = "github:flox/flox/v1.3.16";
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, darwin, homebrew-services, homebrew-nikitabobko, homebrew-felixkratz, homebrew-norwoodj, homebrew-core, homebrew-cask, homebrew-bundle, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, darwin, flox, homebrew-services, homebrew-nikitabobko, homebrew-felixkratz, homebrew-norwoodj, homebrew-core, homebrew-cask, homebrew-bundle, ... }@inputs:
     let 
       homebrew-services-patched = nixpkgs.legacyPackages.aarch64-darwin.applyPatches {
         name = "homebrew-services-patched";
@@ -82,6 +90,7 @@
         pkgs = nixpkgs.legacyPackages."x86_64-linux";
       };
       darwinConfigurations."silver" = darwin.lib.darwinSystem {
+        specialArgs = {inherit inputs;};
         system = "aarch64-darwin";
         modules = [
           home-manager.darwinModules.home-manager

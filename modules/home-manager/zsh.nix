@@ -9,7 +9,7 @@
     dotDir = ".config/zsh";
     oh-my-zsh = {
       enable = true;
-      theme = "robbyrussell";
+      theme = "gallifrey";
       plugins = ["kubectl" "kubectx" "git" "aws"];
     };
     shellAliases = {

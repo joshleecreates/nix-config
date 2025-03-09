@@ -26,6 +26,7 @@
       "notunes" # stop apple music from launching
       
       "arc"
+      "browserosaurus"
       "1password" # password manager
       "spotify" # music
       "eul" # mac monitoring

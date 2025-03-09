@@ -10,8 +10,6 @@
     ../modules/home-manager/zsh.nix
   ];
 
-  # The home.packages option allows you to install Nix packages into your
-  # environment.
   home.packages = [
     # shell
     pkgs.thefuck
@@ -36,6 +34,8 @@
     pkgs.kubectx
     pkgs.talosctl
     pkgs.argocd
+    pkgs.cilium-cli
+    pkgs.clickhouse
   ];
 
   home.sessionVariables = {

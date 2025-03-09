@@ -23,12 +23,12 @@ let user = "joshlee"; in
 
   # Extra Brews & Casks
   homebrew.brews = [
-    "doctl"
+    # "doctl"
   ];
 
   homebrew.casks = [
-    "obs" # stream / recoding software
+    # "obs" # stream / recoding software
   ];
 
-  system.stateVersion = 5;
+  system.stateVersion = 4;
 }
