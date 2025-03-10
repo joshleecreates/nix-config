@@ -2,7 +2,6 @@
 
 {
   imports = [
-    ../modules/home-manager/aerospace.nix
     ../modules/home-manager/git.nix
     ../modules/home-manager/k9s.nix
     ../modules/home-manager/neovim.nix

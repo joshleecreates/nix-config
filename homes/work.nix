@@ -7,6 +7,7 @@
 
   imports = [
     ./home.nix
+    ../modules/home-manager/aerospace.nix
   ];
 
   home.packages = [

@@ -1,6 +1,6 @@
 {...}: {
   # Source aerospace config from the home-manager store
-  home.file.".aerospace.toml".text = ''
+  home.file.".aerospace.toml".text = " 
     # Start AeroSpace at login
     start-at-login = true
 
@@ -22,6 +22,16 @@
     # Automatically unhide macOS hidden apps
     automatically-unhide-macos-hidden-apps = false
 
+    # Run Sketchybar together with AeroSpace
+    # sketchbar has a built-in detection of already running process,
+    # so it won't be run twice on AeroSpace restart
+    after-startup-command = ['exec-and-forget sketchybar']
+
+    # Notify Sketchybar about workspace change
+    exec-on-workspace-change = ['/bin/bash', '-c',
+        'sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE'
+    ]
+
     # Key mapping preset
     [key-mapping]
     preset = 'qwerty'
@@ -38,13 +48,14 @@
     # Main mode bindings
     [mode.main.binding]
     # Launch applications
-    alt-shift-enter = 'exec-and-forget open -na ghostty'
+    alt-shift-period = 'exec-and-forget open -na ghostty'
 
     # Window management
-    alt-q = "close"
+    alt-q = 'close'
     alt-slash = 'layout tiles horizontal vertical'
     alt-comma = 'layout accordion horizontal vertical'
     alt-z = 'fullscreen'
+    alt-shift-enter = 'fullscreen'
 
     # Focus movement
     alt-h = 'focus left'
@@ -135,5 +146,5 @@
     [[on-window-detected]]
     if.app-id = 'us.zoom.xos'
     run = 'move-node-to-workspace 6'
-  '';
+  ";
 }
