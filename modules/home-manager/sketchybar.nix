@@ -60,8 +60,8 @@
                --subscribe front_app front_app_switched
 
     # E V E N T S
-    # sketchybar -m --add event window_focus \
-    #               --add event title_change
+    sketchybar  --add event window_focus \
+                --add event title_change
     #
     # # W I N D O W  T I T L E
     # sketchybar -m --add item title left \
@@ -78,8 +78,8 @@
     # volume is registered. More info about the event system can be found here:
     # https://felixkratz.github.io/SketchyBar/config/events
 
-    sketchybar -m --add item mic right \
-    sketchybar -m --set mic update_freq=3 \
+    sketchybar  --add item mic right \
+    sketchybar  --set mic update_freq=3 \
                   --set mic width=50 \
                   --set mic align="center" \
                   --set mic script="~/.config/sketchybar/plugins/mic.sh" \

@@ -49,6 +49,7 @@
     [mode.main.binding]
     # Launch applications
     alt-shift-period = 'exec-and-forget open -na ghostty'
+    #TODO: Launch Safari new window 
 
     # Window management
     alt-q = 'close'
@@ -56,6 +57,7 @@
     alt-comma = 'layout accordion horizontal vertical'
     alt-z = 'fullscreen'
     alt-shift-enter = 'fullscreen'
+    alt-shift-space = 'fullscreen'
 
     # Focus movement
     alt-h = 'focus left'
@@ -71,9 +73,6 @@
     alt-shift-k = 'move up'
     alt-shift-l = 'move right'
 
-    # Resize windows
-    alt-shift-minus = 'resize smart -50'
-    alt-shift-equal = 'resize smart +50'
 
     # Workspace management
     alt-1 = 'workspace 1'
@@ -120,6 +119,10 @@
 
     # Service mode bindings
     [mode.service.binding]
+    # Resize windows
+    minus = 'resize smart -50'
+    equal = 'resize smart +50'
+
     # Reload config and exit service mode
     esc = ['reload-config', 'mode main']
 
