@@ -21,6 +21,9 @@
     '';
   };
 
+  environment.systemPackages = [
+    pkgs.git
+  ];
   # Turn off NIX_PATH warnings now that we're using flakes
   system.checks.verifyNixPath = false;
 }

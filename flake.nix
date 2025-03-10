@@ -97,7 +97,7 @@
           inputs.nix-homebrew.darwinModules.nix-homebrew
             {
               nix-homebrew = {
-                user = "joshlee";
+                user = "josh";
                 enable = true;
                 taps = homebrewTaps;
                 mutableTaps = true;

@@ -1,6 +1,6 @@
-{ config, pkgs, ...}:
+{ config, pkgs, lib, ...}:
 
-let user = "joshlee"; in 
+let user = "josh"; in 
 
 {
   imports = [
@@ -16,7 +16,11 @@ let user = "joshlee"; in
 
   home-manager.users.${user} = {
     imports = [ ../homes/joshlee.nix ];
-  };
+    home.username = lib.mkForce user;
+    home.homeDirectory = lib.mkForce "/Users/${user}";
+    home.stateVersion = lib.mkForce "23.11";
+ };
+
 
   # Trusted Users
   nix.settings.trusted-users = [ "@admin" "${user}" ];
@@ -30,5 +34,5 @@ let user = "joshlee"; in
     # "obs" # stream / recoding software
   ];
 
-  system.stateVersion = 4;
+  system.stateVersion = 5;
 }

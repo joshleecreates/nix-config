@@ -2,7 +2,7 @@
 
 {
   home.username = "joshlee";
-  home.homeDirectory = lib.mkForce "/Users/joshlee";
+  home.homeDirectory = "/Users/joshlee";
   home.stateVersion = "24.05"; # Please read the comment before changing.
 
   imports = [
