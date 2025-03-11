@@ -42,14 +42,43 @@
       ".DS_Store" # mac
     ];
     extraConfig = {
+      column.ui = "auto";
+      branch.sort = "-committerdate";
+      tag.sort = "version:refname";
       init.defaultBranch = "main";
+      diff = {
+        algorithm = "histogram";
+        colorMoved = "plain";
+        mnemonicPrefix = true;
+        renames = true;
+      };
+      push = {
+        default = "simple";
+        autoSetupRemote = true;
+        followTags = true;
+      };
+      fetch = {
+        prune = true;
+        pruneTags = true;
+        all = true;
+      };
+      help.autocorrect = "prompt";
+      commit.verbose = true;
+      rerere = {
+        enabled = true;
+        autoupdate = true;
+      };
+      core.excludesfile = "~/.gitignore";
+      rebase = {
+        autoSquash = true;
+        autoStash = true;
+        updateRefs = true;
+      };
       pull = {
         ff = false;
         commit = false;
         rebase = true;
       };
-      fetch = { prune = true; };
-      push.autoSetupRemote = true;
       delta = { line-numbers = true; };
     };
   };
