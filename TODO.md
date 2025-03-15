@@ -1,8 +1,8 @@
-- [ ] Add configuration for sketchybar
-- [ ] Add widgets for Ubersicht
+- [ ] Recreate NixOS Workstation Configuration
+- [ ] Ubersicht + Widgets
+- [ ] Sketchybar dependencies
 
 ## Projects
-- Configuration for Amethyst / Space Launcher ???
 - Set up secrets
 - Use nix-vim
 - Try oh-my-posh

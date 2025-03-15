@@ -1,4 +1,33 @@
-{...}: {
+{...}: 
+let
+  workspaces = [
+    "1"
+    "2"
+    "3"
+    "4"
+    "5"
+    "6"
+    "0"
+    "a"
+    "b"
+    "m"
+    "n"
+    "r"
+    "s"
+    "t"
+  ];
+  
+  # Generate workspace management bindings
+  workspaceBindings = builtins.concatStringsSep "\n" (builtins.map 
+    (ws: "alt-${ws} = 'workspace ${ws}'") 
+    workspaces);
+    
+  # Generate move-to-workspace bindings  
+  moveToWorkspaceBindings = builtins.concatStringsSep "\n" (builtins.map 
+    (ws: "alt-shift-${ws} = 'move-node-to-workspace ${ws}'") 
+    workspaces);
+in
+{
   # Source aerospace config from the home-manager store
   home.file.".aerospace.toml".text = " 
     # Start AeroSpace at login
@@ -17,7 +46,7 @@
 
     # Mouse follows focus settings
     on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
-    on-focus-changed = ['move-mouse window-lazy-center']
+    # on-focus-changed = ['move-mouse window-lazy-center']
 
     # Automatically unhide macOS hidden apps
     automatically-unhide-macos-hidden-apps = false
@@ -49,7 +78,7 @@
     [mode.main.binding]
     # Launch applications
     alt-shift-period = 'exec-and-forget open -na ghostty'
-    #TODO: Launch Safari new window 
+    #TODO: Launch Safari new window 
 
     # Window management
     alt-q = 'close'
@@ -75,40 +104,10 @@
 
 
     # Workspace management
-    alt-1 = 'workspace 1'
-    alt-2 = 'workspace 2'
-    alt-3 = 'workspace 3'
-    alt-4 = 'workspace 4'
-    alt-5 = 'workspace 5'
-    alt-6 = 'workspace 6'
-    alt-7 = 'workspace 7'
-    alt-8 = 'workspace 8'
-    alt-9 = 'workspace 9'
-    alt-0 = 'workspace 0'
-    alt-m = 'workspace m'
-    alt-b = 'workspace b'
-    alt-s = 'workspace s'
-    alt-t = 'workspace t'
-    alt-r = 'workspace r'
-    alt-n = 'workspace n'
+    ${workspaceBindings}
 
     # Move windows to workspaces
-    alt-shift-1 = 'move-node-to-workspace 1'
-    alt-shift-2 = 'move-node-to-workspace 2'
-    alt-shift-3 = 'move-node-to-workspace 3'
-    alt-shift-4 = 'move-node-to-workspace 4'
-    alt-shift-5 = 'move-node-to-workspace 5'
-    alt-shift-6 = 'move-node-to-workspace 6'
-    alt-shift-7 = 'move-node-to-workspace 7'
-    alt-shift-8 = 'move-node-to-workspace 8'
-    alt-shift-9 = 'move-node-to-workspace 9'
-    alt-shift-0 = 'move-node-to-workspace 0'
-    alt-shift-m = 'move-node-to-workspace m'
-    alt-shift-b = 'move-node-to-workspace b'
-    alt-shift-s = 'move-node-to-workspace s'
-    alt-shift-t = 'move-node-to-workspace t'
-    alt-shift-r = 'move-node-to-workspace r'
-    alt-shift-n = 'move-node-to-workspace n'
+    ${moveToWorkspaceBindings}
 
     # Workspace navigation
     alt-tab = 'workspace-back-and-forth'
