@@ -10,8 +10,11 @@
     ../modules/home-manager/aerospace.nix
     ../modules/home-manager/sketchybar.nix
     ../modules/home-manager/ghostty.nix
+    ../modules/home-manager/k8s-prompt.nix
   ];
 
+  modules.k8s-prompt.enable = true;
+  
   home.packages = [
     pkgs.pet
     pkgs.yazi
