@@ -7,6 +7,8 @@
     ../modules/home-manager/neovim.nix
     ../modules/home-manager/tmux.nix
     ../modules/home-manager/zsh.nix
+    ../modules/home-manager/sesh.nix
+    ../modules/home-manager/k8s-prompt.nix
   ];
 
   home.packages = [
@@ -17,8 +19,6 @@
     pkgs.wget
     pkgs.gnumake
     pkgs.ranger
-    pkgs.zoxide
-    pkgs.fzf
     pkgs.gh
 
     # lang servers

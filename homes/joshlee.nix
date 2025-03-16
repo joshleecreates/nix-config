@@ -14,10 +14,10 @@
   ];
 
   modules.k8s-prompt.enable = true;
+  modules.sesh.enable = true;
   
   home.packages = [
     pkgs.pet
     pkgs.yazi
-    pkgs.sesh
   ];
 }
