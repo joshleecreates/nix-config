@@ -46,12 +46,16 @@
       url = "github:nikitabobko/homebrew-tap";
       flake = false;
     };
+    homebrew-superbrothers = {
+      url = "github:superbrothers/zsh-kubectl-prompt";
+      flake = false;
+    };
     flox = {
       url = "github:flox/flox/v1.3.16";
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, darwin, flox, homebrew-services, homebrew-nikitabobko, homebrew-felixkratz, homebrew-norwoodj, homebrew-core, homebrew-cask, homebrew-bundle, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, darwin, flox, homebrew-services, homebrew-superbrothers, homebrew-nikitabobko, homebrew-felixkratz, homebrew-norwoodj, homebrew-core, homebrew-cask, homebrew-bundle, ... }@inputs:
     let 
       homebrew-services-patched = nixpkgs.legacyPackages.aarch64-darwin.applyPatches {
         name = "homebrew-services-patched";
@@ -66,6 +70,7 @@
         "felixkratz/homebrew-formulae" = homebrew-felixkratz;
         "norwoodj/tap" = homebrew-norwoodj;
         "nikitabobko/tap" = homebrew-nikitabobko;
+        "superbrothers/zsh-kubectl-prompt" = homebrew-superbrothers;
       };
     in
     {

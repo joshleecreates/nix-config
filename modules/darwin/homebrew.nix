@@ -7,6 +7,7 @@
       "helm"
       "terraform"
       "helm-docs"
+      "zsh-kubectl-prompt"
     ];
     casks = [
       # utilities
@@ -46,6 +47,7 @@
       # "mimestream"
       # "screenflow"
       # "tableplus"
+
     ];
     
     taps = map (key: builtins.replaceStrings ["homebrew-"] [""] key) (builtins.attrNames config.nix-homebrew.taps);

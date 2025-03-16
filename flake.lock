@@ -269,6 +269,22 @@
         "type": "github"
       }
     },
+    "homebrew-superbrothers": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1684118589,
+        "narHash": "sha256-YmQVK7nn59YJ/OV0mM+R4OI0SdB2oIS8xeZrBlSAwuw=",
+        "owner": "superbrothers",
+        "repo": "zsh-kubectl-prompt",
+        "rev": "cc8e2d15b56cf0dfff0954b30bd604fe9bcfcee3",
+        "type": "github"
+      },
+      "original": {
+        "owner": "superbrothers",
+        "repo": "zsh-kubectl-prompt",
+        "type": "github"
+      }
+    },
     "nix-darwin": {
       "inputs": {
         "nixpkgs": "nixpkgs_2"
@@ -403,6 +419,7 @@
         "homebrew-nikitabobko": "homebrew-nikitabobko",
         "homebrew-norwoodj": "homebrew-norwoodj",
         "homebrew-services": "homebrew-services",
+        "homebrew-superbrothers": "homebrew-superbrothers",
         "nix-homebrew": "nix-homebrew",
         "nixpkgs": "nixpkgs_4"
       }
