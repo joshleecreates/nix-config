@@ -41,8 +41,6 @@
       # "ubersicht"
       # "syncthing"
 
-      # from recomendations
-      # https://x.com/steventey/status/1800203408215027757
       "raycast"
       # "cleanshot"
       # "mimestream"
