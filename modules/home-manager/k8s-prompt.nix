@@ -17,14 +17,15 @@ in {
           local k8s_ctx=$(kubectx -c 2>/dev/null)
           
           if [[ -n "$k8s_ctx" ]]; then
-            echo "%F{cyan}[$k8s_ctx]%f "
+            echo "%F{magenta}[$k8s_ctx]%f "
           fi
         fi
       }
 
       # Add to PROMPT
       setopt PROMPT_SUBST
-      PROMPT='$(kube_prompt_info)'"$PROMPT"
+      K8S_PROMPT='$(kube_prompt_info)'"$PROMPT"
+      OG_PROMPT="$PROMPT"
     '';
   };
 }
