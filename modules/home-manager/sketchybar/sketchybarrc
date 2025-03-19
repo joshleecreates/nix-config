@@ -2,6 +2,9 @@
 # We now change some default values, which are applied to all further items.
 # For a full list of all available item properties see:
 # https://felixkratz.github.io/SketchyBar/config/items
+#
+CONFIG_DIR='~/.config/sketchybar'
+PLUGIN_DIR="$CONFIG_DIR/plugins"
 
 default=(
   padding_left=5
@@ -17,7 +20,7 @@ default=(
   label.padding_left=4
   label.padding_right=4
 )
-sketchybar --default "''${default[@]}"
+sketchybar --default "${default[@]}"
 
 sketchybar --add event aerospace_workspace_change
 
