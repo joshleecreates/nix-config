@@ -8,6 +8,8 @@
   imports = [
     ./home.nix
     ../modules/home-manager/aerospace.nix
+    ../modules/home-manager/sketchybar.nix
+    ../modules/home-manager/ghostty.nix
   ];
 
   home.packages = [

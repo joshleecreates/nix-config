@@ -2,7 +2,7 @@
 
 {
   home.username = "joshlee";
-  home.homeDirectory = "/Users/joshlee";
+  home.homeDirectory = lib.mkForce "/Users/joshlee";
   home.stateVersion = "24.05"; # Please read the comment before changing.
 
   imports = [
@@ -15,9 +15,11 @@
 
   modules.k8s-prompt.enable = true;
   modules.sesh.enable = true;
-  
+  programs.zsh.oh-my-zsh.theme = lib.mkForce "robbyrussell";
+
   home.packages = [
     pkgs.pet
+    pkgs.direnv
     pkgs.yazi
   ];
 }

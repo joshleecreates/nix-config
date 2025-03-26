@@ -72,7 +72,7 @@ in
     inner.vertical =   8
     outer.left =       8
     outer.bottom =     8
-    outer.top =        8
+    outer.top =        48
     outer.right =      8
 
     # Main mode bindings
@@ -87,7 +87,7 @@ in
     alt-comma = 'layout accordion horizontal vertical'
     alt-z = 'fullscreen'
     alt-shift-enter = 'fullscreen'
-    alt-shift-space = 'fullscreen'
+    # alt-shift-space = 'fullscreen'
 
     # Focus movement
     alt-h = 'focus left'
@@ -103,6 +103,25 @@ in
     alt-shift-k = 'move up'
     alt-shift-l = 'move right'
 
+    # Move windows to other monitors
+    # Todo: Make focus follow movement
+    alt-shift-o = 'move-node-to-monitor --wrap-around next'
+    alt-shift-i = 'move-node-to-monitor --wrap-around prev'
+
+    # Swap large windows
+    alt-shift-u = [
+      'move left',
+      'focus right',
+      'flatten-workspace-tree',
+      'resize smart +300'
+    ]
+
+    alt-shift-p = [
+      'move right',
+      'focus left',
+      'flatten-workspace-tree',
+      'resize smart +300'
+    ]
 
     # Workspace management
     ${workspaceBindings}
@@ -113,6 +132,9 @@ in
     # Workspace navigation
     alt-tab = 'workspace-back-and-forth'
     alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
+
+    # Zooming
+    alt-shift-space = 'resize smart +300'
 
     # Enter service mode
     alt-shift-semicolon = 'mode service'
@@ -133,7 +155,7 @@ in
     f = ['layout floating tiling', 'mode main']
 
     # Close all windows but current
-    backspace = ['close-all-windows-but-current', 'mode main']
+    # backspace = ['close-all-windows-but-current', 'mode main']
 
     # Join with adjacent windows
     alt-shift-h = ['join-with left', 'mode main']
@@ -149,5 +171,25 @@ in
     [[on-window-detected]]
     if.app-id = 'us.zoom.xos'
     run = 'move-node-to-workspace 6'
+
+    [[on-window-detected]]
+    if.app-id = 'com.apple.MobileSMS'
+    run = 'move-node-to-workspace m'
+
+    [[on-window-detected]]
+    if.app-id = 'com.spotify.client'
+    run = 'move-node-to-workspace m'
+
+    [[on-window-detected]]
+    if.app-id = 'com.apple.iCal'
+    run = 'move-node-to-workspace m'
+
+    [[on-window-detected]]
+    if.app-id = 'com.tinyspeck.slackmacgap'
+    run = 'move-node-to-workspace s'
+
+    [[on-window-detected]]
+    if.app-id = 'com.google.Chrome.app.fmgjjmmmlfnkbppncabfkddbjimcfncm'
+    run = 'move-node-to-workspace s'
   ";
 }

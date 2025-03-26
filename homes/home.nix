@@ -1,6 +1,9 @@
 { config, pkgs, lib, ... }:
 
 {
+  home.username = lib.mkDefault "joshlee";
+  home.homeDirectory = lib.mkDefault "/Users/joshlee";
+
   imports = [
     ../modules/home-manager/git.nix
     ../modules/home-manager/k9s.nix

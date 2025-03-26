@@ -19,6 +19,8 @@
       # aws cli auto complete
       complete -C '${pkgs.awscli}/bin/aws_completer' aws
 
+      eval "$(direnv hook zsh)"
+
       DISABLE_AUTO_TITLE="true"
 
       # # Override oh-my-zsh theme prompt
