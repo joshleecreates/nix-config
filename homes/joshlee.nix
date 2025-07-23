@@ -17,9 +17,14 @@
   modules.sesh.enable = true;
   programs.zsh.oh-my-zsh.theme = lib.mkForce "robbyrussell";
 
+  programs.direnv = {
+    enable = true;
+    enableZshIntegration = true;
+    nix-direnv.enable = true;
+  };
+
   home.packages = [
     pkgs.pet
-    pkgs.direnv
     pkgs.yazi
   ];
 }

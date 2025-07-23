@@ -107,7 +107,15 @@
           ./hosts/silver.nix
         ];
       };
-      darwinConfigurations."mini" = darwin.lib.darwinSystem {
+      darwinConfigurations."mini" = let
+          pkgs = import nixpkgs {
+          system = "aarch64-darwin";
+          config = {
+            allowUnfree = true;
+            allowUnfreePredicate = _: true;
+          };
+        };
+      in darwin.lib.darwinSystem {
         system = "aarch64-darwin";
         modules = [
           home-manager.darwinModules.home-manager

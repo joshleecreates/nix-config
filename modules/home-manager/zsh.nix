@@ -14,12 +14,11 @@
       ta = "tmux attach";
       n = "nvim .";
       k = "kubectl";
+      claude = "~/.local/bin/claude";
     };
     initExtra = ''
       # aws cli auto complete
       complete -C '${pkgs.awscli}/bin/aws_completer' aws
-
-      eval "$(direnv hook zsh)"
 
       DISABLE_AUTO_TITLE="true"
 
