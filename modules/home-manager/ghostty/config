@@ -1,0 +1,8 @@
+font-size = 20
+window-padding-x = 8
+window-padding-y = 8
+window-decoration = auto
+macos-titlebar-style = hidden
+theme = tokyonight
+background-opacity = 0.9
+window-padding-balance = true

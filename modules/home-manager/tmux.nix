@@ -1,23 +1,5 @@
 { pkgs, ... }:
-let 
-  t-smart-tmux-session-manager = pkgs.tmuxPlugins.mkTmuxPlugin
-    {
-      pluginName = "t-smart-tmux-session-manager";
-      version = "unstable-2023-12-23";
-      src = pkgs.fetchFromGitHub {
-        owner = "joshmedeski";
-        repo = "t-smart-tmux-session-manager";
-        rev = "629d5629ac50302ca6f0f3a44228fd73dedd8873";
-        hash = "sha256-cfvO4pzQOWJ9NE4/M/qXj0Rdbg/+wKr/qRS4rNKurDY=";
-      };
-    };
-in
 {
-  home.packages = [
-    pkgs.zoxide
-    pkgs.fzf
-    t-smart-tmux-session-manager.src
-  ];
   programs.tmux = {
     enable = true;
     sensibleOnTop = false;
@@ -27,7 +9,6 @@ in
     customPaneNavigationAndResize = true;
     plugins = with pkgs.tmuxPlugins; [
       yank
-      t-smart-tmux-session-manager
       nord
       {
         plugin = continuum;
@@ -38,7 +19,7 @@ in
     ];
     extraConfig = ''
       set -g default-terminal "screen-256color"
-
+      set -g detach-on-destroy off
       set-option -g status-left-length 40
       # switch panes using Alt-arrow without prefix
       bind -n M-Left select-pane -L
@@ -102,9 +83,6 @@ in
 
       # remove delay for exiting insert mode with ESC in Neovim
       set -sg escape-time 10
-
-      # dont ask to kill pane
-      # bind-key x kill-pane
     '';
   };
 }
