@@ -1,47 +1,31 @@
 { ... }: {
   programs.git = {
     enable = true;
-    delta.enable = true;
-    userName = "Josh Lee";
-    userEmail = "josh@joshuamlee.com";
-    aliases = {
-      cm = "commit";
-      ca = "commit --amend --no-edit";
-      co = "checkout";
-      cp = "cherry-pick";
+    settings = {
+      user = {
+        name = "Josh Lee";
+        email = "josh@joshuamlee.com";
+      };
+      alias = {
+        cm = "commit";
+        ca = "commit --amend --no-edit";
+        co = "checkout";
+        cp = "cherry-pick";
 
-      di = "diff";
-      dh = "diff HEAD";
+        di = "diff";
+        dh = "diff HEAD";
 
-      pu = "pull";
-      ps = "push";
-      pf = "push --force-with-lease";
+        pu = "pull";
+        ps = "push";
+        pf = "push --force-with-lease";
 
-      st = "status -sb";
-      fe = "fetch";
-      gr = "grep -in";
+        st = "status -sb";
+        fe = "fetch";
+        gr = "grep -in";
 
-      ri = "rebase -i";
-      rc = "rebase --continue";
-    };
-    ignores = [
-      # ide
-      ".idea"
-      ".vs"
-      ".vsc"
-      ".vscode"
-      # npm
-      "node_modules"
-      "npm-debug.log"
-      # python
-      "__pycache__"
-      "*.pyc"
-
-      ".ipynb_checkpoints" # jupyter
-      "__sapper__" # svelte
-      ".DS_Store" # mac
-    ];
-    extraConfig = {
+        ri = "rebase -i";
+        rc = "rebase --continue";
+      };
       column.ui = "auto";
       branch.sort = "-committerdate";
       tag.sort = "version:refname";
@@ -81,5 +65,27 @@
       };
       delta = { line-numbers = true; };
     };
+    ignores = [
+      # ide
+      ".idea"
+      ".vs"
+      ".vsc"
+      ".vscode"
+      # npm
+      "node_modules"
+      "npm-debug.log"
+      # python
+      "__pycache__"
+      "*.pyc"
+
+      ".ipynb_checkpoints" # jupyter
+      "__sapper__" # svelte
+      ".DS_Store" # mac
+    ];
+  };
+  
+  programs.delta = {
+    enable = true;
+    enableGitIntegration = true;
   };
 }

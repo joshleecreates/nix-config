@@ -1,9 +1,9 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 {
   programs.zsh = {
     enable = true;
     enableCompletion = true;
-    dotDir = ".config/zsh";
+    dotDir = "${config.xdg.configHome}/zsh";
     oh-my-zsh = {
       enable = true;
       theme = "robbyrussell";
@@ -14,7 +14,6 @@
       ta = "tmux attach";
       n = "nvim .";
       k = "kubectl";
-      claude = "~/.local/bin/claude";
     };
     initExtra = ''
       # aws cli auto complete

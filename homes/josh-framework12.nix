@@ -15,13 +15,14 @@
     ../modules/home-manager/zsh.nix
     ../modules/home-manager/k9s.nix
     ../modules/home-manager/alacritty.nix
+    ../modules/home-manager/ghostty.nix
   ];
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = with pkgs; [
     # Development tools
-    thefuck
+    pay-respects
     git
     gh
     ranger
@@ -46,6 +47,7 @@
     firefox
     chromium
     slack
+    ghostty
     
     # System utilities
     pavucontrol
@@ -71,7 +73,7 @@
     enable = true;
     oh-my-zsh = {
       enable = true;
-      plugins = lib.mkDefault [ "aws" "git" "thefuck" "kubectl" "vi-mode" "docker" ];
+      plugins = lib.mkDefault [ "aws" "git" "kubectl" "vi-mode" "docker" ];
       theme = lib.mkDefault "bira";
     };
     shellAliases = {
