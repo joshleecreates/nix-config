@@ -2,18 +2,10 @@
   description = "Nixos config flake";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     home-manager = {
-      url = "github:nix-community/home-manager/release-24.05";
+      url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
-    };
-    my-modules = {
-      url = "github:joshleecreates/nix-modules/main";
-      flake = false;
-    };
-    local-modules = {
-      url = "git+file:../nix-modules";
-      flake = false;
     };
     darwin = {
       url = "github:LnL7/nix-darwin/master";
@@ -52,7 +44,7 @@
   };
 
 
-  outputs = { self, nixpkgs, nixos-generators, home-manager, darwin, my-modules, homebrew-services, homebrew-felixkratz, homebrew-norwoodj, homebrew-core, homebrew-cask, homebrew-bundle, ... }@inputs:
+  outputs = { self, nixpkgs, nixos-generators, home-manager, darwin, homebrew-services, homebrew-felixkratz, homebrew-norwoodj, homebrew-core, homebrew-cask, homebrew-bundle, ... }@inputs:
     let 
       homebrew-services-patched = nixpkgs.legacyPackages.aarch64-darwin.applyPatches {
         name = "homebrew-services-patched";
@@ -86,6 +78,14 @@
           inputs.home-manager.nixosModules.default
         ];
       };
+      nixosConfigurations.framework12 = nixpkgs.lib.nixosSystem {
+        specialArgs = {inherit inputs; inherit self;};
+        system = "x86_64-linux";
+        modules = [ 
+          ./hosts/framework12/configuration.nix 
+          inputs.home-manager.nixosModules.default
+        ];
+      };
       homeConfigurations."josh@silver" = home-manager.lib.homeManagerConfiguration {
         modules = [
           ./homes/joshlee.nix
@@ -95,6 +95,12 @@
       homeConfigurations."josh@pop-os" = home-manager.lib.homeManagerConfiguration {
         modules = [
           ./homes/josh.nix
+        ];
+        pkgs = nixpkgs.legacyPackages."x86_64-linux";
+      };
+      homeConfigurations."josh@framework12" = home-manager.lib.homeManagerConfiguration {
+        modules = [
+          ./homes/josh-framework12.nix
         ];
         pkgs = nixpkgs.legacyPackages."x86_64-linux";
       };
