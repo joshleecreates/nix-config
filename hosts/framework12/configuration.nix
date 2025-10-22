@@ -11,6 +11,13 @@
       ./cachix.nix
     ];
 
+  # Configure home-manager
+  home-manager = {
+    useGlobalPkgs = true;
+    useUserPackages = true;
+    users.josh = import ../../homes/josh-framework12.nix;
+  };
+
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -48,17 +55,36 @@
   services.xserver.enable = true;
 
   # Enable the KDE Plasma Desktop Environment.
-  services.displayManager.sddm.enable = true;
-  services.desktopManager.plasma6.enable = true;
+  # services.displayManager.sddm.enable = true;
+  # services.desktopManager.plasma6.enable = true;
 
   # Configure keymap in X11
   services.xserver.xkb = {
     layout = "us";
     variant = "";
+    # Alt/Win swap handled by Kanata
+    options = "";
+  };
+
+  # Kanata keyboard remapper
+  services.kanata = {
+    enable = true;
+    keyboards.default = {
+      config = builtins.readFile ./kanata.kbd;
+    };
   };
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
+
+  # Enable polkit for niri
+  security.polkit.enable = true;
+
+  # Enable gnome-keyring
+  services.gnome.gnome-keyring.enable = true;
+
+  # PAM configuration for swaylock
+  security.pam.services.swaylock = {};
 
   # Enable sound with pipewire.
   services.pulseaudio.enable = false;
@@ -91,11 +117,11 @@
     ];
   };
 
-  # Install firefox.
   programs.firefox.enable = true;
-  
-  # Enable zsh system-wide
   programs.zsh.enable = true;
+  programs.niri.enable = true;
+  programs._1password.enable = true;
+  programs._1password-gui.enable = true;
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
@@ -114,6 +140,15 @@
     gh
     tailscale
     _1password-gui
+
+    # Niri and essential Wayland tools
+    fuzzel       # Application launcher
+    swaylock     # Screen locker
+    mako         # Notification daemon
+    swayidle     # Idle management
+    swaybg       # Background manager
+    wl-clipboard # Clipboard utilities
+    playerctl    # Media player control
   ];
   boot.initrd.kernelModules = [ "pinctrl_tigerlake" ];
   # Some programs need SUID wrappers, can be configured further or are
