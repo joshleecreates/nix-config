@@ -1,0 +1,149 @@
+{
+  "mainBar": {
+    "layer": "top",
+    "position": "top",
+    "modules-left": ["niri/workspaces", "custom/media"],
+    "modules-center": ["clock"],
+    "modules-right": [ "temperature", "pulseaudio", "bluetooth", "battery", "tray"],
+    "niri/workspaces": {
+        "disable-scroll": false,
+        "all-outputs": true,
+        "format": "{index}"
+    },
+    "niri/window": {
+        "format": "{icon}",
+        "max-length": 50,
+        "tooltip": false
+    },
+    "bluetooth": {
+        "interval": 30,
+        "format": "{icon}",
+        "format-icons": {
+            "enabled": "󰂯",
+            "disabled": "󰂲"
+        },
+        "on-click": "blueman-manager"
+    },
+    "idle_inhibitor": {
+        "format": "{icon}",
+        "format-icons": {
+            "activated": "󰅶",
+            "deactivated": "󰾪"
+        },
+        "tooltip": true
+    },
+    "tray": {
+        "spacing": 5
+    },
+    "clock": {
+        "format": "{:%H:%M}",
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        "today-format": "<b>{}</b>",
+        "on-click": "gnome-calendar"
+    },
+    "cpu": {
+        "interval": 1,
+        "format": "󰻠 {max_frequency}GHz <span color=\"darkgray\">| {usage}%</span>",
+        "max-length": 13,
+        "min-length": 13,
+        "on-click": "ghostty -e htop --sort-key PERCENT_CPU",
+        "tooltip": false
+    },
+    "temperature": {
+        "interval": 4,
+        "hwmon-path": "/sys/class/hwmon/hwmon8/temp1_input",
+        "critical-threshold": 80,
+        "format-critical": "󰸁 {temperatureC}°C",
+        "format": "{icon} {temperatureC}°C",
+        "format-icons": ["󰔏", "󱃃", "󰸁"],
+        "max-length": 7,
+        "min-length": 7
+    },
+    "network": {
+        "format-wifi": "󰖩 {essid}",
+        "format-ethernet": "󰈀 {ifname}: {ipaddr}/{cidr}",
+        "format-linked": "󰈁 {ifname} (No IP)",
+        "format-disconnected": "󰖪",
+        "format-alt": "{ifname}: {ipaddr}/{cidr}",
+        "family": "ipv4",
+        "tooltip-format-wifi": "󰖩 {ifname} @ {essid}\nIP: {ipaddr}\nStrength: {signalStrength}%\nFreq: {frequency}MHz\n󰕒 {bandwidthUpBits} 󰇚 {bandwidthDownBits}",
+        "tooltip-format-ethernet": "󰈀 {ifname}\nIP: {ipaddr}\n󰕒 {bandwidthUpBits} 󰇚 {bandwidthDownBits}",
+        "on-click": "nm-connection-editor"
+    },
+    "pulseaudio": {
+        "scroll-step": 3,
+        "format": "{icon}",
+        "format-bluetooth": "{icon}",
+        "format-bluetooth-muted": "󰂲",
+        "format-muted": "󰝟",
+        "format-source": "",
+        "format-source-muted": "",
+        "format-icons": {
+            "headphone": "󰋋",
+            "hands-free": "󱡏",
+            "headset": "󰋎",
+            "phone": "󰏲",
+            "portable": "󰏲",
+            "car": "󰄋",
+            "default": ["󰕿", "󰖀", "󰕾"]
+        },
+        "on-click": "pavucontrol",
+        "on-click-right": "pactl set-source-mute @DEFAULT_SOURCE@ toggle"
+    },
+    "battery": {
+        "states": {
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{icon} {capacity}%",
+        "format-charging": "󰂄 {capacity}%",
+        "format-plugged": "󰚥 {capacity}%",
+        "format-alt": "{icon} {time}",
+        "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽"]
+    },
+    "custom/pacman": {
+        "format": "<big>􏆲</big>  {}",
+        "interval": 3600,
+        "exec": "checkupdates | wc -l",
+        "exec-if": "exit 0",
+        "on-click": "ghostty -e 'yay'; pkill -SIGRTMIN+8 waybar",
+        "signal": 8,
+        "max-length": 5,
+        "min-length": 3
+    },
+    "custom/gpu": {
+      "exec": "$HOME/.config/waybar/custom_modules/custom-gpu.sh",
+      "return-type": "json",
+      "format": "  {}",
+      "interval": 2,
+      "tooltip": "{tooltip}",
+      "max-length": 19,
+      "min-length": 19
+    },
+    "custom/cpugovernor": {
+      "format": "{icon}",
+      "interval": 30,
+      "return-type": "json",
+      "exec": "$HOME/.config/waybar/custom_modules/cpugovernor.sh",
+      "min-length": 2,
+      "max-length": 2,
+        "format-icons": {
+            "perf": "󰓅",
+            "sched": "󰾆"
+        }
+    },
+    "custom/media": {
+        "format": "{icon} {text}",
+        "return-type": "json",
+        "max-length": 40,
+        "interval": 2,
+        "format-icons": {
+            "spotify": "󰓇",
+            "default": "󰝚"
+        },
+        "escape": true,
+        "exec": "$HOME/.config/waybar/mediaplayer.py",
+        "on-click": "playerctl play-pause"
+    }
+  }
+}

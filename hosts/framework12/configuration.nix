@@ -119,6 +119,11 @@
     #media-session.enable = true;
   };
 
+  # Enable Bluetooth
+  hardware.bluetooth.enable = true;
+  hardware.bluetooth.powerOnBoot = true;
+  services.blueman.enable = true;
+
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
@@ -159,6 +164,7 @@
     claude-code
     gh
     tailscale
+    jq
     _1password-gui
 
     # Niri and essential Wayland tools

@@ -44,19 +44,19 @@
     talosctl
     argocd
     minikube
-    
+
     # Framework 12 specific tools
     powertop
     brightnessctl
     acpi
-    
+
     # Desktop tools
     chromium
     slack
     ghostty
     termius
     kdePackages.dolphin
-    
+
     # System utilities
     pavucontrol
     networkmanagerapplet
@@ -65,7 +65,20 @@
     # Media
     mpv
     spotify
+
+    # Fonts for waybar icons
+    font-awesome
+    nerd-fonts.fira-code
+    nerd-fonts.jetbrains-mono
+    nerd-fonts.iosevka
+    nerd-fonts.symbols-only
+
+    # Python for waybar scripts
+    python3
   ];
+
+  # Font configuration
+  fonts.fontconfig.enable = true;
 
   # Session variables configured below with niri settings
 
