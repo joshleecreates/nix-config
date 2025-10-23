@@ -61,7 +61,7 @@
 
 /* The whole bar */
 #waybar {
-    background: @bg;
+    background: rgba(46, 52, 64, 0.8);
     color: @light;
     font-family: "Symbols Nerd Font", "JetBrainsMono Nerd Font", "Font Awesome 7 Free", "Cantarell", sans-serif;
     font-size: 12px;
@@ -282,5 +282,5 @@
     color: #D8DEE9;
 }
 #tray {
-    background: #434C5E;
+    background: rgba(67, 76, 94, 0.8);
 }

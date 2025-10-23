@@ -4,5 +4,5 @@ window-padding-y = 8
 window-decoration = auto
 gtk-titlebar = false
 macos-titlebar-style = hidden
-background-opacity = 0.9
+background-opacity = 0.85
 window-padding-balance = true
