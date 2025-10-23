@@ -80,6 +80,9 @@
   # Enable polkit for niri
   security.polkit.enable = true;
 
+  # Enable passwordless sudo for wheel group
+  security.sudo.wheelNeedsPassword = false;
+
   # Enable gnome-keyring
   services.gnome.gnome-keyring.enable = true;
 
@@ -109,7 +112,7 @@
   users.users.josh = {
     isNormalUser = true;
     description = "Josh Lee";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" ];
     shell = pkgs.zsh;  # Set zsh as default shell
     packages = with pkgs; [
       kdePackages.kate
@@ -122,6 +125,9 @@
   programs.niri.enable = true;
   programs._1password.enable = true;
   programs._1password-gui.enable = true;
+
+  # Enable Docker virtualization
+  virtualisation.docker.enable = true;
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;

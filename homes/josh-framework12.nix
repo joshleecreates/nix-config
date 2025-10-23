@@ -17,7 +17,11 @@
     ../modules/home-manager/alacritty.nix
     ../modules/home-manager/ghostty.nix
     ../modules/home-manager/waybar.nix
+    ../modules/home-manager/sesh.nix
   ];
+
+  # Enable sesh session manager
+  modules.sesh.enable = true;
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
@@ -34,10 +38,12 @@
     gnumake
     kubectl
     kubectx
+    kubernetes-helm
     opentofu
     ansible
     talosctl
     argocd
+    minikube
     
     # Framework 12 specific tools
     powertop
