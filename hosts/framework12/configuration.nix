@@ -55,8 +55,11 @@
   services.xserver.enable = true;
 
   # Enable the KDE Plasma Desktop Environment.
-  # services.displayManager.sddm.enable = true;
-  # services.desktopManager.plasma6.enable = true;
+  services.displayManager.sddm.enable = true;
+  services.displayManager.sddm.wayland.enable = true;
+  services.displayManager.defaultSession = "niri";
+  services.displayManager.autoLogin.enable = false;
+  services.desktopManager.plasma6.enable = true;
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -85,6 +88,17 @@
 
   # Enable gnome-keyring
   services.gnome.gnome-keyring.enable = true;
+
+  # XDG Desktop Portal for file pickers and other desktop integrations
+  xdg.portal = {
+    enable = true;
+    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+    config = {
+      common = {
+        default = [ "gtk" ];
+      };
+    };
+  };
 
   # PAM configuration for swaylock
   security.pam.services.swaylock = {};

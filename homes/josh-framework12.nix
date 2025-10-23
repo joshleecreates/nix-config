@@ -55,6 +55,7 @@
     slack
     ghostty
     termius
+    kdePackages.dolphin
     
     # System utilities
     pavucontrol
