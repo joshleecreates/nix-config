@@ -63,6 +63,8 @@
     pavucontrol
     networkmanagerapplet
     blueman
+    xwayland-satellite  # XWayland support for Niri
+    xdg-desktop-portal-gnome  # Desktop portal for waybar
 
     # Media
     mpv
@@ -224,6 +226,15 @@
 
   # Niri configuration
   xdg.configFile."niri/config.kdl".source = ../modules/home-manager/niri-config.kdl;
+
+  # Zoom wrapper for Wayland compatibility
+  home.file.".local/bin/zoom".text = ''
+    #!/usr/bin/env bash
+    export QT_QPA_PLATFORM=xcb
+    export DISPLAY=:0
+    exec ${pkgs.zoom-us}/bin/zoom-us "$@"
+  '';
+  home.file.".local/bin/zoom".executable = true;
 
   # Niri-specific environment variables
   home.sessionVariables = {

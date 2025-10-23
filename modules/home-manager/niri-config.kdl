@@ -1,6 +1,9 @@
 // Niri configuration for Framework 12
 // Based on default config from https://github.com/YaLTeR/niri
 
+// Enable XWayland for X11 app compatibility
+prefer-no-csd
+
 // Input device configuration
 input {
     keyboard {
@@ -39,7 +42,9 @@ layout {
     }
 
     border {
-        off
+        width 4
+        active-color "#88c0d0"
+        inactive-color "#4c566a"
     }
 }
 
@@ -69,6 +74,13 @@ animations {
 }
 
 // Window rules
+
+// Rounded corners for all windows
+window-rule {
+    geometry-corner-radius 8
+    clip-to-geometry true
+}
+
 window-rule {
     match app-id=r#"firefox$"# title="^Picture-in-Picture$"
     open-floating true
