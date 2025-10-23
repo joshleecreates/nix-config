@@ -180,6 +180,26 @@
   services.mako.enable = true;
   services.swayidle.enable = true;
 
+  # Random wallpaper script
+  home.file.".local/bin/random-wallpaper.sh" = {
+    source = ../modules/home-manager/random-wallpaper.sh;
+    executable = true;
+  };
+
+  # Random wallpaper service
+  systemd.user.services.random-wallpaper = {
+    Unit = {
+      Description = "Random wallpaper with swaybg";
+      After = [ "graphical-session.target" ];
+      PartOf = [ "graphical-session.target" ];
+    };
+    Install.WantedBy = [ "graphical-session.target" ];
+    Service = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.bash}/bin/bash %h/.local/bin/random-wallpaper.sh";
+    };
+  };
+
   # Polkit agent for authentication dialogs
   systemd.user.services.polkit-gnome-authentication-agent-1 = {
     Unit.Description = "polkit-gnome-authentication-agent-1";
