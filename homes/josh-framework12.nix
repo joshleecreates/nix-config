@@ -44,6 +44,7 @@
     talosctl
     argocd
     minikube
+    devbox
 
     # Framework 12 specific tools
     powertop
@@ -56,6 +57,7 @@
     ghostty
     termius
     kdePackages.dolphin
+    zoom-us
 
     # System utilities
     pavucontrol
@@ -86,6 +88,13 @@
   programs.home-manager.enable = true;
   programs.htop.enable = true;
   programs.ssh.enable = true;
+
+  # Enable direnv for automatic environment loading
+  programs.direnv = {
+    enable = true;
+    enableZshIntegration = true;
+    nix-direnv.enable = true;
+  };
 
   # Firefox configuration - clean, no sponsored content
   programs.firefox = {
@@ -221,5 +230,7 @@
     EDITOR = "nvim";
     T_REPOS_DIR = "$HOME/repos";
     NIXOS_OZONE_WL = "1";  # Enable Wayland support for Electron apps
+    # Set DISPLAY for X11 compatibility (some tools still check this)
+    DISPLAY = ":0";
   };
 }
