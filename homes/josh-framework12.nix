@@ -71,6 +71,7 @@
     # Media
     mpv
     spotify
+    spotify-player
 
     # Image manipulation for wallpaper blurring
     imagemagick
