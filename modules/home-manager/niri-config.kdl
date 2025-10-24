@@ -125,9 +125,6 @@ binds {
     XF86MonBrightnessUp allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "+10%"; }
     XF86MonBrightnessDown allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "10%-"; }
 
-    // Display mode toggle (mirror/extend)
-    Mod+P { spawn-sh "$HOME/.local/bin/display-toggle.sh"; }
-
     // Overview
     Mod+O repeat=false { toggle-overview; }
 
