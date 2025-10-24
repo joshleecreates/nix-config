@@ -172,7 +172,7 @@
     swaylock     # Screen locker
     mako         # Notification daemon
     swayidle     # Idle management
-    swaybg       # Background manager
+    swww         # Background manager with namespace support
     wl-clipboard # Clipboard utilities
     playerctl    # Media player control
   ];

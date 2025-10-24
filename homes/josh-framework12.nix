@@ -58,6 +58,7 @@
     termius
     kdePackages.dolphin
     zoom-us
+    evolution
 
     # System utilities
     pavucontrol
@@ -69,6 +70,9 @@
     # Media
     mpv
     spotify
+
+    # Image manipulation for wallpaper blurring
+    imagemagick
 
     # Fonts for waybar icons
     font-awesome
@@ -200,7 +204,7 @@
   # Random wallpaper service
   systemd.user.services.random-wallpaper = {
     Unit = {
-      Description = "Random wallpaper with swaybg";
+      Description = "Random wallpaper with swww";
       After = [ "graphical-session.target" ];
       PartOf = [ "graphical-session.target" ];
     };

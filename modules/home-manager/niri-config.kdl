@@ -73,6 +73,17 @@ screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
 animations {
 }
 
+// Overview backdrop settings
+overview {
+    backdrop-color "#2e3440"
+}
+
+// Layer rules for wallpaper backdrop
+layer-rule {
+    match namespace="swww-daemonbackdrop"
+    place-within-backdrop true
+}
+
 // Window rules
 
 // Rounded corners for all windows
