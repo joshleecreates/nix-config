@@ -21,6 +21,22 @@
       set -g default-terminal "screen-256color"
       set -g detach-on-destroy off
       set-option -g status-left-length 40
+      set-option -g status-right-length 80
+
+      # Status bar with rounded bubbles (Nord colors)
+      set -g status-style "bg=default,fg=#eceff4"
+
+      # Left side - session name with rounded bubble
+      set -g status-left "#[bg=default,fg=#88c0d0]#[bg=#88c0d0,fg=#2e3440,bold] #S #[bg=default,fg=#88c0d0] "
+
+      # Right side - host, date, time with rounded bubbles
+      set -g status-right ""
+
+      # Window status format with rounded bubbles
+      set -g window-status-format "#[bg=default,fg=#4c566a]#[bg=#4c566a,fg=#d8dee9] #I #W #[bg=default,fg=#4c566a]"
+      set -g window-status-current-format "#[bg=default,fg=#81a1c1]#[bg=#81a1c1,fg=#2e3440,bold] #I #W #[bg=default,fg=#81a1c1]"
+
+      set -g window-status-separator " "
       # switch panes using Alt-arrow without prefix
       bind -n M-Left select-pane -L
       bind -n M-Right select-pane -R
