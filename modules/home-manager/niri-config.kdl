@@ -125,6 +125,9 @@ binds {
     XF86MonBrightnessUp allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "+10%"; }
     XF86MonBrightnessDown allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "10%-"; }
 
+    // Display mode toggle (mirror/extend)
+    Mod+P { spawn-sh "$HOME/.local/bin/display-toggle.sh"; }
+
     // Overview
     Mod+O repeat=false { toggle-overview; }
 
@@ -133,14 +136,14 @@ binds {
 
     // Focus navigation (arrow keys)
     Mod+Left  { focus-column-left; }
-    Mod+Down  { focus-window-down; }
-    Mod+Up    { focus-window-up; }
+    Mod+Down  { focus-workspace-down; }
+    Mod+Up    { focus-workspace-up; }
     Mod+Right { focus-column-right; }
 
     // Focus navigation (vim keys)
     Mod+H     { focus-column-left; }
-    Mod+J     { focus-window-down; }
-    Mod+K     { focus-window-up; }
+    Mod+J     { focus-workspace-down; }
+    Mod+K     { focus-workspace-up; }
     Mod+L     { focus-column-right; }
 
     // Move windows (arrow keys)

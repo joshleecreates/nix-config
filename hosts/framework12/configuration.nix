@@ -175,6 +175,9 @@
     swww         # Background manager with namespace support
     wl-clipboard # Clipboard utilities
     playerctl    # Media player control
+
+    # System monitoring
+    smartmontools # Disk health and temperature monitoring
   ];
   boot.initrd.kernelModules = [ "pinctrl_tigerlake" ];
   # Some programs need SUID wrappers, can be configured further or are

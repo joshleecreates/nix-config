@@ -18,6 +18,7 @@
     ../modules/home-manager/ghostty.nix
     ../modules/home-manager/waybar.nix
     ../modules/home-manager/sesh.nix
+    ../modules/home-manager/mako.nix
   ];
 
   # Enable sesh session manager
@@ -58,7 +59,6 @@
     termius
     kdePackages.dolphin
     zoom-us
-    evolution
 
     # System utilities
     pavucontrol
@@ -66,6 +66,7 @@
     blueman
     xwayland-satellite  # XWayland support for Niri
     xdg-desktop-portal-gnome  # Desktop portal for waybar
+    wlr-randr  # Wayland display configuration
 
     # Media
     mpv
@@ -161,6 +162,18 @@
       };
     };
   };
+
+  # Thunderbird configuration with 1Password integration
+  programs.thunderbird = {
+    enable = true;
+    profiles.default = {
+      isDefault = true;
+    };
+  };
+
+  # 1Password native messaging host for Thunderbird
+  home.file.".thunderbird/native-messaging-hosts/com.1password.1password.json".source =
+    "${pkgs._1password-gui}/share/1password/native-messaging-hosts/thunderbird/com.1password.1password.json";
   
   programs.zsh = {
     enable = true;
@@ -192,7 +205,6 @@
   };
 
   # Niri Wayland services
-  services.mako.enable = true;
   services.swayidle.enable = true;
 
   # Random wallpaper script
