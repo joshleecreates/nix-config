@@ -1,5 +1,12 @@
 { pkgs, ... }:
 {
+  home.packages = with pkgs; [
+    # lang servers
+    pkgs.vscode-langservers-extracted
+    pkgs.elixir
+    pkgs.elixir-ls
+  ];
+
   programs.neovim = {
     enable = true;
     viAlias = true;

@@ -24,11 +24,6 @@
     pkgs.ranger
     pkgs.gh
 
-    # lang servers
-    pkgs.vscode-langservers-extracted
-    pkgs.elixir
-    pkgs.elixir-ls
-
     # devops
     pkgs.opentofu
     pkgs.awscli2
@@ -50,11 +45,5 @@
 
   programs.htop = {
     enable = true;
-  };
-
-  programs.zsh = {
-    initExtra = ''
-      eval "$(/opt/homebrew/bin/brew shellenv)"
-    '';
   };
 }

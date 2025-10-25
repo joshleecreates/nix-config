@@ -24,6 +24,7 @@
     btop
     dnsutils
     wget
+    yazi
     gnumake
     jq
     btop

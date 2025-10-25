@@ -29,7 +29,4 @@
 
   home.packages = with pkgs; [
   ];
-
-  # Font configuration
-  # fonts.fontconfig.enable = true;
 }
