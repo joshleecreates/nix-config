@@ -16,6 +16,7 @@
     useGlobalPkgs = true;
     useUserPackages = true;
     users.josh = import ../../homes/josh-framework12.nix;
+    users.play = import ../../homes/play-framework12.nix;
   };
 
   # Bootloader.
@@ -126,6 +127,13 @@
     packages = with pkgs; [
       kdePackages.kate
     ];
+  };
+
+  users.users.play = {
+    isNormalUser = true;
+    description = "Play";
+    extraGroups = [ "networkmanager" "wheel" ];
+    shell = pkgs.zsh;  # Set zsh as default shell
   };
 
   programs.firefox.enable = true;
