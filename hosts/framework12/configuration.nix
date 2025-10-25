@@ -119,6 +119,17 @@
   hardware.bluetooth.powerOnBoot = true;
   services.blueman.enable = true;
 
+  # Enable hardware acceleration for Intel graphics
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;  # For 32-bit applications
+    extraPackages = with pkgs; [
+      intel-media-driver  # VAAPI driver for Intel Gen 8+ (Broadwell and newer)
+      intel-compute-runtime  # OpenCL support for Intel GPUs
+      vpl-gpu-rt  # Intel VPL GPU runtime (oneVPL)
+    ];
+  };
+
   users.users.josh = {
     isNormalUser = true;
     description = "Josh Lee";

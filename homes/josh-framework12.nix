@@ -14,6 +14,7 @@
     ./common/ops.nix
     ../modules/home-manager/alacritty.nix
     ../modules/home-manager/framework.nix
+    ../modules/home-manager/moonlight.nix
 
     #niri
     ../modules/home-manager/mako.nix
@@ -23,6 +24,7 @@
   ];
 
   modules.framework.enable = true;
+  modules.moonlight.enable = true;
   modules.niri.enable = true;
   modules.waybar.enable = true;
   modules.randomWallpaper.enable = true;

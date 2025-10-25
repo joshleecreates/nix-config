@@ -30,6 +30,7 @@ in {
       powersave = "sudo powerprofilesctl set power-saver";
       balanced = "sudo powerprofilesctl set balanced";
       performance = "sudo powerprofilesctl set performance";
+      rebuild = "sudo nixos-rebuild switch --flake /home/josh/repos/nix-config#framework12";
     };
   };
 }
