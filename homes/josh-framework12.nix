@@ -9,256 +9,27 @@
   nixpkgs.config.allowUnfree = true;
 
   imports = [
-    ../modules/home-manager/neovim.nix
-    ../modules/home-manager/tmux.nix
-    ../modules/home-manager/git.nix
-    ../modules/home-manager/zsh.nix
-    ../modules/home-manager/k9s.nix
+    ./common/shell.nix
+    ./common/desktop.nix
+    ./common/ops.nix
     ../modules/home-manager/alacritty.nix
-    ../modules/home-manager/ghostty.nix
-    ../modules/home-manager/waybar.nix
-    ../modules/home-manager/sesh.nix
+    ../modules/home-manager/framework.nix
+
+    #niri
     ../modules/home-manager/mako.nix
+    ../modules/home-manager/niri.nix
+    ../modules/home-manager/waybar.nix
+    ../modules/home-manager/random-wallpaper.nix
   ];
 
-  # Enable sesh session manager
-  modules.sesh.enable = true;
+  modules.framework.enable = true;
+  modules.niri.enable = true;
+  modules.waybar.enable = true;
+  modules.randomWallpaper.enable = true;
 
-  # The home.packages option allows you to install Nix packages into your
-  # environment.
   home.packages = with pkgs; [
-    # Development tools
-    pay-respects
-    git
-    gh
-    ranger
-    nurl
-    btop
-    dnsutils
-    wget
-    gnumake
-    kubectl
-    kubectx
-    kubernetes-helm
-    opentofu
-    ansible
-    talosctl
-    argocd
-    minikube
-    devbox
-
-    # Framework 12 specific tools
-    powertop
-    brightnessctl
-    acpi
-
-    # Desktop tools
-    chromium
-    slack
-    ghostty
-    termius
-    kdePackages.dolphin
-    zoom-us
-
-    # System utilities
-    pavucontrol
-    networkmanagerapplet
-    blueman
-    xwayland-satellite  # XWayland support for Niri
-    xdg-desktop-portal-gnome  # Desktop portal for waybar
-    wlr-randr  # Wayland display configuration
-
-    # Media
-    mpv
-    spotify
-    spotify-player
-
-    # Image manipulation for wallpaper blurring
-    imagemagick
-
-    # Fonts for waybar icons
-    font-awesome
-    nerd-fonts.fira-code
-    nerd-fonts.jetbrains-mono
-    nerd-fonts.iosevka
-    nerd-fonts.symbols-only
-
-    # Python for waybar scripts
-    python3
   ];
 
   # Font configuration
-  fonts.fontconfig.enable = true;
-
-  # Session variables configured below with niri settings
-
-  # Let Home Manager install and manage itself.
-  programs.home-manager.enable = true;
-  programs.htop.enable = true;
-  programs.ssh.enable = true;
-
-  # Enable direnv for automatic environment loading
-  programs.direnv = {
-    enable = true;
-    enableZshIntegration = true;
-    nix-direnv.enable = true;
-  };
-
-  # Firefox configuration - clean, no sponsored content
-  programs.firefox = {
-    enable = true;
-    nativeMessagingHosts = [ pkgs._1password-gui ];
-    profiles.default = {
-      id = 0;
-      name = "default";
-      isDefault = true;
-      settings = {
-        # Disable sponsored content and recommendations
-        "browser.newtabpage.activity-stream.showSponsored" = false;
-        "browser.newtabpage.activity-stream.showSponsoredTopSites" = false;
-        "browser.newtabpage.activity-stream.feeds.section.topstories" = false;
-        "browser.newtabpage.activity-stream.feeds.topsites" = false;
-        "browser.newtabpage.activity-stream.section.highlights.includePocket" = false;
-
-        # Disable Pocket
-        "extensions.pocket.enabled" = false;
-        "extensions.pocket.showHome" = false;
-
-        # Disable telemetry
-        "browser.newtabpage.activity-stream.feeds.telemetry" = false;
-        "browser.newtabpage.activity-stream.telemetry" = false;
-        "browser.ping-centre.telemetry" = false;
-        "toolkit.telemetry.archive.enabled" = false;
-        "toolkit.telemetry.bhrPing.enabled" = false;
-        "toolkit.telemetry.enabled" = false;
-        "toolkit.telemetry.firstShutdownPing.enabled" = false;
-        "toolkit.telemetry.newProfilePing.enabled" = false;
-        "toolkit.telemetry.reportingpolicy.firstRun" = false;
-        "toolkit.telemetry.shutdownPingSender.enabled" = false;
-        "toolkit.telemetry.unified" = false;
-        "toolkit.telemetry.updatePing.enabled" = false;
-
-        # Disable studies
-        "app.shield.optoutstudies.enabled" = false;
-        "app.normandy.enabled" = false;
-        "app.normandy.api_url" = "";
-
-        # Disable crash reports
-        "breakpad.reportURL" = "";
-        "browser.tabs.crashReporting.sendReport" = false;
-        "browser.crashReports.unsubmittedCheck.autoSubmit2" = false;
-
-        # Privacy improvements
-        "datareporting.healthreport.uploadEnabled" = false;
-        "datareporting.policy.dataSubmissionEnabled" = false;
-
-        # Clean new tab page
-        "browser.startup.homepage" = "about:blank";
-        "browser.newtabpage.enabled" = false;
-
-        # Disable annoying features
-        "browser.vpn_promo.enabled" = false;
-        "browser.promo.focus.enabled" = false;
-        "browser.aboutwelcome.enabled" = false;
-      };
-    };
-  };
-
-  # Thunderbird configuration with 1Password integration
-  programs.thunderbird = {
-    enable = true;
-    profiles.default = {
-      isDefault = true;
-    };
-  };
-
-  # 1Password native messaging host for Thunderbird
-  home.file.".thunderbird/native-messaging-hosts/com.1password.1password.json".source =
-    "${pkgs._1password-gui}/share/1password/native-messaging-hosts/thunderbird/com.1password.1password.json";
-  
-  programs.zsh = {
-    enable = true;
-    oh-my-zsh = {
-      enable = true;
-      plugins = lib.mkDefault [ "aws" "git" "kubectl" "vi-mode" "docker" ];
-      theme = lib.mkDefault "bira";
-    };
-    shellAliases = {
-      # Battery and power management aliases for Framework laptop
-      battery = "acpi -b";
-      powersave = "sudo powerprofilesctl set power-saver";
-      balanced = "sudo powerprofilesctl set balanced";
-      performance = "sudo powerprofilesctl set performance";
-    };
-  };
-
-  # Framework 12 specific services
-  services.udiskie = {
-    enable = true;
-    automount = true;
-  };
-
-  # Power management
-  services.cbatticon = {
-    enable = true;
-    criticalLevelPercent = 10;
-    commandCriticalLevel = ''notify-send "Battery critical" "Battery level is critically low"'';
-  };
-
-  # Niri Wayland services
-  services.swayidle.enable = true;
-
-  # Random wallpaper script
-  home.file.".local/bin/random-wallpaper.sh" = {
-    source = ../modules/home-manager/random-wallpaper.sh;
-    executable = true;
-  };
-
-  # Random wallpaper service
-  systemd.user.services.random-wallpaper = {
-    Unit = {
-      Description = "Random wallpaper with swww";
-      After = [ "graphical-session.target" ];
-      PartOf = [ "graphical-session.target" ];
-    };
-    Install.WantedBy = [ "graphical-session.target" ];
-    Service = {
-      Type = "oneshot";
-      ExecStart = "${pkgs.bash}/bin/bash %h/.local/bin/random-wallpaper.sh";
-    };
-  };
-
-  # Polkit agent for authentication dialogs
-  systemd.user.services.polkit-gnome-authentication-agent-1 = {
-    Unit.Description = "polkit-gnome-authentication-agent-1";
-    Install.WantedBy = [ "graphical-session.target" ];
-    Service = {
-      Type = "simple";
-      ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
-      Restart = "on-failure";
-      RestartSec = 1;
-      TimeoutStopSec = 10;
-    };
-  };
-
-  # Niri configuration
-  xdg.configFile."niri/config.kdl".source = ../modules/home-manager/niri-config.kdl;
-
-  # Zoom wrapper for Wayland compatibility
-  home.file.".local/bin/zoom".text = ''
-    #!/usr/bin/env bash
-    export QT_QPA_PLATFORM=xcb
-    export DISPLAY=:0
-    exec ${pkgs.zoom-us}/bin/zoom-us "$@"
-  '';
-  home.file.".local/bin/zoom".executable = true;
-
-  # Niri-specific environment variables
-  home.sessionVariables = {
-    EDITOR = "nvim";
-    T_REPOS_DIR = "$HOME/repos";
-    NIXOS_OZONE_WL = "1";  # Enable Wayland support for Electron apps
-    # Set DISPLAY for X11 compatibility (some tools still check this)
-    DISPLAY = ":0";
-  };
+  # fonts.fontconfig.enable = true;
 }
