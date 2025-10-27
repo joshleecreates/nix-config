@@ -97,6 +97,12 @@ window-rule {
     open-floating true
 }
 
+// Hide Xwayland Video Bridge window (used for screen sharing)
+window-rule {
+    match app-id="xwaylandvideobridge"
+    opacity 0.0
+}
+
 // Keybindings
 binds {
     // Show hotkey overlay

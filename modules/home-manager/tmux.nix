@@ -10,10 +10,12 @@
     plugins = with pkgs.tmuxPlugins; [
       yank
       nord
+      resurrect
       {
         plugin = continuum;
         extraConfig = ''
           set -g @continuum-restore 'on'
+          set -g @continuum-save-interval '15'
         '';
       }
     ];

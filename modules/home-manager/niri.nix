@@ -33,17 +33,20 @@ in {
     };
 
     # Polkit agent for authentication dialogs
-    systemd.user.services.polkit-gnome-authentication-agent-1 = {
-      Unit.Description = "polkit-gnome-authentication-agent-1";
-      Install.WantedBy = [ "graphical-session.target" ];
-      Service = {
-        Type = "simple";
-        ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
-        Restart = "on-failure";
-        RestartSec = 1;
-        TimeoutStopSec = 10;
-      };
-    };
+    # Commented out to test if Plasma's polkit agent is sufficient
+    # If you get "Authentication is required" errors without a prompt dialog,
+    # uncomment this and switch to lxqt-policykit-agent instead
+    # systemd.user.services.polkit-gnome-authentication-agent-1 = {
+    #   Unit.Description = "polkit-gnome-authentication-agent-1";
+    #   Install.WantedBy = [ "graphical-session.target" ];
+    #   Service = {
+    #     Type = "simple";
+    #     ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
+    #     Restart = "on-failure";
+    #     RestartSec = 1;
+    #     TimeoutStopSec = 10;
+    #   };
+    # };
 
     # Niri-specific environment variables
     home.sessionVariables = {

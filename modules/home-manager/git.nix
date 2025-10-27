@@ -1,10 +1,14 @@
-{ ... }: {
+{ pkgs, ... }: {
   programs.git = {
     enable = true;
     settings = {
       user = {
         name = "Josh Lee";
         email = "josh@joshuamlee.com";
+      };
+      credential = {
+        "https://github.com".helper = "!${pkgs.gh}/bin/gh auth git-credential";
+        "https://gist.github.com".helper = "!${pkgs.gh}/bin/gh auth git-credential";
       };
       alias = {
         cm = "commit";
