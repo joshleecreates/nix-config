@@ -21,6 +21,12 @@ in {
       executable = true;
     };
 
+    # Save background script
+    home.file.".local/bin/save-background.sh" = {
+      source = ./save-background.sh;
+      executable = true;
+    };
+
     # Random wallpaper service
     systemd.user.services.random-wallpaper = {
       Unit = {

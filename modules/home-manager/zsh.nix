@@ -14,6 +14,7 @@
       ta = "tmux attach";
       n = "nvim .";
       k = "kubectl";
+      save-background = "$HOME/.local/bin/save-background.sh";
     };
     initExtra = ''
       # aws cli auto complete

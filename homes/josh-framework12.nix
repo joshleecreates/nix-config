@@ -21,6 +21,7 @@
     ../modules/home-manager/niri.nix
     ../modules/home-manager/waybar.nix
     ../modules/home-manager/random-wallpaper.nix
+    ../modules/home-manager/wob.nix
   ];
 
   modules.framework.enable = true;

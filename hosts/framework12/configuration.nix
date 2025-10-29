@@ -170,6 +170,7 @@
     home-manager
     tailscale
     _1password-gui
+    obsidian
 
     # Niri and essential Wayland tools
     fuzzel       # Application launcher
