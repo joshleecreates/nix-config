@@ -24,11 +24,12 @@ input {
     touchpad {
         tap
         natural-scroll
+        scroll-factor 0.5  // Reduce scroll speed (default is 1.0)
         click-method "clickfinger"  // 2-finger = right click, 3-finger = middle click
     }
 
     mouse {
-        // Default settings
+        scroll-factor 0.5  // Reduce scroll speed (default is 1.0)
     }
 }
 

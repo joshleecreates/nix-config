@@ -20,6 +20,9 @@
       # aws cli auto complete
       complete -C '${pkgs.awscli}/bin/aws_completer' aws
 
+      # minikube completion
+      source <(minikube completion zsh)
+
       DISABLE_AUTO_TITLE="true"
     '';
   };

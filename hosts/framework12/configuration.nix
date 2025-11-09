@@ -120,6 +120,9 @@
   hardware.bluetooth.powerOnBoot = true;
   services.blueman.enable = true;
 
+  # Enable thermald for Intel thermal management
+  services.thermald.enable = true;
+
   # Enable hardware acceleration for Intel graphics
   hardware.graphics = {
     enable = true;
@@ -183,6 +186,7 @@
 
     # System monitoring
     smartmontools # Disk health and temperature monitoring
+    lm_sensors    # Hardware monitoring (CPU temp, fan speeds, voltages)
   ];
   boot.initrd.kernelModules = [ "pinctrl_tigerlake" ];
   system.stateVersion = "25.05"; # Did you read the comment?

@@ -33,5 +33,11 @@
     mpv
     spotify
     spotify-player
+    vlc
+    davinci-resolve
+    signal-desktop-bin
+
+    # Codecs for DaVinci Resolve (fixes thumbnails/video playback)
+    ffmpeg-full
   ];
 }
