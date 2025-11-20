@@ -2,7 +2,9 @@
   "permissions": {
     "allow": [
       "Bash(journalctl:*)",
-      "WebFetch(domain:github.com)"
+      "WebFetch(domain:github.com)",
+      "Read(//home/josh/.local/share/Steam/logs/**)",
+      "Bash(systemctl:*)"
     ],
     "deny": [],
     "ask": []

@@ -7,6 +7,12 @@ prefer-no-csd
 // Output configuration
 // Note: Niri 0.1.10+ automatically disables internal display when lid is closed with external monitor
 
+// Framework 12 internal display - explicitly set to 1.0 to override KDE settings
+output "eDP-1" {
+    scale 1.0
+    mode "1920x1200@60.002"
+}
+
 // LG Ultrawide configuration with proper scaling for better font rendering
 output "DP-3" {
     scale 1.25
@@ -39,20 +45,20 @@ layout {
 
     center-focused-column "never"
 
-    preset-column-widths {
-        proportion 0.33333
-        proportion 0.5
-        proportion 0.66667
-    }
+    // preset-column-widths {
+    //     proportion 0.33333
+    //     proportion 0.5
+    //     proportion 0.66667
+    // }
 
-    default-column-width { proportion 0.5; }
+    // default-column-width { proportion 0.5; }
 
     focus-ring {
         off
     }
 
     border {
-        width 4
+        width 3
         active-color "#88c0d0"
         inactive-color "#4c566a"
     }
@@ -72,9 +78,9 @@ spawn-at-startup "nm-applet" "--indicator"
 spawn-at-startup "blueman-applet"
 
 // Hotkey overlay settings can be configured here if needed
-// hotkey-overlay {
-//     skip-at-startup
-// }
+hotkey-overlay {
+    skip-at-startup
+}
 
 // Screenshot path
 screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
@@ -108,9 +114,25 @@ window-rule {
 }
 
 // Hide Xwayland Video Bridge window (used for screen sharing)
+// window-rule {
+//     match app-id="xwaylandvideobridge"
+//     opacity 0.0
+// }
+
+// Steam window rules - force some Steam windows to float
 window-rule {
-    match app-id="xwaylandvideobridge"
-    opacity 0.0
+    match title=r#"^Steam - "#
+    open-floating true
+}
+
+window-rule {
+    match title="Friends List"
+    open-floating true
+}
+
+window-rule {
+    match title="Steam Settings"
+    open-floating true
 }
 
 // Keybindings
@@ -124,6 +146,8 @@ binds {
     Super+Alt+L { spawn "swaylock"; }
     Super+S { spawn "slack"; }
     Super+B { spawn "firefox"; }
+    Super+Period { spawn "rofimoji"; }
+    Super+G { spawn-sh "sleep 1 && steam"; }  // Steam with NixOS timing workaround
 
     // Volume keys (Framework laptop function keys) with wob integration
     XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+ -l 1.0 && wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{print int($2*100)}' > $XDG_RUNTIME_DIR/wob.sock"; }

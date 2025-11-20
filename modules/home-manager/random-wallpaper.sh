@@ -21,17 +21,22 @@ if [ -d "$WALLPAPER_DIR" ]; then
             magick "$WALLPAPER" -blur 0x20 "$BLURRED_WALLPAPER"
         fi
 
-        # Initialize swww daemon if not running (default namespace)
-        if ! pgrep -x swww-daemon > /dev/null; then
-            swww-daemon &
-            sleep 1
-        fi
+        # Wait for swww daemons to be ready (they're started by systemd)
+        # Check default namespace
+        for i in {1..10}; do
+            if swww query &>/dev/null; then
+                break
+            fi
+            sleep 0.5
+        done
 
-        # Initialize swww daemon for backdrop namespace if not running
-        if ! pgrep -f "swww-daemon.*backdrop" > /dev/null; then
-            swww-daemon -n backdrop &
-            sleep 1
-        fi
+        # Check backdrop namespace
+        for i in {1..10}; do
+            if swww query -n backdrop &>/dev/null; then
+                break
+            fi
+            sleep 0.5
+        done
 
         # Set wallpaper for normal workspace (default namespace)
         swww img "$WALLPAPER" --transition-type none

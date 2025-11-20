@@ -33,4 +33,16 @@
   home.packages = with pkgs; [
     discord
   ];
+
+  # Override Steam desktop entry to include Niri timing workaround
+  xdg.desktopEntries.steam = {
+    name = "Steam";
+    comment = "Application for managing and playing games on Steam";
+    exec = ''sh -c "sleep 1 && steam %U"'';
+    icon = "steam";
+    terminal = false;
+    type = "Application";
+    categories = [ "Game" ];
+    mimeType = [ "x-scheme-handler/steam" "x-scheme-handler/steamlink" ];
+  };
 }

@@ -64,7 +64,7 @@
     background: rgba(46, 52, 64, 0.8);
     color: @light;
     font-family: "Symbols Nerd Font", "JetBrainsMono Nerd Font", "Font Awesome 7 Free", "Cantarell", sans-serif;
-    font-size: 12px;
+    font-size: 15px;  /* Scaled for 1.25x display (12px * 1.25) */
     font-weight: bold;
 }
 

@@ -13,6 +13,9 @@
     ../modules/home-manager/alacritty.nix
   ];
 
+  # Disable Vivaldi for play user
+  modules.vivaldi.enable = lib.mkForce false;
+
   home.packages = with pkgs; [
   ];
 

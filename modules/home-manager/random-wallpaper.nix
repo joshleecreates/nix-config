@@ -27,11 +27,41 @@ in {
       executable = true;
     };
 
+    # Persistent swww daemon for default namespace
+    systemd.user.services.swww-daemon = {
+      Unit = {
+        Description = "Swww daemon for wallpapers";
+        After = [ "graphical-session.target" ];
+        PartOf = [ "graphical-session.target" ];
+      };
+      Install.WantedBy = [ "graphical-session.target" ];
+      Service = {
+        Type = "simple";
+        ExecStart = "${pkgs.swww}/bin/swww-daemon";
+        Restart = "on-failure";
+      };
+    };
+
+    # Persistent swww daemon for backdrop namespace
+    systemd.user.services.swww-daemon-backdrop = {
+      Unit = {
+        Description = "Swww daemon for backdrop";
+        After = [ "graphical-session.target" ];
+        PartOf = [ "graphical-session.target" ];
+      };
+      Install.WantedBy = [ "graphical-session.target" ];
+      Service = {
+        Type = "simple";
+        ExecStart = "${pkgs.swww}/bin/swww-daemon -n backdrop";
+        Restart = "on-failure";
+      };
+    };
+
     # Random wallpaper service
     systemd.user.services.random-wallpaper = {
       Unit = {
         Description = "Random wallpaper with swww";
-        After = [ "graphical-session.target" ];
+        After = [ "graphical-session.target" "swww-daemon.service" "swww-daemon-backdrop.service" ];
         PartOf = [ "graphical-session.target" ];
       };
       Install.WantedBy = [ "graphical-session.target" ];

@@ -18,6 +18,7 @@ in {
       pavucontrol  # Audio control
       networkmanagerapplet  # Network manager applet
       blueman  # Bluetooth manager
+      rofimoji  # Emoji picker
     ];
 
     # Niri configuration file
@@ -30,6 +31,22 @@ in {
     services.udiskie = {
       enable = true;
       automount = true;
+    };
+
+    # XWayland support via xwayland-satellite
+    systemd.user.services.xwayland-satellite = {
+      Unit = {
+        Description = "XWayland Satellite for Niri";
+        PartOf = [ "graphical-session.target" ];
+        After = [ "graphical-session.target" ];
+      };
+      Service = {
+        Type = "simple";
+        ExecStart = "${pkgs.xwayland-satellite}/bin/xwayland-satellite";
+        Restart = "on-failure";
+        RestartSec = 1;
+      };
+      Install.WantedBy = [ "graphical-session.target" ];
     };
 
     # Polkit agent for authentication dialogs
@@ -51,8 +68,13 @@ in {
     # Niri-specific environment variables
     home.sessionVariables = {
       NIXOS_OZONE_WL = "1";  # Enable Wayland support for Electron apps
-      # Set DISPLAY for X11 compatibility (some tools still check this)
-      DISPLAY = ":0";
+      # XWayland environment variables
+      # xwayland-satellite will set DISPLAY dynamically
+      # Force apps to prefer Wayland when available
+      GDK_BACKEND = "wayland,x11";
+      QT_QPA_PLATFORM = "wayland;xcb";
+      SDL_VIDEODRIVER = "wayland";
+      CLUTTER_BACKEND = "wayland";
     };
   };
 }
