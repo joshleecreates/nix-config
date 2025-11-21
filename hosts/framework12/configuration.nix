@@ -91,6 +91,9 @@
   # Enable passwordless sudo for wheel group
   security.sudo.wheelNeedsPassword = false;
 
+  # Enable Google OS Login
+  security.googleOsLogin.enable = true;
+
   # Enable gnome-keyring
   services.gnome.gnome-keyring.enable = true;
 

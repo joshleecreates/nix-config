@@ -62,4 +62,15 @@
     # OpenCL ICD for Intel (DaVinci Resolve, Blender, etc.)
     OCL_ICD_VENDORS = "/run/opengl-driver/etc/OpenCL/vendors";
   };
+
+  # Override Termius desktop file to add URL scheme handler for OAuth redirects
+  xdg.desktopEntries.termius-app = {
+    name = "Termius";
+    genericName = "Cross-platform SSH client";
+    comment = "The SSH client that works on Desktop and Mobile";
+    exec = "termius-app %u";
+    icon = "termius-app";
+    categories = [ "Network" ];
+    mimeType = [ "x-scheme-handler/termius" ];
+  };
 }
