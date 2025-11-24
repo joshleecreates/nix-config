@@ -100,10 +100,19 @@
   # XDG Desktop Portal for file pickers and other desktop integrations
   xdg.portal = {
     enable = true;
-    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+    extraPortals = [
+      pkgs.xdg-desktop-portal-gtk
+      pkgs.xdg-desktop-portal-wlr  # Required for screensharing on Wayland
+    ];
     config = {
       common = {
         default = [ "gtk" ];
+      };
+      # Use wlr portal for screensharing (works with Niri/wlroots compositors)
+      niri = {
+        default = [ "wlr" "gtk" ];
+        "org.freedesktop.impl.portal.ScreenCast" = [ "wlr" ];
+        "org.freedesktop.impl.portal.Screenshot" = [ "wlr" ];
       };
     };
   };
