@@ -214,7 +214,7 @@
 }
 
 #memory {
-    background: @memory;
+    background: transparent;
 }
 
 #cpu {

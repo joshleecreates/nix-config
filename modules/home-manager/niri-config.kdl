@@ -114,10 +114,10 @@ window-rule {
 }
 
 // Hide Xwayland Video Bridge window (used for screen sharing)
-// window-rule {
-//     match app-id="xwaylandvideobridge"
-//     opacity 0.0
-// }
+window-rule {
+    match app-id="xwaylandvideobridge"
+    opacity 0.0
+}
 
 // Steam window rules - force some Steam windows to float
 window-rule {
@@ -183,16 +183,16 @@ binds {
     Mod+K     { focus-workspace-up; }
     Mod+L     { focus-column-right; }
 
-    // Move windows (arrow keys)
+    // Move windows/workspaces (arrow keys)
     Mod+Ctrl+Left  { move-column-left; }
-    Mod+Ctrl+Down  { move-window-down; }
-    Mod+Ctrl+Up    { move-window-up; }
+    Mod+Ctrl+Down  { move-workspace-down; }
+    Mod+Ctrl+Up    { move-workspace-up; }
     Mod+Ctrl+Right { move-column-right; }
 
     // Move windows (vim keys)
     Mod+Ctrl+H     { move-column-left; }
-    Mod+Ctrl+J     { move-window-down; }
-    Mod+Ctrl+K     { move-window-up; }
+    Mod+Ctrl+J     { move-column-to-workspace-down; }
+    Mod+Ctrl+K     { move-column-to-workspace-up; }
     Mod+Ctrl+L     { move-column-right; }
 
     // Focus first/last column

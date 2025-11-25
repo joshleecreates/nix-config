@@ -260,7 +260,12 @@
   hardware.steam-hardware.enable = true;
 
   # Enable Docker virtualization
-  virtualisation.docker.enable = true;
+  virtualisation.docker = {
+    enable = true;
+    daemon.settings = {
+      ipv6 = false;
+    };
+  };
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;

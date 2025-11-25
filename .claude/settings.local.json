@@ -4,7 +4,8 @@
       "Bash(journalctl:*)",
       "WebFetch(domain:github.com)",
       "Read(//home/josh/.local/share/Steam/logs/**)",
-      "Bash(systemctl:*)"
+      "Bash(systemctl:*)",
+      "WebFetch(domain:raw.githubusercontent.com)"
     ],
     "deny": [],
     "ask": []

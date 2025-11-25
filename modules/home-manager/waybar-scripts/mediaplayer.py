@@ -17,7 +17,7 @@ def get_player_status():
             text=True
         ).strip()
 
-        if status not in ["Playing", "Paused"]:
+        if status != "Playing":
             return None
 
         # Get metadata

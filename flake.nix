@@ -42,6 +42,10 @@
       url = "github:nix-community/nixos-generators";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    waybar-niri-workspaces-enhanced = {
+      url = "github:justbuchanan/waybar-niri-workspaces-enhanced";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
 
@@ -82,9 +86,14 @@
       nixosConfigurations.framework12 = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs; inherit self;};
         system = "x86_64-linux";
-        modules = [ 
-          ./hosts/framework12/configuration.nix 
+        modules = [
+          ./hosts/framework12/configuration.nix
           inputs.home-manager.nixosModules.default
+          {
+            home-manager.sharedModules = [
+              inputs.waybar-niri-workspaces-enhanced.homeModules.default
+            ];
+          }
         ];
       };
       homeConfigurations."josh@silver" = home-manager.lib.homeManagerConfiguration {
