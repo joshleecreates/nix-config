@@ -21,7 +21,7 @@
     "cffi/niri-workspaces-enhanced": {
       "module_path": "/home/josh/.config/waybar/niri-workspaces-enhanced.so",
       "disable-scroll": false,
-      "all-outputs": true,
+      "all-outputs": false,
       "format": "{index-and-name} {window-icons}",
       "window-icon-format": {
         "default": "<span foreground=\"#888888\">{icon}</span>",
