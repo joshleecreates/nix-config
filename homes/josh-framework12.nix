@@ -49,6 +49,11 @@
       main = {
         font = "monospace:size=14";
       };
+      colors = {
+        # Match ghostty's 0.85 opacity (217/255 = 0.85)
+        # Format: rrggbbaa (alpha: d9 = 217 in hex)
+        alpha = "0.85";
+      };
     };
   };
 
@@ -72,12 +77,18 @@
   xdg.desktopEntries.btop = {
     name = "btop";
     comment = "Resource monitor";
-    exec = "foot --app-id=btop_ui --font=monospace:size=18 btop";
+    exec = "foot --app-id=btop_ui --font=monospace:size=13 btop";
     icon = "utilities-system-monitor";
     terminal = false;
     type = "Application";
     categories = [ "System" "Monitor" ];
   };
+
+  # btop configuration - nord theme with transparent background
+  xdg.configFile."btop/btop.conf".text = ''
+    color_theme = "nord"
+    theme_background = False
+  '';
 
   # ChatGPT web app
   xdg.desktopEntries.chatgpt = {
