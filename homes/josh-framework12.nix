@@ -16,10 +16,13 @@
     ../modules/home-manager/framework.nix
     ../modules/home-manager/moonlight.nix
     ../modules/home-manager/obsidian-daily.nix
+    ../modules/home-manager/gaming.nix
 
     #niri
     ../modules/home-manager/mako.nix
     ../modules/home-manager/niri.nix
+    ../modules/home-manager/kanshi.nix
+    ../modules/home-manager/niri-lid-handler.nix
     ../modules/home-manager/waybar.nix
     ../modules/home-manager/random-wallpaper.nix
     ../modules/home-manager/wob.nix
@@ -28,9 +31,12 @@
   modules.framework.enable = true;
   modules.moonlight.enable = true;
   modules.niri.enable = true;
+  modules.kanshi.enable = true;
+  modules.niri-lid-handler.enable = true;
   modules.waybar.enable = true;
   modules.randomWallpaper.enable = true;
   modules.obsidian-daily.enable = true;
+  modules.gaming.enable = true;
 
   # Enable waybar niri workspaces enhancement
   programs.waybar.niri-workspaces-enhanced.enable = true;
@@ -50,18 +56,6 @@
     discord
     distrobox
   ];
-
-  # Override Steam desktop entry to include Niri timing workaround
-  xdg.desktopEntries.steam = {
-    name = "Steam";
-    comment = "Application for managing and playing games on Steam";
-    exec = ''sh -c "sleep 1 && steam %U"'';
-    icon = "steam";
-    terminal = false;
-    type = "Application";
-    categories = [ "Game" ];
-    mimeType = [ "x-scheme-handler/steam" "x-scheme-handler/steamlink" ];
-  };
 
   # Spotify Player desktop entry
   xdg.desktopEntries.spotify-player = {

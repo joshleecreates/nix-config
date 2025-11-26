@@ -9,6 +9,7 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ./cachix.nix
+      ../../modules/nixos/gaming.nix
     ];
 
   # Configure home-manager
@@ -133,6 +134,18 @@
   # Enable Bluetooth
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;
+  hardware.bluetooth.settings = {
+    General = {
+      Enable = "Source,Sink,Media,Socket";
+      Experimental = true;  # Enable experimental features for better LE support
+      KernelExperimental = true;  # Enable kernel experimental features
+      FastConnectable = true;
+      Privacy = "device";  # Use device privacy mode for better compatibility
+    };
+    Policy = {
+      AutoEnable = true;
+    };
+  };
   services.blueman.enable = true;
 
   # Enable thermald for Intel thermal management
@@ -183,6 +196,9 @@
   programs._1password-gui.enable = true;
   programs._1password-gui.polkitPolicyOwners = [ "josh" ];
 
+  # Enable gaming module
+  modules.gaming.enable = true;
+
   # Allow Vivaldi to use 1Password browser integration
   environment.etc."1password/custom_allowed_browsers" = {
     text = ''
@@ -192,72 +208,6 @@
     '';
     mode = "0755";
   };
-
-
-  # Enable Steam
-  programs.steam = {
-    enable = true;
-    remotePlay.openFirewall = true;
-    dedicatedServer.openFirewall = true;
-    localNetworkGameTransfers.openFirewall = true;
-    gamescopeSession.enable = true;  # GameScope compositor for Steam games
-    extest.enable = false;  # DISABLED: Causes ELF class mismatch errors
-
-    # Extra compatibility tools
-    extraCompatPackages = with pkgs; [
-      proton-ge-bin  # GE-Proton for better game compatibility
-    ];
-
-    # Enable Wayland support with hardware acceleration
-    package = pkgs.steam.override {
-      extraLibraries = pkgs: with pkgs; [
-        # X11 libraries (for XWayland with xwayland-satellite)
-        xorg.libXcursor
-        xorg.libXi
-        xorg.libXinerama
-        xorg.libXScrnSaver
-        xorg.libxshmfence
-        xorg.libXxf86vm
-        xorg.libXdamage
-        xorg.libXfixes
-        xorg.libXrandr
-
-        # Graphics and video acceleration libraries
-        libva
-        intel-media-driver
-        mesa
-        libGL
-        libglvnd
-        vulkan-loader
-        vulkan-validation-layers
-
-        # Wayland support
-        libdrm
-        wayland
-        libxkbcommon
-      ];
-      extraProfile = ''
-        # Force X11 backend for Steam client (for xwayland-satellite compatibility)
-        # NOTE: Keep WAYLAND_DISPLAY set so xwayland-satellite can function
-        export GDK_BACKEND=x11
-        export QT_QPA_PLATFORM=xcb
-
-        # UI Scaling
-        export GDK_SCALE=1.25
-        export GDK_DPI_SCALE=1.25
-
-        # Hardware acceleration for Intel graphics
-        export LIBVA_DRIVER_NAME=iHD
-
-        # Mesa/DRI configuration
-        export MESA_LOADER_DRIVER_OVERRIDE=iris
-        export __GLX_VENDOR_LIBRARY_NAME=mesa
-      '';
-    };
-  };
-
-  # Enable Steam hardware support
-  hardware.steam-hardware.enable = true;
 
   # Enable Docker virtualization
   virtualisation.docker = {
@@ -291,20 +241,16 @@
     wl-clipboard # Clipboard utilities
     playerctl    # Media player control
 
-    # Vulkan support for Steam and games
-    vulkan-loader
-    vulkan-tools  # Includes vulkaninfo for debugging
-
     # System monitoring
     smartmontools # Disk health and temperature monitoring
     lm_sensors    # Hardware monitoring (CPU temp, fan speeds, voltages)
   ];
-  # Early kernel module loading and Intel graphics optimizations
-  boot.initrd.kernelModules = [ "pinctrl_tigerlake" "i915" ];
-  boot.kernelParams = [
-    "i915.enable_fbc=1"   # Enable framebuffer compression
-    "i915.enable_psr=2"   # Enable Panel Self Refresh
-    "i915.fastboot=1"     # Faster boot by keeping display config
-  ];
+  # # Early kernel module loading and Intel graphics optimizations
+  # boot.initrd.kernelModules = [ "pinctrl_tigerlake" "i915" ];
+  # boot.kernelParams = [
+  #   "i915.enable_fbc=1"   # Enable framebuffer compression
+  #   "i915.enable_psr=2"   # Enable Panel Self Refresh
+  #   "i915.fastboot=1"     # Faster boot by keeping display config
+  # ];
   system.stateVersion = "25.05"; # Did you read the comment?
 }

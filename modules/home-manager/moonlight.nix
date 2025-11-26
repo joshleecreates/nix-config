@@ -15,17 +15,6 @@ in {
       moonlight-qt
     ];
 
-    # XDG desktop entry customization (optional)
-    xdg.desktopEntries.moonlight = {
-      name = "Moonlight";
-      comment = "Stream games from your NVIDIA GameStream-enabled PC";
-      exec = "moonlight-qt";
-      icon = "moonlight";
-      terminal = false;
-      type = "Application";
-      categories = [ "Game" "Network" ];
-    };
-
     # Shell alias for checking hardware acceleration support
     programs.zsh.shellAliases = {
       vainfo = "vainfo";  # Check VA-API driver and capabilities

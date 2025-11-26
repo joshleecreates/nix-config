@@ -5,19 +5,10 @@
 prefer-no-csd
 
 // Output configuration
-// Note: Niri 0.1.10+ automatically disables internal display when lid is closed with external monitor
-
-// Framework 12 internal display - explicitly set to 1.0 to override KDE settings
-output "eDP-1" {
-    scale 1.0
-    mode "1920x1200@60.002"
-}
-
-// LG Ultrawide configuration with proper scaling for better font rendering
-output "DP-3" {
-    scale 1.25
-    mode "3440x1440@59.987"
-}
+// Note: Display configuration is ENTIRELY managed by kanshi for automatic profile switching
+// Kanshi handles: laptop-only, external-only (lid closed), and dual-display modes
+// Do not add output blocks here - they override kanshi's dynamic configuration
+// Instead, systemd-logind is configured to ignore lid events (see configuration.nix)
 
 // Input device configuration
 input {
@@ -116,7 +107,9 @@ window-rule {
 // Hide Xwayland Video Bridge window (used for screen sharing)
 window-rule {
     match app-id="xwaylandvideobridge"
-    opacity 0.0
+    open-focused false
+    open-maximized false
+    open-floating false
 }
 
 // Steam window rules - force some Steam windows to float

@@ -10,11 +10,20 @@ in {
   };
 
   config = mkIf cfg.enable {
+    # Cursor theme configuration
+    home.pointerCursor = {
+      gtk.enable = true;
+      x11.enable = true;
+      package = pkgs.adwaita-icon-theme;
+      name = "Adwaita";
+      size = 24;
+    };
+
     # Wayland packages
     home.packages = with pkgs; [
       xwayland-satellite  # XWayland support for Niri
       xdg-desktop-portal-gnome  # Desktop portal
-      wlr-randr  # Wayland display configuration
+      # wlr-randr - replaced by kanshi for automatic display profile switching
       pavucontrol  # Audio control
       networkmanagerapplet  # Network manager applet
       blueman  # Bluetooth manager
