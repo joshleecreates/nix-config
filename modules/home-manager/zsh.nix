@@ -15,6 +15,7 @@
       n = "nvim .";
       k = "kubectl";
       save-background = "$HOME/.local/bin/save-background.sh";
+      random-wallpaper = "$HOME/.local/bin/random-wallpaper.sh";
     };
     initExtra = ''
       # aws cli auto complete

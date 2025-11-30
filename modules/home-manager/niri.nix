@@ -28,6 +28,7 @@ in {
       networkmanagerapplet  # Network manager applet
       blueman  # Bluetooth manager
       rofimoji  # Emoji picker
+      wvkbd  # Virtual keyboard for touchscreen mode
     ];
 
     # Niri configuration file
@@ -35,6 +36,7 @@ in {
 
     # Niri Wayland services
     services.swayidle.enable = true;
+
 
     # Disk automounting
     services.udiskie = {
