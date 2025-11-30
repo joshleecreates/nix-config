@@ -17,6 +17,7 @@
     ../modules/home-manager/moonlight.nix
     ../modules/home-manager/obsidian-daily.nix
     ../modules/home-manager/gaming.nix
+    ../modules/home-manager/zen-browser.nix
 
     #niri
     ../modules/home-manager/mako.nix
@@ -37,6 +38,7 @@
   modules.randomWallpaper.enable = true;
   modules.obsidian-daily.enable = true;
   modules.gaming.enable = true;
+  modules.zen-browser.enable = true;
 
   # Enable waybar niri workspaces enhancement
   programs.waybar.niri-workspaces-enhanced.enable = true;

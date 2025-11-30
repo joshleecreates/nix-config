@@ -328,7 +328,8 @@
         "nixos-generators": "nixos-generators",
         "nixpkgs": "nixpkgs",
         "nur": "nur",
-        "waybar-niri-workspaces-enhanced": "waybar-niri-workspaces-enhanced"
+        "waybar-niri-workspaces-enhanced": "waybar-niri-workspaces-enhanced",
+        "zen-browser": "zen-browser"
       }
     },
     "rust-overlay": {
@@ -383,6 +384,26 @@
       "original": {
         "owner": "justbuchanan",
         "repo": "waybar-niri-workspaces-enhanced",
+        "type": "github"
+      }
+    },
+    "zen-browser": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1764476124,
+        "narHash": "sha256-QHvDAJdc7Sx8rIUpEjZYtn9n334F0Rg/8C/NcUWv7M4=",
+        "owner": "youwen5",
+        "repo": "zen-browser-flake",
+        "rev": "0f07eb42107d2b82d8a2e94d3c01aa3d7f500733",
+        "type": "github"
+      },
+      "original": {
+        "owner": "youwen5",
+        "repo": "zen-browser-flake",
         "type": "github"
       }
     }

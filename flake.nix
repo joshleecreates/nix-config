@@ -46,6 +46,10 @@
       url = "github:justbuchanan/waybar-niri-workspaces-enhanced";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    zen-browser = {
+      url = "github:youwen5/zen-browser-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
 
@@ -93,6 +97,9 @@
             home-manager.sharedModules = [
               inputs.waybar-niri-workspaces-enhanced.homeModules.default
             ];
+            home-manager.extraSpecialArgs = {
+              zen-browser-pkg = inputs.zen-browser.packages."x86_64-linux".zen-browser-unwrapped;
+            };
           }
         ];
       };
