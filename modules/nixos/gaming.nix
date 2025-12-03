@@ -8,7 +8,11 @@ with lib;
   };
 
   config = mkIf config.modules.gaming.enable {
-    # Enable Steam
     programs.steam.enable = true;
+
+    environment.systemPackages = with pkgs; [
+      vulkan-loader
+      vulkan-tools
+    ];
   };
 }

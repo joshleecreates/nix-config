@@ -1,9 +1,6 @@
 { config, pkgs, lib, ... }:
 
 {
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
-
   imports = [
     ../../modules/home-manager/ghostty.nix
     ../../modules/home-manager/firefox.nix

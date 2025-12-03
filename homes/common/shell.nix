@@ -21,17 +21,27 @@
     gh
     ranger
     nurl
-    btop
     dnsutils
     wget
     yazi
     gnumake
     jq
-    btop
     fastfetch
     claude-code
     devbox
   ];
+
+  # btop with settings to mitigate crash bug in 1.4.x
+  programs.btop = {
+    enable = true;
+    settings = {
+      color_theme = "nord";
+      theme_background = false;
+      update_ms = 1000;  # slower updates reduce race condition
+      proc_sorting = "memory";
+      proc_filter_kernel = true;
+    };
+  };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;

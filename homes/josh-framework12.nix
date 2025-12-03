@@ -5,9 +5,6 @@
   home.homeDirectory = lib.mkDefault "/home/josh";
   home.stateVersion = lib.mkDefault "25.05";
 
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
-
   imports = [
     ./common/shell.nix
     ./common/desktop.nix

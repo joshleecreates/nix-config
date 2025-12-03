@@ -80,6 +80,7 @@
     enable = true;
     keyboards.default = {
       config = builtins.readFile ./kanata.kbd;
+      extraDefCfg = "process-unmapped-keys yes";
     };
   };
 
@@ -231,6 +232,7 @@
     tailscale
     _1password-gui
     obsidian
+    dbeaver-bin
 
     # Niri and essential Wayland tools
     fuzzel       # Application launcher

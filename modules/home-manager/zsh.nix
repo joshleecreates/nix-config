@@ -17,7 +17,7 @@
       save-background = "$HOME/.local/bin/save-background.sh";
       random-wallpaper = "$HOME/.local/bin/random-wallpaper.sh";
     };
-    initExtra = ''
+    initContent = ''
       # aws cli auto complete
       complete -C '${pkgs.awscli}/bin/aws_completer' aws
 

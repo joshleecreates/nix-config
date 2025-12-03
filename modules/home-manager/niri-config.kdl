@@ -104,6 +104,11 @@ window-rule {
     open-floating true
 }
 
+window-rule {
+    match app-id=r#"firefox$"#
+    open-maximized true
+}
+
 // Hide Xwayland Video Bridge window (used for screen sharing)
 window-rule {
     match app-id="xwaylandvideobridge"
@@ -140,7 +145,7 @@ binds {
     Super+S { spawn "slack"; }
     Super+B { spawn "firefox"; }
     Super+Period { spawn "rofimoji"; }
-    Super+G { spawn-sh "sleep 1 && steam"; }  // Steam with NixOS timing workaround
+    Super+G { spawn-sh "DISPLAY=:0 steam-run steam"; }
 
     // Volume keys (Framework laptop function keys) with wob integration
     XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+ -l 1.0 && wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{print int($2*100)}' > $XDG_RUNTIME_DIR/wob.sock"; }

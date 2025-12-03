@@ -249,16 +249,16 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1760878510,
-        "narHash": "sha256-K5Osef2qexezUfs0alLvZ7nQFTGS9DL2oTVsIXsqLgs=",
+        "lastModified": 1764522689,
+        "narHash": "sha256-SqUuBFjhl/kpDiVaKLQBoD8TLD+/cTUzzgVFoaHrkqY=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "5e2a59a5b1a82f89f2c7e598302a9cacebb72a67",
+        "rev": "8bb5646e0bed5dbd3ab08c7a7cc15b75ab4e1d0f",
         "type": "github"
       },
       "original": {
         "owner": "nixos",
-        "ref": "nixos-unstable",
+        "ref": "nixos-25.11",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -374,11 +374,11 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1763513125,
-        "narHash": "sha256-vqoGyov0NCqb8mpois3iMPjAlzd/Dt+wuAop45Wxlj0=",
+        "lastModified": 1764528613,
+        "narHash": "sha256-A0stLpQCR58IPANTfRq5egQSXIUkKJ7pILScAU9KASI=",
         "owner": "justbuchanan",
         "repo": "waybar-niri-workspaces-enhanced",
-        "rev": "5ea752aaffcb034ec265c73426362d0070493ff4",
+        "rev": "c4633066189cd2cf919fcd60a9da454800a016c6",
         "type": "github"
       },
       "original": {

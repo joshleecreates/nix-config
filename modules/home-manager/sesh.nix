@@ -19,7 +19,7 @@ in {
       set -g detach-on-destroy off
       bind-key x kill-pane
     '';
-    programs.zsh.initExtra = ''
+    programs.zsh.initContent = ''
       eval "$(zoxide init zsh)"
     '';
     programs.zsh.shellAliases = {

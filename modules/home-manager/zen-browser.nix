@@ -68,16 +68,17 @@ in {
           defaultPref("widget.disable-workspace-management", true);
 
           // Transparent Zen mod preferences (by sameerasw)
-          defaultPref("browser.tabs.allow_transparent_browser", true);
-          defaultPref("zen.widget.linux.transparency", true);
+          // Use lockPref for critical transparency settings to prevent user override
+          lockPref("browser.tabs.allow_transparent_browser", true);
+          lockPref("zen.widget.linux.transparency", true);
           defaultPref("zen.view.grey-out-inactive-windows", false);
           defaultPref("mod.sameerasw.zen_transparent_sidebar_enabled", true);
           defaultPref("mod.sameerasw.zen_transparent_glance_enabled", true);
-          defaultPref("mod.sameerasw.zen_bg_color_enabled", false);
-          defaultPref("mod.sameerasw.zen_transparency_color", "#00000000");
+          lockPref("mod.sameerasw.zen_bg_color_enabled", true);
+          lockPref("mod.sameerasw.zen_transparency_color", "#00000000");
           defaultPref("mod.sameerasw_zen_light_tint", "2");
           defaultPref("mod.sameerasw.zen_no_shadow", false);
-          defaultPref("mod.sameerasw.zen_bg_img_enabled", false);
+          lockPref("mod.sameerasw.zen_bg_img_enabled", false);
           defaultPref("mod.sameerasw.zen_tab_switch_anim", true);
           defaultPref("mod.sameerasw_zen_compact_sidebar_type", "0");
           defaultPref("mod.sameerasw.zen_compact_sidebar_width", "165px");
@@ -116,11 +117,8 @@ in {
       };
     };
 
-    # Install Transparent Zen mod CSS (by sameerasw)
-    # This will be placed in the default profile's chrome directory
-    home.file.".zen/chrome/userChrome.css".source = pkgs.fetchurl {
-      url = "https://raw.githubusercontent.com/zen-browser/theme-store/main/themes/642854b5-88b4-4c40-b256-e035532109df/chrome.css";
-      sha256 = "sha256-mOHJFAED4K8+R0eBipIKAZtxcZjH45PVUHux7h/6re8=";
-    };
+    # NOTE: Zen Browser uses ZenMods system for theming, not userChrome.css
+    # The Transparent Zen mod should be installed via Zen's built-in mod manager
+    # Transparency preferences are configured above in extraPrefs
   };
 }

@@ -7,7 +7,8 @@
       "custom/media"
     ],
     "modules-center": [
-      "clock"
+      "clock",
+      "custom/calendar"
     ],
     "modules-right": [
       "memory",
@@ -206,6 +207,14 @@
       "escape": true,
       "exec": "$HOME/.config/waybar/mediaplayer.py",
       "on-click": "playerctl play-pause"
+    },
+    "custom/calendar": {
+      "format": "{}",
+      "return-type": "json",
+      "interval": 60,
+      "exec": "$HOME/.config/waybar/custom_modules/thunderbird-calendar.py",
+      "on-click": "thunderbird",
+      "tooltip": true
     }
   }
 }

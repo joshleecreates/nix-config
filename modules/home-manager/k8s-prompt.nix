@@ -11,7 +11,7 @@ in {
 
   config = mkIf cfg.enable {
     programs.zsh = {
-      initExtra = ''
+      initContent = ''
         # Kubernetes context in prompt
         function kube_prompt_info() {
           if command -v kubectx >/dev/null; then
