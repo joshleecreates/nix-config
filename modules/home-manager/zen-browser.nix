@@ -94,11 +94,6 @@ in {
       })
     ];
 
-    # XDG portal configuration for file picker
-    xdg.portal.enable = true;
-    xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-    xdg.portal.config.common.default = "*";
-
     # Configure DuckDuckGo and @nix search via policies.json
     xdg.configFile."zen-browser/policies/policies.json".text = builtins.toJSON {
       policies = {

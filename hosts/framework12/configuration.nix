@@ -33,7 +33,18 @@
 
   # Enable networking
   networking.networkmanager.enable = true;
+  networking.networkmanager.dns = "systemd-resolved";
   services.tailscale.enable = true;
+
+  # Enable systemd-resolved for robust DNS with caching
+  services.resolved = {
+    enable = true;
+    dnssec = "allow-downgrade";
+    fallbackDns = [ "8.8.8.8" "8.8.4.4" "1.1.1.1" "1.0.0.1" ];
+    extraConfig = ''
+      DNSOverTLS=opportunistic
+    '';
+  };
 
   # Set your time zone.
   time.timeZone = "America/New_York";
@@ -53,19 +64,14 @@
     LC_TIME = "en_US.UTF-8";
   };
 
-  # Enable the X11 windowing system.
-  # You can disable this if you're only using the Wayland session.
-  services.xserver = {
-    enable = true;
-    videoDrivers = [ "modesetting" ];  # Modern KMS-based driver for Intel
-  };
-
-  # Enable the KDE Plasma Desktop Environment.
+  # Display manager for Wayland
   services.displayManager.sddm.enable = true;
   services.displayManager.sddm.wayland.enable = true;
   services.displayManager.defaultSession = "niri";
-  services.displayManager.autoLogin.enable = false;
-  services.desktopManager.plasma6.enable = true;
+
+  # Video drivers (no X11 server needed - Niri uses pure Wayland + xwayland-satellite)
+  # These drivers work with KMS (Kernel Mode Setting) for both Wayland and XWayland
+  services.xserver.videoDrivers = [ "modesetting" ];  # Modern KMS-based driver for Intel
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -96,23 +102,23 @@
   # Enable Google OS Login
   security.googleOsLogin.enable = true;
 
-  # Enable gnome-keyring
+  # Enable gnome-keyring for credential storage
   services.gnome.gnome-keyring.enable = true;
 
-  # XDG Desktop Portal for file pickers and other desktop integrations
+  # XDG Desktop Portal for file pickers, screen sharing, and other desktop integrations
   xdg.portal = {
     enable = true;
     extraPortals = [
-      pkgs.xdg-desktop-portal-gtk
-      pkgs.xdg-desktop-portal-wlr  # Required for screensharing on Wayland
+      pkgs.xdg-desktop-portal-gtk  # File pickers, app choosers
+      pkgs.xdg-desktop-portal-wlr  # Screen sharing for wlroots compositors (Niri)
     ];
     config = {
       common = {
         default = [ "gtk" ];
       };
-      # Use wlr portal for screensharing (works with Niri/wlroots compositors)
       niri = {
-        default = [ "wlr" "gtk" ];
+        default = [ "gtk" ];
+        "org.freedesktop.impl.portal.Secret" = [ "gnome-keyring" ];
         "org.freedesktop.impl.portal.ScreenCast" = [ "wlr" ];
         "org.freedesktop.impl.portal.Screenshot" = [ "wlr" ];
       };

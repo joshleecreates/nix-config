@@ -22,13 +22,13 @@ in {
     # Wayland packages
     home.packages = with pkgs; [
       xwayland-satellite  # XWayland support for Niri
-      xdg-desktop-portal-gnome  # Desktop portal
       # wlr-randr - replaced by kanshi for automatic display profile switching
       pavucontrol  # Audio control
       networkmanagerapplet  # Network manager applet
       blueman  # Bluetooth manager
       rofimoji  # Emoji picker
       wvkbd  # Virtual keyboard for touchscreen mode
+      polkit_gnome  # Polkit authentication agent
     ];
 
     # Niri configuration file
@@ -60,32 +60,42 @@ in {
       Install.WantedBy = [ "graphical-session.target" ];
     };
 
-    # Polkit agent for authentication dialogs
-    # Commented out to test if Plasma's polkit agent is sufficient
-    # If you get "Authentication is required" errors without a prompt dialog,
-    # uncomment this and switch to lxqt-policykit-agent instead
-    # systemd.user.services.polkit-gnome-authentication-agent-1 = {
-    #   Unit.Description = "polkit-gnome-authentication-agent-1";
-    #   Install.WantedBy = [ "graphical-session.target" ];
-    #   Service = {
-    #     Type = "simple";
-    #     ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
-    #     Restart = "on-failure";
-    #     RestartSec = 1;
-    #     TimeoutStopSec = 10;
-    #   };
-    # };
+    # Polkit agent for authentication dialogs (required for elevated permissions)
+    systemd.user.services.polkit-gnome-authentication-agent-1 = {
+      Unit = {
+        Description = "polkit-gnome-authentication-agent-1";
+        PartOf = [ "graphical-session.target" ];
+        After = [ "graphical-session.target" ];
+      };
+      Install.WantedBy = [ "graphical-session.target" ];
+      Service = {
+        Type = "simple";
+        ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
+        Restart = "on-failure";
+        RestartSec = 1;
+        TimeoutStopSec = 10;
+      };
+    };
 
     # Niri-specific environment variables
     home.sessionVariables = {
-      NIXOS_OZONE_WL = "1";  # Enable Wayland support for Electron apps
-      # XWayland environment variables
-      # xwayland-satellite will set DISPLAY dynamically
+      # Wayland session
+      XDG_SESSION_TYPE = "wayland";
+      XDG_CURRENT_DESKTOP = "niri";
+
+      # Enable Wayland support for Electron/Chromium apps
+      NIXOS_OZONE_WL = "1";
+
       # Force apps to prefer Wayland when available
       GDK_BACKEND = "wayland,x11";
       QT_QPA_PLATFORM = "wayland;xcb";
       SDL_VIDEODRIVER = "wayland";
       CLUTTER_BACKEND = "wayland";
+
+      # Mozilla/Firefox Wayland
+      MOZ_ENABLE_WAYLAND = "1";
+
+      # XWayland display will be set dynamically by xwayland-satellite
     };
   };
 }

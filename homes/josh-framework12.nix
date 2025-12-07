@@ -35,7 +35,7 @@
   modules.randomWallpaper.enable = true;
   modules.obsidian-daily.enable = true;
   modules.gaming.enable = true;
-  modules.zen-browser.enable = true;
+  modules.zen-browser.enable = false;
 
   # Enable waybar niri workspaces enhancement
   programs.waybar.niri-workspaces-enhanced.enable = true;
