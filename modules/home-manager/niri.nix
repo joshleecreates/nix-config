@@ -44,21 +44,8 @@ in {
       automount = true;
     };
 
-    # XWayland support via xwayland-satellite
-    systemd.user.services.xwayland-satellite = {
-      Unit = {
-        Description = "XWayland Satellite for Niri";
-        PartOf = [ "graphical-session.target" ];
-        After = [ "graphical-session.target" ];
-      };
-      Service = {
-        Type = "simple";
-        ExecStart = "${pkgs.xwayland-satellite}/bin/xwayland-satellite";
-        Restart = "on-failure";
-        RestartSec = 1;
-      };
-      Install.WantedBy = [ "graphical-session.target" ];
-    };
+    # XWayland support: niri 25.11+ automatically spawns xwayland-satellite
+    # and exports DISPLAY. The package is kept in PATH above.
 
     # Polkit agent for authentication dialogs (required for elevated permissions)
     systemd.user.services.polkit-gnome-authentication-agent-1 = {
@@ -95,7 +82,7 @@ in {
       # Mozilla/Firefox Wayland
       MOZ_ENABLE_WAYLAND = "1";
 
-      # XWayland display will be set dynamically by xwayland-satellite
+      # DISPLAY is set automatically by niri when it spawns xwayland-satellite
     };
   };
 }

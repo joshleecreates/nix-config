@@ -158,6 +158,9 @@
   # Enable thermald for Intel thermal management
   services.thermald.enable = true;
 
+  # Power profiles daemon for powerprofilesctl
+  services.power-profiles-daemon.enable = true;
+
   # Enable hardware acceleration for Intel graphics
   hardware.graphics = {
     enable = true;

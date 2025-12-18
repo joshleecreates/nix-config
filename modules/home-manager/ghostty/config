@@ -1,4 +1,5 @@
-font-size = 13
+font-size = 14
+confirm-close-surface = false
 window-padding-x = 8
 window-padding-y = 8
 window-decoration = auto
@@ -11,4 +12,3 @@ window-padding-balance = true
 quick-terminal-position = top
 quick-terminal-screen = main
 quick-terminal-animation-duration = 0.1
-keybind = global:ctrl+grave=toggle_quick_terminal

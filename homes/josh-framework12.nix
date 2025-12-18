@@ -89,6 +89,33 @@
     theme_background = False
   '';
 
+  # Fuzzel launcher - Nord theme styling
+  programs.fuzzel = {
+    enable = true;
+    settings = {
+      main = {
+        font = "JetBrainsMono Nerd Font:size=14";
+        terminal = "foot";
+        layer = "overlay";
+        prompt = "❯ ";
+      };
+      colors = {
+        # Nord theme colors with transparency
+        background = "2e3440ee";        # Nord polar night (semi-transparent)
+        text = "d8dee9ff";              # Nord snow storm
+        match = "88c0d0ff";             # Nord frost (accent color matching window borders)
+        selection = "4c566aff";         # Nord polar night (darker)
+        selection-text = "eceff4ff";    # Nord snow storm (bright)
+        selection-match = "88c0d0ff";   # Nord frost
+        border = "88c0d0ff";            # Nord frost (matching window active border)
+      };
+      border = {
+        width = 3;                      # Match niri window border width
+        radius = 8;                     # Match niri window corner radius
+      };
+    };
+  };
+
   # ChatGPT web app
   xdg.desktopEntries.chatgpt = {
     name = "ChatGPT";
