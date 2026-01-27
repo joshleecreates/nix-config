@@ -71,6 +71,11 @@ in {
           "browser.vpn_promo.enabled" = false;
           "browser.promo.focus.enabled" = false;
           "browser.aboutwelcome.enabled" = false;
+        } // optionalAttrs cfg.onePasswordIntegration {
+          # Disable built-in password manager when using 1Password
+          "signon.rememberSignons" = false;
+          "signon.autofillForms" = false;
+          "signon.formlessCapture.enabled" = false;
         };
       };
     };

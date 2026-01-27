@@ -6,7 +6,8 @@
       "Read(//home/josh/.local/share/Steam/logs/**)",
       "Bash(systemctl:*)",
       "WebFetch(domain:raw.githubusercontent.com)",
-      "WebFetch(domain:wiki.nixos.org)"
+      "WebFetch(domain:wiki.nixos.org)",
+      "mcp__nixos__nix"
     ],
     "deny": [],
     "ask": []

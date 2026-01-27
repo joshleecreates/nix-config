@@ -9,6 +9,8 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ./cachix.nix
+      ../../modules/nixos/graphics.nix
+      ../../modules/nixos/wayland.nix
       ../../modules/nixos/gaming.nix
     ];
 
@@ -105,38 +107,25 @@
   # Enable gnome-keyring for credential storage
   services.gnome.gnome-keyring.enable = true;
 
-  # XDG Desktop Portal for file pickers, screen sharing, and other desktop integrations
-  xdg.portal = {
+  # Enable gvfs for file manager SMB/network share support
+  services.gvfs.enable = true;
+
+  # Network discovery for SMB shares
+  services.avahi = {
     enable = true;
-    extraPortals = [
-      pkgs.xdg-desktop-portal-gtk  # File pickers, app choosers
-      pkgs.xdg-desktop-portal-wlr  # Screen sharing for wlroots compositors (Niri)
-    ];
-    config = {
-      common = {
-        default = [ "gtk" ];
-      };
-      niri = {
-        default = [ "gtk" ];
-        "org.freedesktop.impl.portal.Secret" = [ "gnome-keyring" ];
-        "org.freedesktop.impl.portal.ScreenCast" = [ "wlr" ];
-        "org.freedesktop.impl.portal.Screenshot" = [ "wlr" ];
-      };
-    };
+    nssmdns4 = true;  # Enable mDNS resolution in NSS
+    openFirewall = true;
   };
 
-  # PAM configuration for swaylock
-  security.pam.services.swaylock = {};
-
-  # Enable sound with pipewire.
-  services.pulseaudio.enable = false;
-  security.rtkit.enable = true;
-  services.pipewire = {
+  # Windows network discovery (WS-Discovery)
+  services.samba-wsdd = {
     enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
+    openFirewall = true;
   };
+
+  # Enable Wayland module (handles PipeWire, XDG portals, swaylock PAM)
+  modules.wayland.enable = true;
+  modules.wayland.compositor = "niri";
 
   # Enable Bluetooth
   hardware.bluetooth.enable = true;
@@ -161,25 +150,20 @@
   # Power profiles daemon for powerprofilesctl
   services.power-profiles-daemon.enable = true;
 
-  # Enable hardware acceleration for Intel graphics
-  hardware.graphics = {
-    enable = true;
-    enable32Bit = true;  # For 32-bit applications
-    extraPackages = with pkgs; [
-      intel-media-driver  # VAAPI driver for Intel Gen 8+ (Broadwell and newer)
-      intel-compute-runtime  # OpenCL support for Intel GPUs
-      vpl-gpu-rt  # Intel VPL GPU runtime (oneVPL)
-      mesa  # Mesa drivers including Vulkan (ANV for Intel)
-    ];
-    extraPackages32 = with pkgs.driversi686Linux; [
-      intel-media-driver  # 32-bit VAAPI support
-    ];
-  };
+  # Intel-specific graphics packages (on top of base graphics module)
+  hardware.graphics.extraPackages = with pkgs; [
+    intel-media-driver      # VAAPI driver for Intel Gen 8+ (Broadwell and newer)
+    intel-compute-runtime   # OpenCL support for Intel GPUs
+    vpl-gpu-rt              # Intel VPL GPU runtime (oneVPL)
+  ];
+  hardware.graphics.extraPackages32 = with pkgs.driversi686Linux; [
+    intel-media-driver      # 32-bit VAAPI support
+  ];
 
-  # System-wide video acceleration environment variables
+  # Intel-specific video acceleration environment variables
   environment.sessionVariables = {
-    LIBVA_DRIVER_NAME = "iHD";  # Use Intel iHD driver for VAAPI
-    VDPAU_DRIVER = "va_gl";  # VDPAU via VAAPI
+    LIBVA_DRIVER_NAME = "iHD";   # Use Intel iHD driver for VAAPI
+    VDPAU_DRIVER = "va_gl";      # VDPAU via VAAPI
   };
 
   users.users.josh = {
@@ -243,18 +227,22 @@
     obsidian
     dbeaver-bin
 
-    # Niri and essential Wayland tools
+    # Niri and essential Wayland tools (wl-clipboard is in wayland module)
     fuzzel       # Application launcher
     swaylock     # Screen locker
     mako         # Notification daemon
     swayidle     # Idle management
     swww         # Background manager with namespace support
-    wl-clipboard # Clipboard utilities
     playerctl    # Media player control
 
     # System monitoring
     smartmontools # Disk health and temperature monitoring
     lm_sensors    # Hardware monitoring (CPU temp, fan speeds, voltages)
+
+    # Network file sharing
+    cifs-utils                      # Mount SMB/CIFS shares
+    kdePackages.kio-extras          # KIO plugins for SMB (Dolphin)
+    kdePackages.kdenetwork-filesharing  # KDE network file sharing
   ];
   # # Early kernel module loading and Intel graphics optimizations
   # boot.initrd.kernelModules = [ "pinctrl_tigerlake" "i915" ];

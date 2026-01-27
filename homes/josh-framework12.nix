@@ -19,6 +19,7 @@
     #niri
     ../modules/home-manager/mako.nix
     ../modules/home-manager/niri.nix
+    ../modules/home-manager/nirius.nix
     ../modules/home-manager/kanshi.nix
     ../modules/home-manager/niri-lid-handler.nix
     ../modules/home-manager/waybar.nix
@@ -29,6 +30,7 @@
   modules.framework.enable = true;
   modules.moonlight.enable = true;
   modules.niri.enable = true;
+  modules.nirius.enable = true;
   modules.kanshi.enable = true;
   modules.niri-lid-handler.enable = true;
   modules.waybar.enable = true;
@@ -59,7 +61,41 @@
   home.packages = with pkgs; [
     discord
     distrobox
+    kdePackages.ark
+    kdePackages.gwenview
+    libheif
+    unzip
   ];
+
+  xdg.mimeApps = {
+    enable = true;
+    defaultApplications = {
+      # Archives (Ark)
+      "application/zip" = [ "org.kde.ark.desktop" ];
+      "application/x-7z-compressed" = [ "org.kde.ark.desktop" ];
+      "application/x-tar" = [ "org.kde.ark.desktop" ];
+      "application/gzip" = [ "org.kde.ark.desktop" ];
+      "application/x-rar" = [ "org.kde.ark.desktop" ];
+      # Web (Firefox)
+      "application/x-extension-htm" = [ "firefox.desktop" ];
+      "application/x-extension-html" = [ "firefox.desktop" ];
+      "application/x-extension-shtml" = [ "firefox.desktop" ];
+      "application/x-extension-xht" = [ "firefox.desktop" ];
+      "application/x-extension-xhtml" = [ "firefox.desktop" ];
+      "application/xhtml+xml" = [ "firefox.desktop" ];
+      "text/html" = [ "firefox.desktop" ];
+      "x-scheme-handler/chrome" = [ "firefox.desktop" ];
+      "x-scheme-handler/http" = [ "firefox.desktop" ];
+      "x-scheme-handler/https" = [ "firefox.desktop" ];
+      # Video (VLC)
+      "video/mp4" = [ "vlc.desktop" ];
+      # App handlers
+      "x-scheme-handler/slack" = [ "slack.desktop" ];
+      "x-scheme-handler/sgnl" = [ "signal.desktop" ];
+      "x-scheme-handler/signalcaptcha" = [ "signal.desktop" ];
+    };
+  };
+  xdg.configFile."mimeapps.list".force = true;
 
   # Spotify Player desktop entry
   xdg.desktopEntries.spotify-player = {
@@ -82,12 +118,6 @@
     type = "Application";
     categories = [ "System" "Monitor" ];
   };
-
-  # btop configuration - nord theme with transparent background
-  xdg.configFile."btop/btop.conf".text = ''
-    color_theme = "nord"
-    theme_background = False
-  '';
 
   # Fuzzel launcher - Nord theme styling
   programs.fuzzel = {

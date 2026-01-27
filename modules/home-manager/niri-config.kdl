@@ -10,6 +10,11 @@ prefer-no-csd
 // Do not add output blocks here - they override kanshi's dynamic configuration
 // Instead, systemd-logind is configured to ignore lid events (see configuration.nix)
 
+// Nreal Air 2 Pro AR glasses - reduced scale for usability
+output "Nreal Air 2 Pro 0x88888800" {
+    scale 1.5
+}
+
 // Input device configuration
 input {
     keyboard {
@@ -146,6 +151,11 @@ binds {
     Super+B { spawn "firefox"; }
     Super+Period { spawn "rofimoji"; }
     Super+G { spawn "steam"; }
+
+    // Scratchpad toggles (nirius)
+    Mod+Shift+T { spawn "nirius" "scratchpad-toggle" "--app-id" "ghostty" "--spawn" "ghostty"; }
+    Mod+Shift+B { spawn "nirius" "scratchpad-toggle" "--app-id" "firefox" "--spawn" "firefox"; }
+    Mod+Shift+C { spawn "nirius" "scratchpad-toggle" "--app-id" "chatgpt" "--spawn" "chatgpt"; }
 
     // Volume keys (Framework laptop function keys) with wob integration
     XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+ -l 1.0 && wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{print int($2*100)}' > $XDG_RUNTIME_DIR/wob.sock"; }
