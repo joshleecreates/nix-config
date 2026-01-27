@@ -64,8 +64,7 @@ layout {
 // spawn-at-startup "mako"
 // spawn-at-startup "swayidle"
 
-// Start waybar
-spawn-at-startup "waybar"
+// Noctalia shell (bar, notifications, wallpaper) is started via systemd
 
 // Start NetworkManager applet
 spawn-at-startup "nm-applet" "--indicator"
@@ -88,12 +87,6 @@ animations {
 // Overview backdrop settings
 overview {
     backdrop-color "#2e3440"
-}
-
-// Layer rules for wallpaper backdrop
-layer-rule {
-    match namespace="swww-daemonbackdrop"
-    place-within-backdrop true
 }
 
 // Window rules
@@ -157,11 +150,11 @@ binds {
     Mod+Shift+B { spawn "nirius" "scratchpad-toggle" "--app-id" "firefox" "--spawn" "firefox"; }
     Mod+Shift+C { spawn "nirius" "scratchpad-toggle" "--app-id" "chatgpt" "--spawn" "chatgpt"; }
 
-    // Volume keys (Framework laptop function keys) with wob integration
-    XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+ -l 1.0 && wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{print int($2*100)}' > $XDG_RUNTIME_DIR/wob.sock"; }
-    XF86AudioLowerVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1- && wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{print int($2*100)}' > $XDG_RUNTIME_DIR/wob.sock"; }
-    XF86AudioMute        allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle && (wpctl get-volume @DEFAULT_AUDIO_SINK@ | grep -q MUTED && echo 0 || wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{print int($2*100)}') > $XDG_RUNTIME_DIR/wob.sock"; }
-    XF86AudioMicMute     allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"; }
+    // Volume keys (Framework laptop function keys) - OSD handled by noctalia-shell
+    XF86AudioRaiseVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1+" "-l" "1.0"; }
+    XF86AudioLowerVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1-"; }
+    XF86AudioMute        allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; }
+    XF86AudioMicMute     allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"; }
 
     // Media keys
     XF86AudioPlay        allow-when-locked=true { spawn-sh "playerctl play-pause"; }
@@ -169,9 +162,9 @@ binds {
     XF86AudioPrev        allow-when-locked=true { spawn-sh "playerctl previous"; }
     XF86AudioNext        allow-when-locked=true { spawn-sh "playerctl next"; }
 
-    // Brightness keys (Framework laptop function keys) with wob integration
-    XF86MonBrightnessUp allow-when-locked=true { spawn-sh "brightnessctl --class=backlight set +10% | sed -En 's/.*\\(([0-9]+)%\\).*/\\1/p' > $XDG_RUNTIME_DIR/wob.sock"; }
-    XF86MonBrightnessDown allow-when-locked=true { spawn-sh "brightnessctl --class=backlight set 10%- | sed -En 's/.*\\(([0-9]+)%\\).*/\\1/p' > $XDG_RUNTIME_DIR/wob.sock"; }
+    // Brightness keys (Framework laptop function keys) - OSD handled by noctalia-shell
+    XF86MonBrightnessUp allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "+10%"; }
+    XF86MonBrightnessDown allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "10%-"; }
 
     // Overview
     Mod+O repeat=false { toggle-overview; }

@@ -150,6 +150,9 @@
   # Power profiles daemon for powerprofilesctl
   services.power-profiles-daemon.enable = true;
 
+  # UPower for battery info (required by noctalia-shell)
+  services.upower.enable = true;
+
   # Intel-specific graphics packages (on top of base graphics module)
   hardware.graphics.extraPackages = with pkgs; [
     intel-media-driver      # VAAPI driver for Intel Gen 8+ (Broadwell and newer)
@@ -228,11 +231,10 @@
     dbeaver-bin
 
     # Niri and essential Wayland tools (wl-clipboard is in wayland module)
+    # Note: mako (notifications), swww (wallpaper) replaced by noctalia-shell
     fuzzel       # Application launcher
     swaylock     # Screen locker
-    mako         # Notification daemon
     swayidle     # Idle management
-    swww         # Background manager with namespace support
     playerctl    # Media player control
 
     # System monitoring

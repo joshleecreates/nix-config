@@ -50,6 +50,10 @@
       url = "github:youwen5/zen-browser-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    noctalia = {
+      url = "github:noctalia-dev/noctalia-shell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
 
@@ -93,9 +97,15 @@
         modules = [
           ./hosts/framework12/configuration.nix
           inputs.home-manager.nixosModules.default
+          inputs.noctalia.nixosModules.default
+          {
+            # Enable noctalia-shell systemd service
+            services.noctalia-shell.enable = true;
+          }
           {
             home-manager.sharedModules = [
               inputs.waybar-niri-workspaces-enhanced.homeModules.default
+              inputs.noctalia.homeModules.default
             ];
             home-manager.extraSpecialArgs = {
               zen-browser-pkg = inputs.zen-browser.packages."x86_64-linux".zen-browser-unwrapped;

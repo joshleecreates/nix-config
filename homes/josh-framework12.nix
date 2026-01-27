@@ -17,14 +17,11 @@
     ../modules/home-manager/zen-browser.nix
 
     #niri
-    ../modules/home-manager/mako.nix
+    # Replaced by noctalia-shell: mako.nix, waybar.nix, random-wallpaper.nix, wob.nix
     ../modules/home-manager/niri.nix
     ../modules/home-manager/nirius.nix
     ../modules/home-manager/kanshi.nix
     ../modules/home-manager/niri-lid-handler.nix
-    ../modules/home-manager/waybar.nix
-    ../modules/home-manager/random-wallpaper.nix
-    ../modules/home-manager/wob.nix
   ];
 
   modules.framework.enable = true;
@@ -33,14 +30,15 @@
   modules.nirius.enable = true;
   modules.kanshi.enable = true;
   modules.niri-lid-handler.enable = true;
-  modules.waybar.enable = true;
-  modules.randomWallpaper.enable = true;
   modules.obsidian-daily.enable = true;
   modules.gaming.enable = true;
   modules.zen-browser.enable = false;
 
-  # Enable waybar niri workspaces enhancement
-  programs.waybar.niri-workspaces-enhanced.enable = true;
+  # Noctalia shell - replaces waybar, mako, wob, swww/random-wallpaper
+  programs.noctalia-shell = {
+    enable = true;
+    systemd.enable = true;
+  };
 
   # Configure foot terminal
   programs.foot = {
