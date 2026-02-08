@@ -5,6 +5,8 @@
     pkgs.vscode-langservers-extracted
     pkgs.elixir
     pkgs.elixir-ls
+    pkgs.typescript
+    pkgs.nodePackages.typescript-language-server
   ];
 
   programs.neovim = {
@@ -19,11 +21,14 @@
         type = "lua";
         config = ''
           local capabilities = require('cmp_nvim_lsp').default_capabilities()
-          require'lspconfig'.html.setup { capabilities = capabilities }
-          require'lspconfig'.elixirls.setup { 
-            cmd = {"${pkgs.elixir-ls}/bin/elixir-ls"};
-            capabilities = capabilities 
+
+          vim.lsp.config.html = { capabilities = capabilities }
+          vim.lsp.config.elixirls = {
+            cmd = {"${pkgs.elixir-ls}/bin/elixir-ls"},
+            capabilities = capabilities
           }
+          vim.lsp.config.ts_ls = { capabilities = capabilities }
+          vim.lsp.enable({'html', 'elixirls', 'ts_ls'})
         '';
       }
       cmp-nvim-lsp

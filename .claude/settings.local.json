@@ -7,7 +7,8 @@
       "Bash(systemctl:*)",
       "WebFetch(domain:raw.githubusercontent.com)",
       "WebFetch(domain:wiki.nixos.org)",
-      "mcp__nixos__nix"
+      "mcp__nixos__nix",
+      "Bash(cat:*)"
     ],
     "deny": [],
     "ask": []

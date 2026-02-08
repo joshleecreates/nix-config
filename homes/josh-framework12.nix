@@ -38,6 +38,14 @@
   programs.noctalia-shell = {
     enable = true;
     systemd.enable = true;
+    settings = {
+      notifications = {
+        normalUrgencyDuration = 60;  # Auto-dismiss after 60 seconds
+      };
+      audio = {
+        mprisBlacklist = [ "spotify" ];  # Don't show Spotify in media widget
+      };
+    };
   };
 
   # Configure foot terminal

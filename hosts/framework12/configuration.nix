@@ -36,6 +36,11 @@
   # Enable networking
   networking.networkmanager.enable = true;
   networking.networkmanager.dns = "systemd-resolved";
+  networking.nameservers = [
+    "1.1.1.1"
+    "8.8.8.8"
+  ];
+
   services.tailscale.enable = true;
 
   # Enable systemd-resolved for robust DNS with caching
