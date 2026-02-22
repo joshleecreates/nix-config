@@ -8,8 +8,7 @@
   home.stateVersion = lib.mkDefault "25.05";
 
   imports = [
-    ../../home/desktop.nix
-    ./displays.nix
+    ../home/desktop.nix
   ];
 
   # Disable some modules for play user

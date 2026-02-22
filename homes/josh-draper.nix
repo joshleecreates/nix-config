@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ lib, pkgs, ... }:
 
 # Standalone home-manager config for josh@draper (NixOS workstation)
 # CLI tools only - no desktop environment
@@ -10,5 +10,9 @@
 
   home.username = "josh";
   home.homeDirectory = "/home/josh";
-  home.stateVersion = "24.05";
+  home.stateVersion = "25.05";
+
+  home.packages = with pkgs; [
+    claude-code
+  ];
 }

@@ -34,23 +34,10 @@
     yazi
     gnumake
     jq
+    tree
     fastfetch
-    claude-code
     devbox
   ];
-
-  # btop with settings to mitigate crash bug in 1.4.x
-  programs.btop = {
-    enable = true;
-    settings = {
-      color_theme = "nord";
-      theme_background = false;
-      update_ms = 1000;
-      proc_sorting = "memory";
-      proc_filter_kernel = true;
-      show_gpu_info = "Off";
-    };
-  };
 
   programs.home-manager.enable = true;
   programs.htop.enable = true;

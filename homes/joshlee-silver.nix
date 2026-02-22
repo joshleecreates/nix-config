@@ -9,5 +9,9 @@
 
   home.username = "joshlee";
   home.homeDirectory = "/Users/joshlee";
-  home.stateVersion = "24.05";
+  home.stateVersion = "25.05";
+
+  home.packages = with pkgs; [
+    claude-code
+  ];
 }

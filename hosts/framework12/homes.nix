@@ -7,8 +7,18 @@
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
-    users.josh = import ./josh.nix;
-    users.play = import ./play.nix;
+    users.josh = {
+      imports = [
+        ../../homes/josh-framework12.nix
+        ./displays.nix
+      ];
+    };
+    users.play = {
+      imports = [
+        ../../homes/play-framework12.nix
+        ./displays.nix
+      ];
+    };
 
     # Framework laptop settings shared by all users
     sharedModules = [{
