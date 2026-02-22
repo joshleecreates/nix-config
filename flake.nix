@@ -123,7 +123,7 @@
         modules = [
           ./homes/josh.nix
         ];
-        pkgs = nixpkgs.legacyPackages."x86_64-linux";
+        pkgs = import nixpkgs { system = "x86_64-linux"; config.allowUnfree = true; };
       };
       homeConfigurations."josh@framework12" = home-manager.lib.homeManagerConfiguration {
         modules = [

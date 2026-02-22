@@ -16,7 +16,7 @@
 
   home.packages = [
     # shell
-    pkgs.thefuck
+    pkgs.pay-respects
     pkgs.oh-my-zsh
     pkgs.git
     pkgs.wget
