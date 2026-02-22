@@ -8,7 +8,7 @@
   home.stateVersion = lib.mkDefault "25.05";
 
   imports = [
-    ../../homes/desktop.nix
+    ../../home/desktop.nix
     ./displays.nix
   ];
 

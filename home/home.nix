@@ -5,20 +5,22 @@
 
 {
   imports = [
+    # Common configs (always-on)
+    ./common/git.nix
+    ./common/zsh.nix
     # CLI tools
     ../modules/home-manager/neovim.nix
     ../modules/home-manager/tmux.nix
-    ../modules/home-manager/git.nix
-    ../modules/home-manager/zsh.nix
     ../modules/home-manager/sesh.nix
-    # Ops tools
-    ../modules/home-manager/k9s.nix
-    ../modules/home-manager/k8s-prompt.nix
+    # DevOps tools
+    ../modules/home-manager/devops.nix
   ];
 
   # Enable modules
+  modules.neovim.enable = true;
+  modules.tmux.enable = true;
   modules.sesh.enable = true;
-  modules.k8s-prompt.enable = true;
+  modules.devops.enable = true;
 
   home.packages = with pkgs; [
     # Standard CLI tools
@@ -35,18 +37,6 @@
     fastfetch
     claude-code
     devbox
-
-    # Ops tools
-    awscli2
-    kubectl
-    kubectx
-    kubernetes-helm
-    opentofu
-    ansible
-    talosctl
-    argocd
-    minikube
-    cilium-cli
   ];
 
   # btop with settings to mitigate crash bug in 1.4.x

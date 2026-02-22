@@ -46,11 +46,12 @@
         ];
       };
       # Standalone home-manager configurations
-      homeConfigurations."josh@pop-os" = home-manager.lib.homeManagerConfiguration {
-        modules = [
-          ./homes/josh.nix
-        ];
-        pkgs = import nixpkgs { system = "x86_64-linux"; config.allowUnfree = true; };
+      homeConfigurations."josh@draper" = home-manager.lib.homeManagerConfiguration {
+        modules = [ ./homes/josh-draper.nix ];
+        pkgs = import nixpkgs {
+          system = "x86_64-linux";
+          config.allowUnfree = true;
+        };
       };
       homeConfigurations."josh@framework12" = home-manager.lib.homeManagerConfiguration {
         modules = [ ./hosts/framework12/josh.nix ];
@@ -59,15 +60,8 @@
           config.allowUnfree = true;
         };
       };
-      homeConfigurations."josh@silver" = home-manager.lib.homeManagerConfiguration {
-        modules = [
-          ./homes/macos.nix
-          {
-            home.username = "josh";
-            home.homeDirectory = "/Users/josh";
-            home.stateVersion = "24.05";
-          }
-        ];
+      homeConfigurations."joshlee@silver" = home-manager.lib.homeManagerConfiguration {
+        modules = [ ./homes/joshlee-silver.nix ];
         pkgs = nixpkgs.legacyPackages."aarch64-darwin";
       };
     };
