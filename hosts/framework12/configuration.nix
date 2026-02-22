@@ -5,22 +5,14 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      ./cachix.nix
-      ../../modules/nixos/graphics.nix
-      ../../modules/nixos/wayland.nix
-      ../../modules/nixos/gaming.nix
-    ];
-
-  # Configure home-manager
-  home-manager = {
-    useGlobalPkgs = true;
-    useUserPackages = true;
-    users.josh = import ../../homes/josh-framework12.nix;
-    users.play = import ../../homes/play-framework12.nix;
-  };
+  imports = [
+    ./hardware.nix
+    ./homes.nix
+    ../../modules/nixos/cachix.nix
+    ../../modules/nixos/graphics.nix
+    ../../modules/nixos/wayland.nix
+    ../../modules/nixos/gaming.nix
+  ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -42,6 +34,9 @@
   ];
 
   services.tailscale.enable = true;
+
+  # Enable SSH
+  services.openssh.enable = true;
 
   # Enable systemd-resolved for robust DNS with caching
   services.resolved = {
@@ -174,42 +169,12 @@
     VDPAU_DRIVER = "va_gl";      # VDPAU via VAAPI
   };
 
-  users.users.josh = {
-    isNormalUser = true;
-    description = "Josh Lee";
-    extraGroups = [ "networkmanager" "wheel" "docker" ];
-    shell = pkgs.zsh;  # Set zsh as default shell
-    packages = with pkgs; [
-      kdePackages.kate
-    ];
-  };
-
-  users.users.play = {
-    isNormalUser = true;
-    description = "Play";
-    extraGroups = [ "networkmanager" "wheel" ];
-    shell = pkgs.zsh;  # Set zsh as default shell
-  };
-
   programs.firefox.enable = true;
   programs.zsh.enable = true;
   programs.niri.enable = true;
-  programs._1password.enable = true;
-  programs._1password-gui.enable = true;
-  programs._1password-gui.polkitPolicyOwners = [ "josh" ];
 
   # Enable gaming module
   modules.gaming.enable = true;
-
-  # Allow Vivaldi to use 1Password browser integration
-  environment.etc."1password/custom_allowed_browsers" = {
-    text = ''
-      vivaldi-bin
-      vivaldi
-      .vivaldi-wrapped
-    '';
-    mode = "0755";
-  };
 
   # Enable Docker virtualization
   virtualisation.docker = {
@@ -217,6 +182,12 @@
     daemon.settings = {
       ipv6 = false;
     };
+  };
+
+  # Ollama - local LLM inference
+  services.ollama = {
+    enable = true;
+    acceleration = false;  # No GPU acceleration (Intel iGPU not supported)
   };
 
   # Allow unfree packages
@@ -245,6 +216,9 @@
     # System monitoring
     smartmontools # Disk health and temperature monitoring
     lm_sensors    # Hardware monitoring (CPU temp, fan speeds, voltages)
+
+    # AI/LLM
+    ollama        # CLI for ollama service
 
     # Network file sharing
     cifs-utils                      # Mount SMB/CIFS shares

@@ -16,6 +16,8 @@
       k = "kubectl";
       save-background = "$HOME/.local/bin/save-background.sh";
       random-wallpaper = "$HOME/.local/bin/random-wallpaper.sh";
+      dsa = "docker stop $(docker ps -aq)";
+      dra = "docker rm $(docker ps -aq)";
     };
     initContent = ''
       # aws cli auto complete
