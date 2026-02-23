@@ -10,6 +10,7 @@
     ./common/zsh.nix
     # CLI tools
     ../modules/home-manager/zsh.nix
+    ../modules/home-manager/btop.nix
     ../modules/home-manager/neovim.nix
     ../modules/home-manager/tmux.nix
     ../modules/home-manager/sesh.nix
@@ -18,6 +19,7 @@
   ];
 
   # Enable modules
+  modules.btop.enable = true;
   modules.neovim.enable = true;
   modules.tmux.enable = true;
   modules.sesh.enable = true;

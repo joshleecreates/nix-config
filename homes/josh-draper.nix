@@ -16,6 +16,8 @@
     ghostty.terminfo
     claude-code
     nerd-fonts.jetbrains-mono
+    eza
+    bat
   ];
 
   fonts.fontconfig.enable = true;
@@ -29,6 +31,11 @@
 
   programs.zsh.shellAliases = {
     hms = "home-manager switch --flake ~/nix-config#josh@draper";
+    ls = "eza --icons";
+    ll = lib.mkForce "eza -l --icons";
+    la = "eza -la --icons";
+    lt = "eza --tree --icons";
+    cat = "bat";
   };
 
   programs.starship = {
