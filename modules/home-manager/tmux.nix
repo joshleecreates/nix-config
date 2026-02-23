@@ -2,10 +2,39 @@
 
 let
   cfg = config.modules.tmux;
+
+  # Theme color palettes
+  themes = {
+    nord = {
+      bg = "default";
+      fg = "#eceff4";
+      accent = "#88c0d0";
+      accentFg = "#2e3440";
+      secondary = "#81a1c1";
+      muted = "#4c566a";
+      mutedFg = "#d8dee9";
+    };
+    rose-pine = {
+      bg = "default";
+      fg = "#e0def4";
+      accent = "#c4a7e7";
+      accentFg = "#191724";
+      secondary = "#ebbcba";
+      muted = "#26233a";
+      mutedFg = "#e0def4";
+    };
+  };
+
+  theme = themes.${cfg.theme};
 in
 {
   options.modules.tmux = {
     enable = lib.mkEnableOption "Tmux terminal multiplexer";
+    theme = lib.mkOption {
+      type = lib.types.enum [ "nord" "rose-pine" ];
+      default = "nord";
+      description = "Color theme for tmux status bar";
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -18,7 +47,6 @@ in
       customPaneNavigationAndResize = true;
       plugins = with pkgs.tmuxPlugins; [
         yank
-        nord
         resurrect
         {
           plugin = continuum;
@@ -29,23 +57,25 @@ in
         }
       ];
       extraConfig = ''
-        set -g default-terminal "screen-256color"
+        set -g default-terminal "tmux-256color"
+        set -ga terminal-overrides ",*256col*:Tc"
+        set -ga terminal-overrides ',*:Ss=\E[%p1%d q:Se=\E[2 q'
         set -g detach-on-destroy off
         set-option -g status-left-length 40
         set-option -g status-right-length 80
 
-        # Status bar with rounded bubbles (Nord colors)
-        set -g status-style "bg=default,fg=#eceff4"
+        # Status bar with rounded bubbles
+        set -g status-style "bg=${theme.bg},fg=${theme.fg}"
 
         # Left side - session name with rounded bubble
-        set -g status-left "#[bg=default,fg=#88c0d0]#[bg=#88c0d0,fg=#2e3440,bold] #S #[bg=default,fg=#88c0d0] "
+        set -g status-left "#[bg=${theme.bg},fg=${theme.accent}]#[bg=${theme.accent},fg=${theme.accentFg},bold] #S #[bg=${theme.bg},fg=${theme.accent}] "
 
         # Right side - host, date, time with rounded bubbles
         set -g status-right ""
 
         # Window status format with rounded bubbles
-        set -g window-status-format "#[bg=default,fg=#4c566a]#[bg=#4c566a,fg=#d8dee9] #I #W #[bg=default,fg=#4c566a]"
-        set -g window-status-current-format "#[bg=default,fg=#81a1c1]#[bg=#81a1c1,fg=#2e3440,bold] #I #W #[bg=default,fg=#81a1c1]"
+        set -g window-status-format "#[bg=${theme.bg},fg=${theme.muted}]#[bg=${theme.muted},fg=${theme.mutedFg}] #I #W #[bg=${theme.bg},fg=${theme.muted}]"
+        set -g window-status-current-format "#[bg=${theme.bg},fg=${theme.secondary}]#[bg=${theme.secondary},fg=${theme.accentFg},bold] #I #W #[bg=${theme.bg},fg=${theme.secondary}]"
 
         set -g window-status-separator " "
         # switch panes using Alt-arrow without prefix

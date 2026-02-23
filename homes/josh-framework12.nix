@@ -16,5 +16,6 @@
 
   home.packages = with pkgs; [
     moonlight-qt
+    claude-code
   ];
 }

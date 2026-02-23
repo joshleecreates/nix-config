@@ -4,11 +4,6 @@
     enable = true;
     enableCompletion = true;
     dotDir = "${config.xdg.configHome}/zsh";
-    oh-my-zsh = {
-      enable = true;
-      theme = "robbyrussell";
-      plugins = ["kubectl" "kubectx" "git" "aws" "docker"];
-    };
     shellAliases = {
       ll = "ls -l";
       ta = "tmux attach";

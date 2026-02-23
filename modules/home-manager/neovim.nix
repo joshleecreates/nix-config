@@ -2,10 +2,33 @@
 
 let
   cfg = config.modules.neovim;
+
+  themePlugins = {
+    nord = {
+      plugin = pkgs.vimPlugins.nord-nvim;
+      type = "lua";
+      config = ''
+        vim.cmd[[colorscheme nord]]
+      '';
+    };
+    rose-pine = {
+      plugin = pkgs.vimPlugins.rose-pine;
+      type = "lua";
+      config = ''
+        require("rose-pine").setup()
+        vim.cmd[[colorscheme rose-pine]]
+      '';
+    };
+  };
 in
 {
   options.modules.neovim = {
     enable = lib.mkEnableOption "Neovim editor with LSP and plugins";
+    theme = lib.mkOption {
+      type = lib.types.enum [ "nord" "rose-pine" ];
+      default = "nord";
+      description = "Color theme for Neovim";
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -67,13 +90,7 @@ in
         vim-tmux-navigator
         ansible-vim
         vim-nix
-        {
-          plugin = nord-nvim;
-          type = "lua";
-          config = ''
-            vim.cmd[[colorscheme nord]]
-          '';
-        }
+        themePlugins.${cfg.theme}
         {
           plugin = conform-nvim;
           type = "lua";

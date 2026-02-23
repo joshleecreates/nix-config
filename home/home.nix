@@ -9,6 +9,7 @@
     ./common/git.nix
     ./common/zsh.nix
     # CLI tools
+    ../modules/home-manager/zsh.nix
     ../modules/home-manager/neovim.nix
     ../modules/home-manager/tmux.nix
     ../modules/home-manager/sesh.nix
@@ -49,14 +50,6 @@
     nix-direnv.enable = true;
   };
 
-  programs.zsh = {
-    enable = true;
-    oh-my-zsh = {
-      enable = true;
-      plugins = lib.mkDefault [ "aws" "git" "kubectl" "vi-mode" "docker" ];
-      theme = lib.mkDefault "bira";
-    };
-  };
 
   home.sessionVariables = {
     EDITOR = "nvim";
