@@ -1,20 +1,18 @@
 { config, pkgs, lib, ... }:
 
+# Play user on Framework 12 - desktop with gaming focus
+
 {
   home.username = lib.mkDefault "play";
   home.homeDirectory = lib.mkDefault "/home/play";
   home.stateVersion = lib.mkDefault "25.05";
 
   imports = [
-    ./common/desktop.nix
-    ../modules/home-manager/alacritty.nix
+    ../home/desktop.nix
   ];
 
-  # Disable Vivaldi for play user
+  # Disable some modules for play user
   modules.vivaldi.enable = lib.mkForce false;
-
-  home.packages = with pkgs; [
-  ];
 
   # Font configuration
   fonts.fontconfig.enable = true;

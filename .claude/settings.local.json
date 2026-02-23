@@ -8,7 +8,14 @@
       "WebFetch(domain:raw.githubusercontent.com)",
       "WebFetch(domain:wiki.nixos.org)",
       "mcp__nixos__nix",
-      "Bash(cat:*)"
+      "Bash(cat:*)",
+      "Bash(xargs -I {} bash -c 'echo \"\"\"\"=== {} ===\"\"\"\" && grep -l \"\"\"\"options.modules\"\"\"\" {} && true')",
+      "Bash(xargs:*)",
+      "Bash(tree:*)",
+      "Bash(rm:*)",
+      "Bash(nix flake check:*)",
+      "Bash(nix flake show:*)",
+      "Bash(git add:*)"
     ],
     "deny": [],
     "ask": []

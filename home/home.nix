@@ -1,21 +1,29 @@
 { config, pkgs, lib, ... }:
 
+# Base home configuration - CLI tools for all systems
+# Import this for servers, headless machines, or as base for desktop/macos
+
 {
   imports = [
-    ../../modules/home-manager/neovim.nix
-    ../../modules/home-manager/tmux.nix
-    ../../modules/home-manager/git.nix
-    ../../modules/home-manager/zsh.nix
-    ../../modules/home-manager/sesh.nix
+    # Common configs (always-on)
+    ./common/git.nix
+    ./common/zsh.nix
+    # CLI tools
+    ../modules/home-manager/neovim.nix
+    ../modules/home-manager/tmux.nix
+    ../modules/home-manager/sesh.nix
+    # DevOps tools
+    ../modules/home-manager/devops.nix
   ];
 
   # Enable modules
+  modules.neovim.enable = true;
+  modules.tmux.enable = true;
   modules.sesh.enable = true;
+  modules.devops.enable = true;
 
-  # The home.packages option allows you to install Nix packages into your
-  # environment.
   home.packages = with pkgs; [
-    # Standard Tools
+    # Standard CLI tools
     pay-respects
     git
     gh
@@ -26,24 +34,11 @@
     yazi
     gnumake
     jq
+    tree
     fastfetch
-    claude-code
     devbox
   ];
 
-  # btop with settings to mitigate crash bug in 1.4.x
-  programs.btop = {
-    enable = true;
-    settings = {
-      color_theme = "nord";
-      theme_background = false;
-      update_ms = 1000;  # slower updates reduce race condition
-      proc_sorting = "memory";
-      proc_filter_kernel = true;
-    };
-  };
-
-  # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
   programs.htop.enable = true;
 

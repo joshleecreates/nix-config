@@ -1,5 +1,10 @@
-{...}: 
+{ config, lib, ... }:
+
+with lib;
+
 let
+  cfg = config.modules.aerospace;
+
   workspaces = [
     "1"
     "2"
@@ -17,179 +22,184 @@ let
     "s"
     "t"
   ];
-  
+
   # Generate workspace management bindings
-  workspaceBindings = builtins.concatStringsSep "\n" (builtins.map 
-    (ws: "alt-${ws} = 'workspace ${ws}'") 
+  workspaceBindings = builtins.concatStringsSep "\n" (builtins.map
+    (ws: "alt-${ws} = 'workspace ${ws}'")
     workspaces);
-    
-  # Generate move-to-workspace bindings  
-  moveToWorkspaceBindings = builtins.concatStringsSep "\n" (builtins.map 
-    (ws: "alt-shift-${ws} = 'move-node-to-workspace ${ws}'") 
+
+  # Generate move-to-workspace bindings
+  moveToWorkspaceBindings = builtins.concatStringsSep "\n" (builtins.map
+    (ws: "alt-shift-${ws} = 'move-node-to-workspace ${ws}'")
     workspaces);
-in
-{
-  # Source aerospace config from the home-manager store
-  home.file.".aerospace.toml".text = " 
-    # Start AeroSpace at login
-    start-at-login = true
+in {
+  options.modules.aerospace = {
+    enable = mkEnableOption "AeroSpace window manager for macOS";
+  };
 
-    # Normalization settings
-    enable-normalization-flatten-containers = true
-    enable-normalization-opposite-orientation-for-nested-containers = true
+  config = mkIf cfg.enable {
+    # Source aerospace config from the home-manager store
+    home.file.".aerospace.toml".text = "
+      # Start AeroSpace at login
+      start-at-login = true
 
-    # Accordion layout settings
-    accordion-padding = 30
+      # Normalization settings
+      enable-normalization-flatten-containers = true
+      enable-normalization-opposite-orientation-for-nested-containers = true
 
-    # Default root container settings
-    default-root-container-layout = 'tiles'
-    default-root-container-orientation = 'auto'
+      # Accordion layout settings
+      accordion-padding = 30
 
-    # Mouse follows focus settings
-    on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
-    # on-focus-changed = ['move-mouse window-lazy-center']
+      # Default root container settings
+      default-root-container-layout = 'tiles'
+      default-root-container-orientation = 'auto'
 
-    # Automatically unhide macOS hidden apps
-    automatically-unhide-macos-hidden-apps = false
+      # Mouse follows focus settings
+      on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
+      # on-focus-changed = ['move-mouse window-lazy-center']
 
-    # Run Sketchybar together with AeroSpace
-    # sketchbar has a built-in detection of already running process,
-    # so it won't be run twice on AeroSpace restart
-    after-startup-command = ['exec-and-forget sketchybar']
+      # Automatically unhide macOS hidden apps
+      automatically-unhide-macos-hidden-apps = false
 
-    # Notify Sketchybar about workspace change
-    exec-on-workspace-change = ['/bin/bash', '-c',
-        'sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE'
-    ]
+      # Run Sketchybar together with AeroSpace
+      # sketchbar has a built-in detection of already running process,
+      # so it won't be run twice on AeroSpace restart
+      after-startup-command = ['exec-and-forget sketchybar']
 
-    # Key mapping preset
-    [key-mapping]
-    preset = 'qwerty'
+      # Notify Sketchybar about workspace change
+      exec-on-workspace-change = ['/bin/bash', '-c',
+          'sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE'
+      ]
 
-    # Gaps settings
-    [gaps]
-    inner.horizontal = 8
-    inner.vertical =   8
-    outer.left =       8
-    outer.bottom =     8
-    outer.top =        48
-    outer.right =      8
+      # Key mapping preset
+      [key-mapping]
+      preset = 'qwerty'
 
-    # Main mode bindings
-    [mode.main.binding]
-    # Launch applications
-    alt-shift-period = 'exec-and-forget open -na ghostty'
-    #TODO: Launch Safari new window 
+      # Gaps settings
+      [gaps]
+      inner.horizontal = 8
+      inner.vertical =   8
+      outer.left =       8
+      outer.bottom =     8
+      outer.top =        48
+      outer.right =      8
 
-    # Window management
-    alt-q = 'close'
-    alt-slash = 'layout tiles horizontal vertical'
-    alt-comma = 'layout accordion horizontal vertical'
-    alt-z = 'fullscreen'
-    alt-shift-enter = 'fullscreen'
-    # alt-shift-space = 'fullscreen'
+      # Main mode bindings
+      [mode.main.binding]
+      # Launch applications
+      alt-shift-period = 'exec-and-forget open -na ghostty'
+      #TODO: Launch Safari new window
 
-    # Focus movement
-    alt-h = 'focus left'
-    alt-j = 'focus down'
-    alt-k = 'focus up'
-    alt-l = 'focus right'
-    alt-o = 'focus-monitor --wrap-around next'
-    alt-i = 'focus-monitor --wrap-around prev'
+      # Window management
+      alt-q = 'close'
+      alt-slash = 'layout tiles horizontal vertical'
+      alt-comma = 'layout accordion horizontal vertical'
+      alt-z = 'fullscreen'
+      alt-shift-enter = 'fullscreen'
+      # alt-shift-space = 'fullscreen'
 
-    # Window movement
-    alt-shift-h = 'move left'
-    alt-shift-j = 'move down'
-    alt-shift-k = 'move up'
-    alt-shift-l = 'move right'
+      # Focus movement
+      alt-h = 'focus left'
+      alt-j = 'focus down'
+      alt-k = 'focus up'
+      alt-l = 'focus right'
+      alt-o = 'focus-monitor --wrap-around next'
+      alt-i = 'focus-monitor --wrap-around prev'
 
-    # Move windows to other monitors
-    # Todo: Make focus follow movement
-    alt-shift-o = 'move-node-to-monitor --wrap-around next'
-    alt-shift-i = 'move-node-to-monitor --wrap-around prev'
+      # Window movement
+      alt-shift-h = 'move left'
+      alt-shift-j = 'move down'
+      alt-shift-k = 'move up'
+      alt-shift-l = 'move right'
 
-    # Swap large windows
-    alt-shift-u = [
-      'move left',
-      'focus right',
-      'flatten-workspace-tree',
-      'resize smart +300'
-    ]
+      # Move windows to other monitors
+      # Todo: Make focus follow movement
+      alt-shift-o = 'move-node-to-monitor --wrap-around next'
+      alt-shift-i = 'move-node-to-monitor --wrap-around prev'
 
-    alt-shift-p = [
-      'move right',
-      'focus left',
-      'flatten-workspace-tree',
-      'resize smart +300'
-    ]
+      # Swap large windows
+      alt-shift-u = [
+        'move left',
+        'focus right',
+        'flatten-workspace-tree',
+        'resize smart +300'
+      ]
 
-    # Workspace management
-    ${workspaceBindings}
+      alt-shift-p = [
+        'move right',
+        'focus left',
+        'flatten-workspace-tree',
+        'resize smart +300'
+      ]
 
-    # Move windows to workspaces
-    ${moveToWorkspaceBindings}
+      # Workspace management
+      ${workspaceBindings}
 
-    # Workspace navigation
-    alt-tab = 'workspace-back-and-forth'
-    alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
+      # Move windows to workspaces
+      ${moveToWorkspaceBindings}
 
-    # Zooming
-    alt-shift-space = 'resize smart +300'
+      # Workspace navigation
+      alt-tab = 'workspace-back-and-forth'
+      alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
 
-    # Enter service mode
-    alt-shift-semicolon = 'mode service'
+      # Zooming
+      alt-shift-space = 'resize smart +300'
 
-    # Service mode bindings
-    [mode.service.binding]
-    # Resize windows
-    minus = 'resize smart -50'
-    equal = 'resize smart +50'
+      # Enter service mode
+      alt-shift-semicolon = 'mode service'
 
-    # Reload config and exit service mode
-    esc = ['reload-config', 'mode main']
+      # Service mode bindings
+      [mode.service.binding]
+      # Resize windows
+      minus = 'resize smart -50'
+      equal = 'resize smart +50'
 
-    # Reset layout
-    r = ['flatten-workspace-tree', 'mode main']
+      # Reload config and exit service mode
+      esc = ['reload-config', 'mode main']
 
-    # Toggle floating/tiling layout
-    f = ['layout floating tiling', 'mode main']
+      # Reset layout
+      r = ['flatten-workspace-tree', 'mode main']
 
-    # Close all windows but current
-    # backspace = ['close-all-windows-but-current', 'mode main']
+      # Toggle floating/tiling layout
+      f = ['layout floating tiling', 'mode main']
 
-    # Join with adjacent windows
-    alt-shift-h = ['join-with left', 'mode main']
-    alt-shift-j = ['join-with down', 'mode main']
-    alt-shift-k = ['join-with up', 'mode main']
-    alt-shift-l = ['join-with right', 'mode main']
+      # Close all windows but current
+      # backspace = ['close-all-windows-but-current', 'mode main']
 
-    # Window detection rules
-    [[on-window-detected]]
-    if.app-id = 'com.obsproject.obs-studio'
-    run = 'move-node-to-workspace 6'
+      # Join with adjacent windows
+      alt-shift-h = ['join-with left', 'mode main']
+      alt-shift-j = ['join-with down', 'mode main']
+      alt-shift-k = ['join-with up', 'mode main']
+      alt-shift-l = ['join-with right', 'mode main']
 
-    [[on-window-detected]]
-    if.app-id = 'us.zoom.xos'
-    run = 'move-node-to-workspace 6'
+      # Window detection rules
+      [[on-window-detected]]
+      if.app-id = 'com.obsproject.obs-studio'
+      run = 'move-node-to-workspace 6'
 
-    [[on-window-detected]]
-    if.app-id = 'com.apple.MobileSMS'
-    run = 'move-node-to-workspace m'
+      [[on-window-detected]]
+      if.app-id = 'us.zoom.xos'
+      run = 'move-node-to-workspace 6'
 
-    [[on-window-detected]]
-    if.app-id = 'com.spotify.client'
-    run = 'move-node-to-workspace m'
+      [[on-window-detected]]
+      if.app-id = 'com.apple.MobileSMS'
+      run = 'move-node-to-workspace m'
 
-    [[on-window-detected]]
-    if.app-id = 'com.apple.iCal'
-    run = 'move-node-to-workspace m'
+      [[on-window-detected]]
+      if.app-id = 'com.spotify.client'
+      run = 'move-node-to-workspace m'
 
-    [[on-window-detected]]
-    if.app-id = 'com.tinyspeck.slackmacgap'
-    run = 'move-node-to-workspace s'
+      [[on-window-detected]]
+      if.app-id = 'com.apple.iCal'
+      run = 'move-node-to-workspace m'
 
-    [[on-window-detected]]
-    if.app-id = 'com.google.Chrome.app.fmgjjmmmlfnkbppncabfkddbjimcfncm'
-    run = 'move-node-to-workspace s'
-  ";
+      [[on-window-detected]]
+      if.app-id = 'com.tinyspeck.slackmacgap'
+      run = 'move-node-to-workspace s'
+
+      [[on-window-detected]]
+      if.app-id = 'com.google.Chrome.app.fmgjjmmmlfnkbppncabfkddbjimcfncm'
+      run = 'move-node-to-workspace s'
+    ";
+  };
 }
