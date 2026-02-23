@@ -13,6 +13,7 @@
   home.stateVersion = "25.05";
 
   home.packages = with pkgs; [
+    ghostty.terminfo
     claude-code
   ];
 }
