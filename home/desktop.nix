@@ -207,5 +207,15 @@
       type = "Application";
       categories = [ "Network" "VideoConference" ];
     };
+
+    google-calendar = {
+      name = "Google Calendar";
+      comment = "Google Calendar";
+      exec = "chromium --ozone-platform-hint=auto --enable-features=WaylandWindowDecorations --enable-wayland-ime=true --class=google-calendar --name=google-calendar --app-id=google-calendar --user-data-dir=${config.home.homeDirectory}/.local/share/google-calendar-ssb --app=https://calendar.google.com";
+      icon = "chromium";
+      terminal = false;
+      type = "Application";
+      categories = [ "Network" "Calendar" "Office" ];
+    };
   };
 }

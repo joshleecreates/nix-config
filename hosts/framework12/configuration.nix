@@ -49,7 +49,7 @@
   };
 
   # Set your time zone.
-  time.timeZone = "America/New_York";
+  time.timeZone = "America/Los_Angeles";
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
@@ -91,6 +91,20 @@
       extraDefCfg = "process-unmapped-keys yes";
     };
   };
+
+  # Restart kanata when Bluetooth keyboard connects so it gets remapped
+  # Uses a systemd service with a delay to ensure the device is fully registered
+  systemd.services.kanata-reload-bt = {
+    description = "Reload kanata for Bluetooth keyboard";
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.bash}/bin/bash -c 'sleep 3 && systemctl restart kanata-default.service'";
+    };
+  };
+
+  services.udev.extraRules = ''
+    ACTION=="add", SUBSYSTEM=="input", ATTR{name}=="iClever IC-BK06 Keyboard", TAG+="systemd", ENV{SYSTEMD_WANTS}="kanata-reload-bt.service"
+  '';
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
@@ -136,7 +150,7 @@
       Experimental = true;  # Enable experimental features for better LE support
       KernelExperimental = true;  # Enable kernel experimental features
       FastConnectable = true;
-      Privacy = "device";  # Use device privacy mode for better compatibility
+      # Privacy = "device";  # Disabled - was preventing device name discovery
     };
     Policy = {
       AutoEnable = true;

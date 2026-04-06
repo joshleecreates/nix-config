@@ -71,6 +71,18 @@ in {
           "browser.vpn_promo.enabled" = false;
           "browser.promo.focus.enabled" = false;
           "browser.aboutwelcome.enabled" = false;
+
+          # Kinetic/momentum scrolling
+          "general.smoothScroll" = true;
+          "general.smoothScroll.mouseWheel" = true;
+          "apz.gtk.kinetic_scroll.enabled" = true;
+          "general.smoothScroll.msdPhysics.enabled" = true;
+          "general.smoothScroll.msdPhysics.continuousMotionMaxDeltaMS" = 250;
+          "general.smoothScroll.msdPhysics.motionBeginSpringConstant" = 400;
+          "general.smoothScroll.msdPhysics.regularSpringConstant" = 400;
+          "general.smoothScroll.msdPhysics.slowdownMinDeltaMS" = 120;
+          "general.smoothScroll.msdPhysics.slowdownSpringConstant" = 5000;
+          "mousewheel.min_line_scroll_amount" = 22;
         } // optionalAttrs cfg.onePasswordIntegration {
           # Disable built-in password manager when using 1Password
           "signon.rememberSignons" = false;

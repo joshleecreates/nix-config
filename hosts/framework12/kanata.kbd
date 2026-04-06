@@ -1,5 +1,6 @@
 ;; Kanata configuration for Framework 12
 ;; Remaps Caps Lock to Control and swaps Alt/Win (Super) keys
+;; Applies to ALL keyboards
 
 (defsrc
   caps lalt lmet ralt rmet

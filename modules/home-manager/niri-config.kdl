@@ -31,7 +31,7 @@ input {
     }
 
     mouse {
-        scroll-factor 0.5  // Reduce scroll speed (default is 1.0)
+        scroll-factor 3.0  // Fast scroll speed (default is 1.0)
     }
 }
 
