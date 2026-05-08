@@ -6,6 +6,7 @@
 {
   imports = [
     ../home/home.nix
+    ../modules/home-manager/pi.nix
   ];
 
   home.username = "josh";
@@ -21,6 +22,8 @@
   ];
 
   fonts.fontconfig.enable = true;
+
+  modules.pi.enable = true;
 
   # Use rose-pine theme
   modules.neovim.theme = "rose-pine";
