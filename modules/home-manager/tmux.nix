@@ -140,6 +140,9 @@ in
 
         # remove delay for exiting insert mode with ESC in Neovim
         set -sg escape-time 10
+
+        # extended keys for modified key sequences
+        set -g extended-keys on
       '';
     };
   };

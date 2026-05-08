@@ -9,10 +9,12 @@
 
   imports = [
     ../home/desktop.nix
+    ../modules/home-manager/pi.nix
   ];
 
   # Desktop feature overrides
   modules.gaming.enable = true;
+  modules.pi.enable = true;
 
   home.packages = with pkgs; [
     moonlight-qt

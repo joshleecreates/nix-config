@@ -98,7 +98,7 @@
     description = "Reload kanata for Bluetooth keyboard";
     serviceConfig = {
       Type = "oneshot";
-      ExecStart = "${pkgs.bash}/bin/bash -c 'sleep 3 && systemctl restart kanata-default.service'";
+      ExecStart = "${pkgs.bash}/bin/bash -c 'sleep 3 && ${pkgs.kbd}/bin/setleds -caps < /dev/console && systemctl restart kanata-default.service'";
     };
   };
 
