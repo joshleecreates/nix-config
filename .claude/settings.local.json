@@ -15,7 +15,8 @@
       "Bash(rm:*)",
       "Bash(nix flake check:*)",
       "Bash(nix flake show:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(nix search:*)"
     ],
     "deny": [],
     "ask": []

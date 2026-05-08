@@ -21,10 +21,16 @@ in {
     '';
     programs.zsh.initContent = ''
       eval "$(zoxide init zsh)"
+
+      function s() {
+        local session
+        session=$(sesh list | fzf) || return
+        if [ -n "$TMUX" ]; then
+          sesh connect "$session"
+        else
+          tmux attach-session -t "$session" 2>/dev/null || sesh connect "$session"
+        fi
+      }
     '';
-    programs.zsh.shellAliases = {
-      s = "sesh connect $(sesh list | fzf)";
-    };
   };
 }
-
