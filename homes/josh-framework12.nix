@@ -15,8 +15,10 @@
   # Desktop feature overrides
   modules.gaming.enable = true;
   modules.pi.enable = true;
+  modules.zsh.oh-my-zsh.theme = "robbyrussell";
 
   home.packages = with pkgs; [
+    beekeeper-studio
     moonlight-qt
     claude-code
   ];
