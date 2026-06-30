@@ -58,6 +58,10 @@
       audio = {
         mprisBlacklist = [ "spotify" ];
       };
+      wallpaper = {
+        enabled = true;
+        directory = "~/wallpapers";
+      };
     };
   };
 

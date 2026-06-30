@@ -6,7 +6,7 @@ let
   cfg = config.modules.zen-browser;
 in {
   options.modules.zen-browser = {
-    enable = mkEnableOption "Zen Browser with custom configuration";
+    enable = mkEnableOption "Zen Browser";
   };
 
   config = mkIf cfg.enable {
@@ -58,30 +58,9 @@ in {
           defaultPref("privacy.trackingprotection.enabled", true);
           defaultPref("dom.security.https_only_mode", true);
 
-          // Theme and transparency settings
+          // Wayland integration
           defaultPref("widget.use-xdg-desktop-portal.file-picker", 1);
           defaultPref("widget.use-xdg-desktop-portal.mime-handler", 1);
-          defaultPref("browser.theme.toolbar-theme", 2); // 0=light, 1=dark, 2=system
-          defaultPref("browser.theme.content-theme", 2); // 0=light, 1=dark, 2=system
-          defaultPref("ui.systemUsesDarkTheme", 1); // Force dark theme
-          defaultPref("widget.content.allow-gtk-dark-theme", true);
-          defaultPref("widget.disable-workspace-management", true);
-
-          // Transparent Zen mod preferences (by sameerasw)
-          // Use lockPref for critical transparency settings to prevent user override
-          lockPref("browser.tabs.allow_transparent_browser", true);
-          lockPref("zen.widget.linux.transparency", true);
-          defaultPref("zen.view.grey-out-inactive-windows", false);
-          defaultPref("mod.sameerasw.zen_transparent_sidebar_enabled", true);
-          defaultPref("mod.sameerasw.zen_transparent_glance_enabled", true);
-          lockPref("mod.sameerasw.zen_bg_color_enabled", true);
-          lockPref("mod.sameerasw.zen_transparency_color", "#00000000");
-          defaultPref("mod.sameerasw_zen_light_tint", "2");
-          defaultPref("mod.sameerasw.zen_no_shadow", false);
-          lockPref("mod.sameerasw.zen_bg_img_enabled", false);
-          defaultPref("mod.sameerasw.zen_tab_switch_anim", true);
-          defaultPref("mod.sameerasw_zen_compact_sidebar_type", "0");
-          defaultPref("mod.sameerasw.zen_compact_sidebar_width", "165px");
         '';
 
         extraPrefsFiles = [
@@ -111,9 +90,5 @@ in {
         };
       };
     };
-
-    # NOTE: Zen Browser uses ZenMods system for theming, not userChrome.css
-    # The Transparent Zen mod should be installed via Zen's built-in mod manager
-    # Transparency preferences are configured above in extraPrefs
   };
 }

@@ -142,6 +142,7 @@ binds {
     Super+Alt+L { spawn "swaylock"; }
     Super+S { spawn "slack"; }
     Super+B { spawn "firefox"; }
+    Super+Z { spawn "zen"; }
     Super+Period { spawn "rofimoji"; }
     Super+G { spawn "steam"; }
 
