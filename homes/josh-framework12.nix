@@ -81,5 +81,6 @@
     moonlight-qt
     claude-code
     owncloud-client
+    vcluster
   ];
 }

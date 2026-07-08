@@ -19,6 +19,9 @@
       url = "github:noctalia-dev/noctalia-shell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    claude-code = {
+      url = "github:sadjow/claude-code-nix";
+    };
   };
 
 
@@ -27,6 +30,7 @@
         specialArgs = {inherit inputs; inherit self;};
         system = "x86_64-linux";
         modules = [
+          { nixpkgs.overlays = [ inputs.claude-code.overlays.default ]; }
           ./hosts/framework12/configuration.nix
           inputs.home-manager.nixosModules.default
           inputs.noctalia.nixosModules.default
@@ -47,21 +51,30 @@
       };
       # Standalone home-manager configurations
       homeConfigurations."josh@draper" = home-manager.lib.homeManagerConfiguration {
-        modules = [ ./homes/josh-draper.nix ];
+        modules = [
+          { nixpkgs.overlays = [ inputs.claude-code.overlays.default ]; }
+          ./homes/josh-draper.nix
+        ];
         pkgs = import nixpkgs {
           system = "x86_64-linux";
           config.allowUnfree = true;
         };
       };
       homeConfigurations."josh@framework12" = home-manager.lib.homeManagerConfiguration {
-        modules = [ ./homes/josh-framework12.nix ];
+        modules = [
+          { nixpkgs.overlays = [ inputs.claude-code.overlays.default ]; }
+          ./homes/josh-framework12.nix
+        ];
         pkgs = import nixpkgs {
           system = "x86_64-linux";
           config.allowUnfree = true;
         };
       };
       homeConfigurations."joshlee@silver" = home-manager.lib.homeManagerConfiguration {
-        modules = [ ./homes/joshlee-silver.nix ];
+        modules = [
+          { nixpkgs.overlays = [ inputs.claude-code.overlays.default ]; }
+          ./homes/joshlee-silver.nix
+        ];
         pkgs = nixpkgs.legacyPackages."aarch64-darwin";
       };
     };
