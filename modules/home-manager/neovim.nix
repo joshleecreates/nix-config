@@ -38,7 +38,7 @@ in
       pkgs.elixir
       pkgs.elixir-ls
       pkgs.typescript
-      pkgs.nodePackages.typescript-language-server
+      pkgs.typescript-language-server
     ];
 
     programs.neovim = {

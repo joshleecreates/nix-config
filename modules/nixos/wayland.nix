@@ -46,7 +46,8 @@ with lib;
         }
         (mkIf (config.modules.wayland.compositor == "niri") {
           niri = {
-            default = [ "gtk" ];
+            # nixpkgs' niri module now sets a default ("gnome;gtk"); override it.
+            default = mkForce [ "gtk" ];
             "org.freedesktop.impl.portal.Secret" = [ "gnome-keyring" ];
             "org.freedesktop.impl.portal.ScreenCast" = [ "wlr" ];
             "org.freedesktop.impl.portal.Screenshot" = [ "wlr" ];

@@ -125,7 +125,7 @@
     spotify-player
     vlc
     davinci-resolve
-    signal-desktop-bin
+    signal-desktop
     ffmpeg-full
   ];
 

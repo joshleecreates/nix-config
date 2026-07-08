@@ -41,11 +41,11 @@
   # Enable systemd-resolved for robust DNS with caching
   services.resolved = {
     enable = true;
-    dnssec = "allow-downgrade";
-    fallbackDns = [ "8.8.8.8" "8.8.4.4" "1.1.1.1" "1.0.0.1" ];
-    extraConfig = ''
-      DNSOverTLS=opportunistic
-    '';
+    settings.Resolve = {
+      DNSSEC = "allow-downgrade";
+      FallbackDNS = [ "8.8.8.8" "8.8.4.4" "1.1.1.1" "1.0.0.1" ];
+      DNSOverTLS = "opportunistic";
+    };
   };
 
   # Set your time zone.
@@ -201,7 +201,9 @@
   # Ollama - local LLM inference
   services.ollama = {
     enable = true;
-    acceleration = false;  # No GPU acceleration (Intel iGPU not supported)
+    # CPU-only (Intel iGPU not supported); default pkgs.ollama is the CPU build.
+    # `acceleration = false` was removed in 26.05 in favor of selecting the package.
+    package = pkgs.ollama;
   };
 
   # Allow unfree packages
