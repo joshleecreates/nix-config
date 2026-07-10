@@ -48,13 +48,21 @@ in
       source <(minikube completion zsh)
 
       DISABLE_AUTO_TITLE="true"
+    '';
 
-      # Merge all kubeconfigs from ~/.kube/configs/ into ~/.kube/config
-      if [ -d "$HOME/.kube/configs" ]; then
-        _kubeconfig_parts="$HOME/.kube/config$(find "$HOME/.kube/configs" -name '*.yaml' -o -name '*.yml' 2>/dev/null | while read f; do printf ":%s" "$f"; done)"
-        KUBECONFIG="$_kubeconfig_parts" kubectl config view --flatten > "$HOME/.kube/config.merged" 2>/dev/null && mv "$HOME/.kube/config.merged" "$HOME/.kube/config"
-        unset _kubeconfig_parts
-      fi
+    # Expose every kubeconfig in ~/.kube/configs/ without naming them here.
+    # ~/.kube/config comes first so `kubectl config use-context` and kubectx
+    # write their state there rather than mutating the per-cluster files,
+    # which are decrypted from sops and should stay byte-for-byte upstream.
+    #
+    # This deliberately does not flatten the merge back into ~/.kube/config:
+    # doing so made that file both input and output, so it accumulated stale
+    # contexts forever and was rewritten world-readable with private keys in
+    # it on every shell start.
+    envExtra = ''
+      _kubeconfigs=("$HOME/.kube/config" "$HOME"/.kube/configs/*.(yaml|yml)(N))
+      export KUBECONFIG="''${(j.:.)_kubeconfigs}"
+      unset _kubeconfigs
     '';
   };
 }

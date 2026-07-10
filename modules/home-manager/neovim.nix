@@ -77,12 +77,13 @@ in
           plugin = nvim-treesitter.withAllGrammars;
           type = "lua";
           config = ''
-            require("nvim-treesitter.configs").setup({
-              auto_install = false,
-              highlight = {
-                enable = true,
-                disable = { }
-              },
+            vim.api.nvim_create_autocmd("FileType", {
+              callback = function(args)
+                -- Filetypes with no grammar make start() raise; there is no
+                -- cheap way to test for one first, as language.add() reports a
+                -- missing parser by return value rather than by raising.
+                pcall(vim.treesitter.start, args.buf)
+              end,
             })
           '';
         }
