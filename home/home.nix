@@ -50,6 +50,10 @@
     enable = true;
     enableZshIntegration = true;
     nix-direnv.enable = true;
+
+    # Suppress the "direnv: export +AR +AS +CC ..." dump on every shell start.
+    # The loading/unloading notices are kept.
+    config.global.hide_env_diff = true;
   };
 
 
