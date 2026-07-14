@@ -39,4 +39,19 @@
     !*/
     *
   '';
+
+  # SSH host aliases for the other machines.
+  programs.ssh = {
+    enable = true;
+    matchBlocks = {
+      draper = {
+        hostname = "draper";
+        user = "josh";
+      };
+      kasti = {
+        hostname = "workstation-kasti";
+        user = "josh";
+      };
+    };
+  };
 }

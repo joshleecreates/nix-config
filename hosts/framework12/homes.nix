@@ -13,12 +13,6 @@
         ./displays.nix
       ];
     };
-    users.play = {
-      imports = [
-        ../../homes/play-framework12.nix
-        ./displays.nix
-      ];
-    };
 
     # Framework laptop settings shared by all users
     sharedModules = [{
@@ -55,13 +49,6 @@
     packages = with pkgs; [
       kdePackages.kate
     ];
-  };
-
-  users.users.play = {
-    isNormalUser = true;
-    description = "Play";
-    extraGroups = [ "networkmanager" "wheel" ];
-    shell = pkgs.zsh;
   };
 
   # 1Password integration

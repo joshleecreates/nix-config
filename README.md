@@ -2,8 +2,8 @@
 
 Multi-machine NixOS, nix-darwin, and standalone home-manager configuration, managed
 with flakes. It drives four NixOS systems (`framework12`, `kasti`, `workstation`,
-`nixos-desktop`), one macOS system (`sting`), and three standalone home-manager
-profiles (`josh@pop-os`, `josh@framework12`, `josh@silver`).
+`nixos-desktop`), one macOS system (`sting`), and four standalone home-manager
+profiles (`josh@draper`, `josh@kasti`, `josh@framework12`, `joshlee@silver`).
 
 The Framework 12 laptop (`framework12`) is the primary, most-customized target: Niri
 on Wayland, noctalia-shell, and the custom tooling described below.
@@ -130,6 +130,69 @@ So the two-part recipe for a **new browser**:
 
 ---
 
+## Syncthing
+
+Syncthing keeps a couple of folders in sync across machines. It's configured
+declaratively, but through **two different modules** depending on how the host is
+deployed:
+
+| Host | Module | Where |
+|------|--------|-------|
+| `framework12` | NixOS `services.syncthing` (system service, runs as `josh`) | `hosts/framework12/configuration.nix` |
+| `kasti` | home-manager `services.syncthing` (systemd **user** service) | `homes/josh-kasti.nix` |
+| `draper` | home-manager `services.syncthing` (systemd **user** service) | `homes/josh-draper.nix` |
+
+The two modules share the same `settings.folders` schema, so folder definitions look
+identical. The NixOS version additionally sets `user`/`group`/`configDir`/`dataDir`; the
+home-manager version needs none of those — it always runs as the logged-in user and
+defaults to `~/.config/syncthing` and `~/.local/share/syncthing`.
+
+### Folders
+
+| Folder id | Path | framework12 | kasti | draper |
+|-----------|------|:-----------:|:-----:|:------:|
+| `repos`   | `~/repos`  | ✅ | ✅ | ✅ |
+| `kube`    | `~/.kube`  | ✅ | ✅ | — |
+
+Folder **ids match across hosts** (`repos`, `kube`) so pairing lines them up cleanly.
+`draper` deliberately does **not** sync `~/.kube`.
+
+### The `~/.kube` whitelist
+
+`~/.kube` holds more than cluster definitions — `config` (the current-context holder),
+a credential cache, and a discovery cache all live there and are per-machine or rewritten
+constantly. Syncing the whole directory would produce sync-conflict files and pointless
+churn.
+
+So the `kube` folder is scoped to **`*.yaml` files only** via a Syncthing `.stignore`
+whitelist. Ignore rules are first-match-wins, so the keeps come before the catch-all:
+
+```gitignore
+!*.yaml     # keep yaml cluster definitions anywhere in the tree
+!*/         # descend into subdirs to reach nested yaml
+*           # ignore everything else (config, cache, credentials)
+```
+
+`.stignore` is **not** exposed by either Syncthing Nix module, so it's written on disk via
+home-manager `home.file.".kube/.stignore"`. It's standardized: the **same** block lives in
+both `homes/josh-framework12.nix` and `homes/josh-kasti.nix` (not draper, which doesn't
+sync kube). Note this whitelist excludes `~/.kube/config` itself by design — that file is
+a per-machine holder for the current context and is not synced.
+
+### Pairing and the web UI
+
+Device pairing is **not** declared in Nix — nodes are paired through the web UI, which
+binds to `127.0.0.1:8384` on each host and isn't exposed to the network. Reach a remote
+host's UI by forwarding it over SSH to a spare local port (see
+[Useful commands](#useful-commands)). To wire pairing declaratively instead, add
+`settings.devices` plus a `devices` list on each folder once device IDs are exchanged.
+
+> **Caveat — git working trees:** `~/repos` contains git checkouts. Syncing `.git` across
+> machines races with git and produces `*.sync-conflict-*` files. Scope the folder or
+> exclude `.git` before more than one node is actively syncing it.
+
+---
+
 ## Common commands
 
 ### NixOS (integrated with home-manager)
@@ -144,9 +207,10 @@ sudo nixos-rebuild switch --flake .#nixos-desktop
 ### Standalone home-manager
 
 ```bash
-home-manager switch --flake .#josh@pop-os
+home-manager switch --flake .#josh@draper
+home-manager switch --flake .#josh@kasti
 home-manager switch --flake .#josh@framework12
-home-manager switch --flake .#josh@silver
+home-manager switch --flake .#joshlee@silver
 ```
 
 ### Darwin (macOS)
