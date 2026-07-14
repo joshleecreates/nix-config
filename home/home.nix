@@ -10,6 +10,7 @@
     ./common/zsh.nix
     # CLI tools
     ../modules/home-manager/zsh.nix
+    ../modules/home-manager/starship.nix
     ../modules/home-manager/btop.nix
     ../modules/home-manager/neovim.nix
     ../modules/home-manager/tmux.nix

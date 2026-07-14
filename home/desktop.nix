@@ -79,31 +79,7 @@
     };
   };
 
-  # Fuzzel launcher - Nord theme
-  programs.fuzzel = {
-    enable = true;
-    settings = {
-      main = {
-        font = "JetBrainsMono Nerd Font:size=14";
-        terminal = "foot";
-        layer = "overlay";
-        prompt = "❯ ";
-      };
-      colors = {
-        background = "2e3440ee";
-        text = "d8dee9ff";
-        match = "88c0d0ff";
-        selection = "4c566aff";
-        selection-text = "eceff4ff";
-        selection-match = "88c0d0ff";
-        border = "88c0d0ff";
-      };
-      border = {
-        width = 3;
-        radius = 8;
-      };
-    };
-  };
+  # App launcher handled by noctalia-shell (Mod+Space -> launcher toggle IPC)
 
   home.packages = with pkgs; [
     # Desktop tools

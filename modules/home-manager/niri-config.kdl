@@ -138,7 +138,7 @@ binds {
 
     // Launch programs
     Mod+T { spawn "ghostty"; }
-    Mod+Space { spawn "fuzzel"; }
+    Mod+Space { spawn "noctalia-shell" "ipc" "call" "launcher" "toggle"; }
     Super+Alt+L { spawn "swaylock"; }
     Super+S { spawn "slack"; }
     Super+B { spawn "firefox"; }

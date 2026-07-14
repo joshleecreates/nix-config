@@ -224,7 +224,6 @@
 
     # Niri and essential Wayland tools (wl-clipboard is in wayland module)
     # Note: mako (notifications), swww (wallpaper) replaced by noctalia-shell
-    fuzzel       # Application launcher
     swaylock     # Screen locker
     swayidle     # Idle management
     playerctl    # Media player control
