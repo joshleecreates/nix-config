@@ -167,6 +167,15 @@ nix flake update                            # update all inputs
 > New files must be `git add`-ed before `nix flake check` / rebuild will see them —
 > flakes only evaluate tracked paths.
 
+### Useful commands
+
+```bash
+# Load a remote host's Syncthing web UI locally over SSH.
+# The UI binds to 127.0.0.1:8384 on the remote and isn't exposed to the network,
+# so forward it to a spare local port (8384 is taken if you also run Syncthing here).
+ssh -L 8385:127.0.0.1:8384 josh@draper   # then open http://127.0.0.1:8385
+```
+
 ---
 
 ## Repository layout

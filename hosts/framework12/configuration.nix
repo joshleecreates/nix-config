@@ -54,6 +54,11 @@
         label = "repos";
         path = "/home/josh/repos";
       };
+      folders."kube" = {
+        id = "kube";
+        label = "kube";
+        path = "/home/josh/.kube";
+      };
     };
   };
 

@@ -64,6 +64,16 @@
           config.allowUnfree = true;
         };
       };
+      homeConfigurations."josh@kasti" = home-manager.lib.homeManagerConfiguration {
+        modules = [
+          { nixpkgs.overlays = [ inputs.claude-code.overlays.default ]; }
+          ./homes/josh-kasti.nix
+        ];
+        pkgs = import nixpkgs {
+          system = "x86_64-linux";
+          config.allowUnfree = true;
+        };
+      };
       homeConfigurations."josh@framework12" = home-manager.lib.homeManagerConfiguration {
         modules = [
           { nixpkgs.overlays = [ inputs.claude-code.overlays.default inputs.herdr.overlays.default ]; }

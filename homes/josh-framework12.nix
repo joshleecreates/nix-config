@@ -29,4 +29,14 @@
     owncloud-client
     vcluster
   ];
+
+  # Syncthing whitelist for the ~/.kube folder: sync only *.yaml cluster
+  # definitions, never ~/.kube/config (a per-machine holder for the current
+  # context), the credential cache, or discovery cache. First match wins, so
+  # keeps are listed before the catch-all ignore.
+  home.file.".kube/.stignore".text = ''
+    !*.yaml
+    !*/
+    *
+  '';
 }
