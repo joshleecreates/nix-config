@@ -36,4 +36,25 @@
   };
 
   modules.starship.enable = true;
+
+  # Syncthing — runs as a systemd user service (standalone home-manager, so
+  # no NixOS service module here; it defaults to ~/.config/syncthing and
+  # ~/.local/share/syncthing running as josh).
+  # Single node for now; pair with framework12 via the web UI (or add
+  # settings.devices) once device IDs are exchanged.
+  # NOTE: ~/repos contains git working trees; syncing .git across machines
+  # races with git and produces sync-conflict files. Scope the folder or
+  # exclude .git before both nodes are actively syncing.
+  services.syncthing = {
+    enable = true;
+    overrideDevices = true;
+    overrideFolders = true;
+    settings = {
+      folders."repos" = {
+        id = "repos";
+        label = "repos";
+        path = "/home/josh/repos";
+      };
+    };
+  };
 }

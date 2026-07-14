@@ -4,6 +4,55 @@ with lib;
 
 let
   cfg = config.modules.niri;
+
+  # Opens a new Firefox window on the last (empty trailing) workspace, then
+  # moves that workspace up one. See Super+Shift+B in niri-config.kdl.
+  firefoxLastWorkspace = pkgs.writeShellScriptBin "firefox-last-workspace" ''
+    set -euo pipefail
+
+    niri=${pkgs.niri}/bin/niri
+    jq=${pkgs.jq}/bin/jq
+
+    # Find the last workspace index on the currently focused output.
+    last_idx=$("$niri" msg -j workspaces | "$jq" -r '
+      (map(select(.is_focused)) | .[0].output) as $out
+      | [.[] | select(.output == $out)] | max_by(.idx) | .idx')
+
+    # Focus that (empty, trailing) workspace so the new window lands there.
+    "$niri" msg action focus-workspace "$last_idx"
+
+    # Record how many Firefox windows exist, then open a new one.
+    before=$("$niri" msg -j windows | "$jq" '[.[] | select(.app_id == "firefox")] | length')
+    firefox --new-window >/dev/null 2>&1 &
+
+    # Wait (up to ~10s) for the new window to map onto the workspace.
+    for _ in $(seq 1 100); do
+      after=$("$niri" msg -j windows | "$jq" '[.[] | select(.app_id == "firefox")] | length')
+      [ "$after" -gt "$before" ] && break
+      sleep 0.1
+    done
+
+    # Move the workspace (now holding Firefox) up one level.
+    "$niri" msg action move-workspace-up
+  '';
+
+  # Moves the focused window to the last (empty trailing) workspace, then moves
+  # that workspace up one. See Super+Shift+N in niri-config.kdl.
+  windowToLastWorkspace = pkgs.writeShellScriptBin "window-to-last-workspace" ''
+    set -euo pipefail
+
+    niri=${pkgs.niri}/bin/niri
+    jq=${pkgs.jq}/bin/jq
+
+    # Find the last workspace index on the currently focused output.
+    last_idx=$("$niri" msg -j workspaces | "$jq" -r '
+      (map(select(.is_focused)) | .[0].output) as $out
+      | [.[] | select(.output == $out)] | max_by(.idx) | .idx')
+
+    # Move the focused window there (focus follows), then move that workspace up.
+    "$niri" msg action move-window-to-workspace "$last_idx"
+    "$niri" msg action move-workspace-up
+  '';
 in {
   options.modules.niri = {
     enable = mkEnableOption "Niri Wayland compositor";
@@ -29,6 +78,8 @@ in {
       rofimoji  # Emoji picker
       wvkbd  # Virtual keyboard for touchscreen mode
       polkit_gnome  # Polkit authentication agent
+      firefoxLastWorkspace  # Super+Shift+B: firefox on last workspace, moved up
+      windowToLastWorkspace  # Super+Shift+N: current window to last workspace, moved up
     ];
 
     # Niri configuration file

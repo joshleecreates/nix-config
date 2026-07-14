@@ -148,7 +148,8 @@ binds {
 
     // Scratchpad toggles (nirius)
     Mod+Shift+T { spawn "nirius" "scratchpad-toggle" "--app-id" "ghostty" "--spawn" "ghostty"; }
-    Mod+Shift+B { spawn "nirius" "scratchpad-toggle" "--app-id" "firefox" "--spawn" "firefox"; }
+    Mod+Shift+B { spawn "firefox-last-workspace"; }
+    Mod+Shift+N { spawn "window-to-last-workspace"; }
     Mod+Shift+C { spawn "nirius" "scratchpad-toggle" "--app-id" "chatgpt" "--spawn" "chatgpt"; }
 
     // Volume keys (Framework laptop function keys) - OSD handled by noctalia-shell
