@@ -11,6 +11,7 @@
     # CLI tools
     ../modules/home-manager/zsh.nix
     ../modules/home-manager/starship.nix
+    ../modules/home-manager/fs-tools.nix
     ../modules/home-manager/btop.nix
     ../modules/home-manager/neovim.nix
     ../modules/home-manager/tmux.nix
@@ -20,6 +21,7 @@
   ];
 
   # Enable modules
+  modules.fsTools.enable = true;
   modules.btop.enable = true;
   modules.neovim.enable = true;
   modules.tmux.enable = true;

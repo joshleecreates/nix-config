@@ -17,8 +17,6 @@
     ghostty.terminfo
     claude-code
     nerd-fonts.jetbrains-mono
-    eza
-    bat
   ];
 
   fonts.fontconfig.enable = true;
@@ -32,13 +30,9 @@
   # Disable oh-my-zsh theme, use Starship instead
   programs.zsh.oh-my-zsh.theme = lib.mkForce "";
 
+  # eza/bat and their aliases now come from modules.fsTools (enabled in home.nix).
   programs.zsh.shellAliases = {
     hms = "home-manager switch --flake ~/nix-config#josh@draper";
-    ls = "eza --icons";
-    ll = lib.mkForce "eza -l --icons";
-    la = "eza -la --icons";
-    lt = "eza --tree --icons";
-    cat = "bat";
   };
 
   modules.starship.enable = true;
