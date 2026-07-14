@@ -35,6 +35,28 @@
 
   services.tailscale.enable = true;
 
+  # Syncthing — runs as josh so it can read/write the home directory.
+  # Single node for now; peers/device IDs get added once other hosts join.
+  # NOTE: ~/repos contains git working trees; syncing .git across machines
+  # races with git and produces sync-conflict files. Revisit (exclude .git or
+  # scope the folder) before adding a second device.
+  services.syncthing = {
+    enable = true;
+    user = "josh";
+    group = "users";
+    configDir = "/home/josh/.config/syncthing";
+    dataDir = "/home/josh/.local/share/syncthing";
+    overrideDevices = true;
+    overrideFolders = true;
+    settings = {
+      folders."repos" = {
+        id = "repos";
+        label = "repos";
+        path = "/home/josh/repos";
+      };
+    };
+  };
+
   # Enable SSH
   services.openssh.enable = true;
 

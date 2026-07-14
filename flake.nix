@@ -22,6 +22,10 @@
     claude-code = {
       url = "github:sadjow/claude-code-nix";
     };
+    herdr = {
+      url = "github:ogulcancelik/herdr";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
 
@@ -30,7 +34,7 @@
         specialArgs = {inherit inputs; inherit self;};
         system = "x86_64-linux";
         modules = [
-          { nixpkgs.overlays = [ inputs.claude-code.overlays.default ]; }
+          { nixpkgs.overlays = [ inputs.claude-code.overlays.default inputs.herdr.overlays.default ]; }
           ./hosts/framework12/configuration.nix
           inputs.home-manager.nixosModules.default
           inputs.noctalia.nixosModules.default
@@ -62,7 +66,7 @@
       };
       homeConfigurations."josh@framework12" = home-manager.lib.homeManagerConfiguration {
         modules = [
-          { nixpkgs.overlays = [ inputs.claude-code.overlays.default ]; }
+          { nixpkgs.overlays = [ inputs.claude-code.overlays.default inputs.herdr.overlays.default ]; }
           ./homes/josh-framework12.nix
         ];
         pkgs = import nixpkgs {

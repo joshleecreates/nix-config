@@ -175,6 +175,42 @@ in
             require("nvim-autopairs").setup()
           '';
         }
+        plenary-nvim
+        {
+          plugin = obsidian-nvim;
+          type = "lua";
+          config = ''
+            require("obsidian").setup({
+              legacy_commands = false,
+              workspaces = {
+                { name = "pkb", path = "~/Documents/Obsidian/PKB" },
+              },
+              daily_notes = {
+                folder = "04 Periodic/Daily",
+                date_format = "%Y-%m-%d",
+                template = "00 Meta/Templates/Daily.md",
+              },
+              completion = {
+                nvim_cmp = true,
+                min_chars = 2,
+              },
+              new_notes_location = "notes_subdir",
+              notes_subdir = "01 Inbox",
+              -- Let treesitter/render own the display; avoid conceal surprises.
+              ui = { enable = false },
+            })
+
+            -- Make `gf` follow [[wikilinks]] and markdown links when the cursor
+            -- is on one, otherwise fall back to normal `gf`.
+            vim.keymap.set("n", "gf", function()
+              local ok, util = pcall(require, "obsidian.util")
+              if ok and util.cursor_on_markdown_link and util.cursor_on_markdown_link() then
+                return "<cmd>ObsidianFollowLink<CR>"
+              end
+              return "gf"
+            end, { noremap = false, expr = true, desc = "Obsidian: follow link or gf" })
+          '';
+        }
       ];
       extraConfig = ''
         :luafile ~/.config/nvim/options.lua

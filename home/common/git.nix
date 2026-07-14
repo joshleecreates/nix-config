@@ -92,4 +92,25 @@
     enable = true;
     enableGitIntegration = true;
   };
+
+  programs.lazygit = {
+    enable = true;
+    settings = {
+      gui = {
+        nerdFontsVersion = "3";
+        theme = {
+          activeBorderColor = [ "#88C0D0" "bold" ]; # nord8 frost
+          inactiveBorderColor = [ "#4C566A" ]; # nord3
+          optionsTextColor = [ "#81A1C1" ]; # nord9
+          selectedLineBgColor = [ "#434C5E" ]; # nord2
+          cherryPickedCommitBgColor = [ "#434C5E" ]; # nord2
+          cherryPickedCommitFgColor = [ "#88C0D0" ]; # nord8
+          markedBaseCommitBgColor = [ "#434C5E" ]; # nord2
+          markedBaseCommitFgColor = [ "#EBCB8B" ]; # nord13
+          unstagedChangesColor = [ "#BF616A" ]; # nord11 red
+          defaultFgColor = [ "#D8DEE9" ]; # nord4
+        };
+      };
+    };
+  };
 }

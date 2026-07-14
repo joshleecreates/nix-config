@@ -69,12 +69,16 @@
   programs._1password-gui.enable = true;
   programs._1password-gui.polkitPolicyOwners = [ "josh" ];
 
-  # Allow Vivaldi to use 1Password browser integration
+  # Allow Vivaldi and Chromium to use 1Password browser integration
   environment.etc."1password/custom_allowed_browsers" = {
     text = ''
       vivaldi-bin
       vivaldi
       .vivaldi-wrapped
+      chromium
+      .chromium-wrapped
+      zen
+      .zen-wrapped
     '';
     mode = "0755";
   };

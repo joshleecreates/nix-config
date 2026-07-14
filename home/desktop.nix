@@ -16,6 +16,7 @@
     ../modules/home-manager/prusa.nix
     ../modules/home-manager/alacritty.nix
     ../modules/home-manager/obsidian-daily.nix
+    ../modules/home-manager/pkb-daily.nix
     ../modules/home-manager/gaming.nix
     ../modules/home-manager/zen-browser.nix
 
@@ -44,6 +45,7 @@
 
   # Optional desktop features (enabled by default, can override)
   modules.obsidian-daily.enable = lib.mkDefault true;
+  modules.pkb-daily.enable = lib.mkDefault true;
   modules.gaming.enable = lib.mkDefault false;
   modules.zen-browser.enable = lib.mkDefault false;
 
@@ -171,7 +173,7 @@
     chatgpt = {
       name = "ChatGPT";
       comment = "ChatGPT web application";
-      exec = "chromium --ozone-platform-hint=auto --enable-features=WaylandWindowDecorations --enable-wayland-ime=true --class=chatgpt --name=chatgpt --app-id=chatgpt --user-data-dir=${config.home.homeDirectory}/.local/share/chatgpt-ssb --app=https://chatgpt.com";
+      exec = "chromium --ozone-platform-hint=auto --enable-features=WaylandWindowDecorations --enable-wayland-ime=true --class=chatgpt --name=chatgpt --app-id=chatgpt --app=https://chatgpt.com";
       icon = "chromium";
       terminal = false;
       type = "Application";
@@ -181,7 +183,7 @@
     google-meet = {
       name = "Google Meet";
       comment = "Google Meet video conferencing";
-      exec = "chromium --ozone-platform-hint=auto --enable-features=WaylandWindowDecorations --enable-wayland-ime=true --class=google-meet --name=google-meet --app-id=google-meet --user-data-dir=${config.home.homeDirectory}/.local/share/google-meet-ssb --app=https://meet.google.com";
+      exec = "chromium --ozone-platform-hint=auto --enable-features=WaylandWindowDecorations --enable-wayland-ime=true --class=google-meet --name=google-meet --app-id=google-meet --app=https://meet.google.com";
       icon = "chromium";
       terminal = false;
       type = "Application";
@@ -191,7 +193,7 @@
     google-calendar = {
       name = "Google Calendar";
       comment = "Google Calendar";
-      exec = "chromium --ozone-platform-hint=auto --enable-features=WaylandWindowDecorations --enable-wayland-ime=true --class=google-calendar --name=google-calendar --app-id=google-calendar --user-data-dir=${config.home.homeDirectory}/.local/share/google-calendar-ssb --app=https://calendar.google.com";
+      exec = "chromium --ozone-platform-hint=auto --enable-features=WaylandWindowDecorations --enable-wayland-ime=true --class=google-calendar --name=google-calendar --app-id=google-calendar --app=https://calendar.google.com";
       icon = "chromium";
       terminal = false;
       type = "Application";

@@ -12,6 +12,10 @@ in {
   config = mkIf cfg.enable {
     home.packages = [
       (pkgs.wrapFirefox zen-browser-pkg {
+        # 1Password native messaging host (baked into the wrapper's
+        # lib/mozilla/native-messaging-hosts so Zen finds it regardless of profile)
+        nativeMessagingHosts = [ pkgs._1password-gui ];
+
         extraPolicies = {
           CaptivePortal = false;
           DisableFirefoxStudies = true;
