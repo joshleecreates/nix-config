@@ -101,6 +101,10 @@ in
         bind | split-window -h
         bind - split-window -v
 
+        # clone current session into a grouped session with an incremented name
+        # (shares windows, independent view); prefix + C
+        bind C run-shell 'base="#{s/-[0-9]*$//:session_name}"; i=2; while tmux has-session -t "$base-$i" 2>/dev/null; do i=$((i + 1)); done; tmux new-session -d -t "#S" -s "$base-$i" && tmux switch-client -t "$base-$i"'
+
         # Enable mouse mode (tmux 2.1 and above)
         set -g mouse on
 
