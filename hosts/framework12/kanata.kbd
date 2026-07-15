@@ -2,13 +2,24 @@
 ;; Remaps Caps Lock to Control and swaps Alt/Win (Super) keys
 ;; Applies to ALL keyboards
 
-;; Tap the (physical) left-Alt key -> emit Menu/Compose (cmp), which niri binds
-;; to toggle-overview; hold it -> acts as Super (Mod). tap-hold-press so Super+key
-;; chords fire immediately when another key is pressed.
-;; NB: use cmp (keysym "Menu") not F13 -- F13 has no keysym in the default US
-;; xkb layout, so niri never sees it.
+;; The (physical) left-Alt key is a tap-hold:
+;;   tap  -> Menu/Compose (cmp), which niri binds to toggle-overview (sticky).
+;;   hold -> Super (Mod) for chords, AND drives a hold-to-peek overview:
+;;           tap F13 when the hold engages (niri: open-overview) and
+;;           tap F14 when it releases    (niri: close-overview).
+;; So overview stays open exactly as long as Mod is held, and Mod chords still
+;; work because lmet is held the whole time.
+;; NB: bind the *keysyms* F13/F14 produce, not "F13"/"F14". Under the evdev(inet)
+;; xkb layout F13 -> XF86Tools and F14 -> XF86Launch5 (there is no "F13" keysym,
+;; which is why an earlier attempt to bind F13 directly never fired).
+(deffakekeys
+  ov-open f13
+  ov-close f14
+)
+
 (defalias
-  super-ov (tap-hold-press 200 200 cmp lmet)
+  super-hold (multi lmet (on-press-fakekey ov-open tap) (on-release-fakekey ov-close tap))
+  super-ov (tap-hold-press 200 200 cmp @super-hold)
 )
 
 (defsrc
