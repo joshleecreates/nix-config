@@ -21,6 +21,7 @@
   # Disable oh-my-zsh theme, use Starship instead
   programs.zsh.oh-my-zsh.theme = lib.mkForce "";
   modules.starship.enable = true;
+  modules.starship.hostIcon = "💻"; # laptop → framework12
 
   home.packages = with pkgs; [
     beekeeper-studio
@@ -51,6 +52,11 @@
       kasti = {
         hostname = "workstation-kasti";
         user = "josh";
+      };
+      pdm = {
+        hostname = "192.168.11.220";
+        user = "root";
+        proxyJump = "josh@workstation-kasti";
       };
     };
   };

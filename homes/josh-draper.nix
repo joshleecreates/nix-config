@@ -36,6 +36,7 @@
   };
 
   modules.starship.enable = true;
+  modules.starship.hostIcon = "⌨️"; # keyboard → draper
 
   # Syncthing — runs as a systemd user service (standalone home-manager, so
   # no NixOS service module here; it defaults to ~/.config/syncthing and

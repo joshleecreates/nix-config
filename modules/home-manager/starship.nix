@@ -6,7 +6,16 @@ let
   cfg = config.modules.starship;
 in
 {
-  options.modules.starship.enable = mkEnableOption "starship prompt with env-var-gated kube segment";
+  options.modules.starship = {
+    enable = mkEnableOption "starship prompt with env-var-gated kube segment";
+
+    hostIcon = mkOption {
+      type = types.nullOr types.str;
+      default = null;
+      example = "";
+      description = "Static glyph shown at the start of the prompt to identify the host. Null hides it.";
+    };
+  };
 
   config = mkIf cfg.enable {
     programs.starship = {
@@ -30,7 +39,9 @@ in
           surface = "#1f1d2e";
         };
 
-        format = "$directory$git_branch$git_status$kubernetes$aws$character";
+        format =
+          optionalString (cfg.hostIcon != null) "[${cfg.hostIcon} ](bold rose)"
+          + "$directory$git_branch$git_status$kubernetes$aws$character";
 
         directory = {
           style = "bold iris";
