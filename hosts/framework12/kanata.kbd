@@ -2,10 +2,19 @@
 ;; Remaps Caps Lock to Control and swaps Alt/Win (Super) keys
 ;; Applies to ALL keyboards
 
+;; Tap the (physical) left-Alt key -> emit Menu/Compose (cmp), which niri binds
+;; to toggle-overview; hold it -> acts as Super (Mod). tap-hold-press so Super+key
+;; chords fire immediately when another key is pressed.
+;; NB: use cmp (keysym "Menu") not F13 -- F13 has no keysym in the default US
+;; xkb layout, so niri never sees it.
+(defalias
+  super-ov (tap-hold-press 200 200 cmp lmet)
+)
+
 (defsrc
   caps lalt lmet ralt rmet
 )
 
 (deflayer base
-  lctl lmet lalt rmet ralt
+  lctl @super-ov lalt rmet ralt
 )

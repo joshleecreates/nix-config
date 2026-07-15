@@ -15,6 +15,12 @@ in
       example = "";
       description = "Static glyph shown at the start of the prompt to identify the host. Null hides it.";
     };
+
+    theme = mkOption {
+      type = types.enum [ "rose-pine" "nord" ];
+      default = "rose-pine";
+      description = "Color palette for the starship prompt. Both palettes define the same semantic color names, so only the active palette is switched.";
+    };
   };
 
   config = mkIf cfg.enable {
@@ -22,7 +28,10 @@ in
       enable = true;
       enableZshIntegration = true;
       settings = {
-        palette = "rose_pine";
+        # Both palettes define the same semantic names (love, gold, rose, ...),
+        # so the format strings below stay theme-agnostic and only the active
+        # palette selection changes.
+        palette = if cfg.theme == "nord" then "nord" else "rose_pine";
 
         palettes.rose_pine = {
           overlay = "#26233a";
@@ -37,6 +46,21 @@ in
           muted = "#6e6a86";
           base = "#191724";
           surface = "#1f1d2e";
+        };
+
+        palettes.nord = {
+          overlay = "#3b4252"; # nord1
+          love = "#bf616a"; # nord11
+          gold = "#ebcb8b"; # nord13
+          rose = "#81a1c1"; # nord9
+          pine = "#5e81ac"; # nord10
+          foam = "#88c0d0"; # nord8
+          iris = "#b48ead"; # nord15
+          text = "#eceff4"; # nord6
+          subtle = "#d8dee9"; # nord4
+          muted = "#4c566a"; # nord3
+          base = "#2e3440"; # nord0
+          surface = "#3b4252"; # nord1
         };
 
         format =

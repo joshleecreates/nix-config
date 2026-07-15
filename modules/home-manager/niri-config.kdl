@@ -170,6 +170,8 @@ binds {
 
     // Overview
     Mod+O repeat=false { toggle-overview; }
+    // Tap Mod (Super) alone -> kanata emits Menu -> toggle overview
+    Menu repeat=false { toggle-overview; }
 
     // Close window
     Mod+Q repeat=false { close-window; }
