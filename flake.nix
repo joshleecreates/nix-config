@@ -56,7 +56,7 @@
       # Standalone home-manager configurations
       homeConfigurations."josh@draper" = home-manager.lib.homeManagerConfiguration {
         modules = [
-          { nixpkgs.overlays = [ inputs.claude-code.overlays.default ]; }
+          { nixpkgs.overlays = [ inputs.claude-code.overlays.default inputs.herdr.overlays.default ]; }
           ./homes/josh-draper.nix
         ];
         pkgs = import nixpkgs {

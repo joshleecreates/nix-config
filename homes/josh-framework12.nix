@@ -46,6 +46,12 @@
     *
   '';
 
+  # Syncthing ignores for ~/repos. The stub just pulls in .stignore-shared — a
+  # regular file that lives inside the synced folder, so the actual patterns
+  # (root-owned/churning container data dirs, node_modules, etc.) propagate to
+  # every host via Syncthing itself. Edit .stignore-shared on any machine.
+  home.file."repos/.stignore".text = "#include .stignore-shared\n";
+
   # SSH host aliases for the other machines.
   programs.ssh = {
     enable = true;

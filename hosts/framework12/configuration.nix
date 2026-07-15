@@ -36,10 +36,13 @@
   services.tailscale.enable = true;
 
   # Syncthing — runs as josh so it can read/write the home directory.
-  # Single node for now; peers/device IDs get added once other hosts join.
+  # Peering is declared here (overrideDevices/overrideFolders = true means the
+  # web UI can't durably add peers — every rebuild/restart resets to this).
+  # Peers are pinned to their Tailscale IPs (+ dynamic fallback) so repos syncs
+  # over the tailnet directly instead of a public relay.
   # NOTE: ~/repos contains git working trees; syncing .git across machines
   # races with git and produces sync-conflict files. Revisit (exclude .git or
-  # scope the folder) before adding a second device.
+  # scope the folder) if sync-conflict files start appearing.
   services.syncthing = {
     enable = true;
     user = "josh";
@@ -49,15 +52,27 @@
     overrideDevices = true;
     overrideFolders = true;
     settings = {
+      devices = {
+        kasti = {
+          id = "INZN3IU-ZFMNH4F-OHLVDLD-DIXCYZJ-SX5MTAD-HNA56F2-HSDBNS3-EYIEDAI";
+          addresses = [ "tcp://100.122.202.21:22000" "dynamic" ];
+        };
+        draper = {
+          id = "DREZGHY-QCPMOHH-3EQ5LS2-EMRCCP4-LZUJTS2-TA4K7WL-ONYYFDW-F42VIQ6";
+          addresses = [ "tcp://100.68.102.73:22000" "dynamic" ];
+        };
+      };
       folders."repos" = {
         id = "repos";
         label = "repos";
         path = "/home/josh/repos";
+        devices = [ "kasti" "draper" ];
       };
       folders."kube" = {
         id = "kube";
         label = "kube";
         path = "/home/josh/.kube";
+        devices = [ "kasti" ];
       };
     };
   };
