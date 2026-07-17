@@ -170,16 +170,6 @@ binds {
 
     // Overview
     Mod+O repeat=false { toggle-overview; }
-    // Tap Mod (Super) alone -> kanata emits Menu -> toggle overview (sticky)
-    Menu repeat=false { toggle-overview; }
-    // Hold Mod -> kanata taps F13 on hold-engage / F14 on hold-release,
-    // which the evdev(inet) xkb layout surfaces as XF86Tools / XF86Launch5.
-    // Bound both bare and with Mod because Super is held during the fake tap
-    // and the release-time modifier order isn't guaranteed.
-    Mod+XF86Tools   repeat=false { open-overview; }
-    XF86Tools       repeat=false { open-overview; }
-    Mod+XF86Launch5 repeat=false { close-overview; }
-    XF86Launch5     repeat=false { close-overview; }
 
     // Close window
     Mod+Q repeat=false { close-window; }
