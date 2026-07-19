@@ -16,6 +16,8 @@
 
   home.packages = with pkgs; [
     ghostty.terminfo
+    bitwarden-cli
+    bws
     claude-code
     nerd-fonts.jetbrains-mono
   ];

@@ -249,6 +249,7 @@
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.permittedInsecurePackages = [
     "beekeeper-studio-5.3.4"
+    "electron-39.8.10" # bitwarden-desktop
   ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];

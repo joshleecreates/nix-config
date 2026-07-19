@@ -30,10 +30,14 @@
 
   home.packages = with pkgs; [
     beekeeper-studio
+    bitwarden-desktop
+    bitwarden-cli
+    bws
     moonlight-qt
     claude-code
     owncloud-client
     vcluster
+    vscode
   ];
 
   # Syncthing whitelist for the ~/.kube folder: sync only *.yaml cluster
