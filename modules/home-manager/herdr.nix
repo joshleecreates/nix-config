@@ -10,7 +10,13 @@ in {
   };
 
   config = mkIf cfg.enable {
-    home.packages = [ pkgs.herdr ];
+    # herdr's `s` (below) replaces sesh's tmux workflow on every host where
+    # herdr is enabled, so turn sesh off to stop its `s()` from shadowing ours.
+    # herdr declares its own copies of the tools sesh used to supply — zoxide
+    # and fzf, plus the zoxide shell init — so nothing is lost by disabling it.
+    modules.sesh.enable = lib.mkForce false;
+
+    home.packages = [ pkgs.herdr pkgs.zoxide pkgs.fzf ];
 
     # Align keybindings with the tmux module so muscle memory carries over:
     # Ctrl-n prefix, prefix+| vertical split, prefix+- horizontal split,
@@ -61,6 +67,39 @@ in {
       # No sound when agents finish or request input
       [ui.sound]
       enabled = false
+    '';
+
+    # `s` — herdr's answer to sesh. Like sesh, it uses fzf to fuzzy-pick a
+    # recently-visited directory (frecency-ranked by zoxide), but instead of a
+    # tmux session it opens a herdr workspace rooted at that directory.
+    #
+    #   s              pick a dir with fzf, then open a workspace there
+    #   s <query>      resolve <query> to a dir via zoxide, skip the picker
+    #
+    # Inside a running herdr session (HERDR_ENV=1) this creates a new focused
+    # workspace over the socket API. Outside one, it cd's to the dir and boots
+    # herdr so the initial workspace is rooted there.
+    #
+    # The zoxide init below installs the chpwd hook that records visited
+    # directories into the frecency database that `zoxide query` reads.
+    programs.zsh.initContent = ''
+      eval "$(zoxide init zsh)"
+
+      function s() {
+        local dir
+        if [ "$#" -gt 0 ]; then
+          dir=$(zoxide query -- "$@") || return
+        else
+          dir=$(zoxide query -l | fzf --height 40% --reverse \
+            --prompt 'workspace > ') || return
+        fi
+        [ -n "$dir" ] || return
+        if [ -n "$HERDR_ENV" ]; then
+          herdr workspace create --cwd "$dir" --focus >/dev/null
+        else
+          cd "$dir" && herdr
+        fi
+      }
     '';
   };
 }
