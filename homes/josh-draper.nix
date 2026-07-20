@@ -19,6 +19,7 @@
     bitwarden-cli
     bws
     claude-code
+    tea
     nerd-fonts.jetbrains-mono
   ];
 

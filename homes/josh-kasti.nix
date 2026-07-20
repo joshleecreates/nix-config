@@ -16,6 +16,7 @@
   home.packages = with pkgs; [
     ghostty.terminfo
     claude-code
+    tea
     nerd-fonts.jetbrains-mono
   ];
 
