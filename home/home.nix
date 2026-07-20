@@ -33,6 +33,7 @@
     pay-respects
     git
     gh
+    tea
     ranger
     nurl
     dnsutils
