@@ -1,0 +1,13 @@
+{
+  "id": "work-mode",
+  "name": "Work Mode",
+  "version": "1.0.0",
+  "minNoctaliaVersion": "5.0.0",
+  "author": "josh",
+  "license": "MIT",
+  "description": "Toggle Work Mode from the bar.",
+  "tags": ["Bar"],
+  "entryPoints": { "barWidget": "BarWidget.qml" },
+  "dependencies": { "plugins": [] },
+  "metadata": { "defaultSettings": { "enabled": false } }
+}

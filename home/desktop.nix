@@ -24,6 +24,9 @@
     ../modules/home-manager/niri.nix
     ../modules/home-manager/nirius.nix
     ../modules/home-manager/niri-lid-handler.nix
+
+    # Noctalia plugins
+    ../modules/home-manager/noctalia-work-mode.nix
   ];
 
   # Enable GUI modules
@@ -50,6 +53,7 @@
   modules.zen-browser.enable = lib.mkDefault false;
 
   # Noctalia shell - status bar, notifications, wallpaper
+  modules.noctalia-work-mode.enable = true;
   programs.noctalia-shell = {
     enable = true;
     systemd.enable = true;
@@ -63,6 +67,167 @@
       wallpaper = {
         enabled = true;
         directory = "~/wallpapers";
+      };
+      # Resting color scheme (work mode off). The Work Mode bar widget switches this
+      # to Nord at runtime when toggled on. Pinned here so a fresh start (work mode
+      # defaults off) matches. settings.json is nix-owned, so this must live here.
+      colorSchemes = {
+        darkMode = true;
+        useWallpaperColors = false;
+        predefinedScheme = "Gruvbox";
+        schedulingMode = "off";
+      };
+      # Bar layout is fully nix-owned (settings.json is a read-only symlink), so the
+      # whole widget list must be declared. Restored from the pre-nix hand-tuned layout,
+      # with the Work Mode plugin button inserted next to NotificationHistory (alerts).
+      bar = {
+        backgroundOpacity = 0.93;
+        barType = "simple";
+        capsuleOpacity = 1;
+        density = "default";
+        exclusive = true;
+        floating = false;
+        frameRadius = 12;
+        frameThickness = 8;
+        hideOnOverview = false;
+        marginHorizontal = 4;
+        marginVertical = 4;
+        monitors = [ ];
+        outerCorners = true;
+        position = "top";
+        screenOverrides = [ ];
+        showCapsule = true;
+        showOutline = false;
+        useSeparateOpacity = false;
+        widgets = {
+          # Left: launcher, calendar (Clock), temperature (SystemMonitor), window, media
+          left = [
+            {
+              id = "Launcher";
+              icon = "rocket";
+              usePrimaryColor = false;
+            }
+            {
+              id = "Clock";
+              customFont = "";
+              formatHorizontal = "HH:mm ddd, MMM dd";
+              formatVertical = "HH mm - dd MM";
+              tooltipFormat = "HH:mm ddd, MMM dd";
+              useCustomFont = false;
+              usePrimaryColor = false;
+            }
+            {
+              id = "SystemMonitor";
+              compactMode = true;
+              diskPath = "/";
+              showCpuTemp = true;
+              showCpuUsage = true;
+              showDiskUsage = false;
+              showGpuTemp = false;
+              showLoadAverage = false;
+              showMemoryAsPercent = false;
+              showMemoryUsage = true;
+              showNetworkStats = false;
+              showSwapUsage = false;
+              useMonospaceFont = true;
+              usePrimaryColor = false;
+            }
+            {
+              id = "ActiveWindow";
+              colorizeIcons = false;
+              hideMode = "hidden";
+              maxWidth = 145;
+              scrollingMode = "hover";
+              showIcon = true;
+              useFixedWidth = false;
+            }
+            {
+              id = "MediaMini";
+              compactMode = false;
+              compactShowAlbumArt = true;
+              compactShowVisualizer = false;
+              hideMode = "hidden";
+              hideWhenIdle = false;
+              maxWidth = 145;
+              panelShowAlbumArt = true;
+              panelShowVisualizer = true;
+              scrollingMode = "hover";
+              showAlbumArt = true;
+              showArtistFirst = true;
+              showProgressRing = true;
+              showVisualizer = false;
+              useFixedWidth = false;
+              visualizerType = "linear";
+            }
+          ];
+          # Center: workspaces
+          center = [
+            {
+              id = "Workspace";
+              characterCount = 2;
+              colorizeIcons = false;
+              emptyColor = "secondary";
+              enableScrollWheel = true;
+              focusedColor = "primary";
+              followFocusedScreen = false;
+              groupedBorderOpacity = 1;
+              hideUnoccupied = false;
+              iconScale = 0.8;
+              labelMode = "index";
+              occupiedColor = "secondary";
+              showApplications = false;
+              showBadge = true;
+              showLabelsOnlyWhenOccupied = true;
+              unfocusedIconsOpacity = 1;
+            }
+          ];
+          right = [
+            {
+              id = "Tray";
+              blacklist = [ ];
+              colorizeIcons = false;
+              drawerEnabled = true;
+              hidePassive = false;
+              pinned = [ ];
+            }
+            {
+              id = "NotificationHistory";
+              hideWhenZero = false;
+              hideWhenZeroUnread = false;
+              showUnreadBadge = true;
+            }
+            # Work Mode toggle button, next to the alerts (NotificationHistory) icon.
+            { id = "plugin:work-mode"; }
+            {
+              id = "Network";
+              displayMode = "onhover";
+            }
+            {
+              id = "Battery";
+              deviceNativePath = "";
+              displayMode = "onhover";
+              hideIfIdle = false;
+              hideIfNotDetected = true;
+              showNoctaliaPerformance = false;
+              showPowerProfiles = false;
+              warningThreshold = 30;
+            }
+            {
+              id = "Volume";
+              displayMode = "onhover";
+              middleClickCommand = "pwvucontrol || pavucontrol";
+            }
+            {
+              id = "ControlCenter";
+              colorizeDistroLogo = false;
+              colorizeSystemIcon = "none";
+              customIconPath = "";
+              enableColorization = false;
+              icon = "noctalia";
+              useDistroLogo = false;
+            }
+          ];
+        };
       };
     };
   };
