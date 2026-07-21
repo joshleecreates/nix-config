@@ -137,20 +137,24 @@ binds {
     Mod+Shift+Slash { show-hotkey-overlay; }
 
     // Launch programs
-    Mod+T { spawn "ghostty"; }
+    Mod+T { spawn "nirius" "focus-or-spawn" "--app-id" "^com.mitchellh.ghostty$" "--" "ghostty"; }
+    Mod+N { spawn "nirius" "focus-or-spawn" "--app-id" "^obsidian$" "--" "obsidian"; }
     Mod+Space { spawn "noctalia-shell" "ipc" "call" "launcher" "toggle"; }
     Super+Alt+L { spawn "swaylock"; }
-    Super+S { spawn "slack"; }
+    Super+S { spawn "focus-or-spawn-fs" "--below" "^slack$" "" "1" "--" "slack"; }
     Super+B { spawn "firefox"; }
     Super+Z { spawn "zen"; }
+    Super+C { spawn "nirius" "focus-or-spawn" "--app-id" "^zen$" "--title" "Calendar" "--" "zen" "-P" "Work" "--new-window" "https://calendar.google.com"; }
+    Super+D { spawn "focus-or-spawn-fs" "^zen$" "Google Drive" "1" "--" "zen" "-P" "Work" "--new-window" "https://drive.google.com"; }
     Super+Period { spawn "rofimoji"; }
-    Super+G { spawn "steam"; }
+    Super+G { spawn "nirius" "focus-or-spawn" "--title" "jlee@altinity.com" "--" "zen" "-P" "Work" "--new-window" "https://mail.google.com"; }
 
-    // Scratchpad toggles (nirius)
-    Mod+Shift+T { spawn "nirius" "scratchpad-toggle" "--app-id" "ghostty" "--spawn" "ghostty"; }
-    Mod+Shift+B { spawn "firefox-last-workspace"; }
-    Mod+Shift+N { spawn "window-to-last-workspace"; }
-    Mod+Shift+C { spawn "nirius" "scratchpad-toggle" "--app-id" "chatgpt" "--spawn" "chatgpt"; }
+    // Open on a fresh workspace directly below the current one
+    Mod+Shift+T { spawn "open-below-current" "com.mitchellh.ghostty" "--" "ghostty"; }
+    Mod+Shift+B { spawn "open-below-current" "firefox" "--" "firefox" "--new-window"; }
+    Mod+Shift+N { spawn "window-below-current"; }
+    Mod+Shift+C { spawn "open-below-current" "zen" "--" "zen" "-P" "Work" "--new-window" "https://calendar.google.com"; }
+    Mod+Shift+D { spawn "open-below-current" "--maximize" "zen" "--" "zen" "-P" "Work" "--new-window" "https://drive.google.com"; }
 
     // Volume keys (Framework laptop function keys) - OSD handled by noctalia-shell
     XF86AudioRaiseVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1+" "-l" "1.0"; }
@@ -291,7 +295,6 @@ binds {
     Mod+Ctrl+F { expand-column-to-available-width; }
 
     // Centering
-    Mod+C { center-column; }
     Mod+Ctrl+C { center-visible-columns; }
 
     // Width/height adjustments
