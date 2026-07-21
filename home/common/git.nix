@@ -247,6 +247,10 @@
       herdr pane split "$pane" --direction down --cwd "$dir" --no-focus >/dev/null
       herdr pane run "$pane" "n" >/dev/null
     }
+
+    # Shortcuts: wtp 1234 == wt pr 1234, wtb NAME == wt branch NAME.
+    wtp() { wt pr "$@"; }
+    wtb() { wt branch "$@"; }
   '';
 
   programs.delta = {
